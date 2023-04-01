@@ -11,7 +11,7 @@
 	<groupId>kr.spring</groupId>
 	<artifactId>mybatis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>dog</name>
 	<description>dog project for Spring Boot</description>
 	<properties>
