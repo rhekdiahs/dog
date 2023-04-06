@@ -5,12 +5,6 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="study_ticketList" extends="main">
-		<put-attribute name="title" value="OurStudy : : 독서실 이용권" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/ticket/study_ticketList.jsp" />
-	</definition>
-	
 	<definition name="cafeList" template="/WEB-INF/views/template/layout.jsp">
     	<put-attribute name="title" value="카페 목록"/>
     	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
