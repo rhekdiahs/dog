@@ -6,12 +6,16 @@
 
 <tiles-definitions>
 	<!-- 메인 -->
-    <definition name="main" template="/WEB-INF/views/template/layout.jsp">
-    	<put-attribute name="title" value="메인페이지"/>
+    <definition name="memberRegister" template="/WEB-INF/views/template/layout.jsp">
+    	<put-attribute name="title" value="회원가입"/>
     	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
-    	<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/>
     	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
     </definition>
 
+	<definition name="memberLogin" extends="memberRegister">
+    	<put-attribute name="title" value="로그인"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>     
+    </definition>
   
 </tiles-definitions>

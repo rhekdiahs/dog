@@ -63,6 +63,7 @@ public class AppConfig implements WebMvcConfigurer{
 		//해당 경로에 xml 설정 파일을 넣음
 		configurer.setDefinitions(new String[] {
 				"/WEB-INF/tiles-def/main.xml",
+				"/WEB-INF/tiles-def/YM.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;
