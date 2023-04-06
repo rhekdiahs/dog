@@ -31,8 +31,8 @@ function numberphone(e){
 			<li>
 				<label for="mem_pw">비밀번호</label>
 				<form:password path="mem_pw"/>
-				<div id="message_pw">
-				<form:errors path="mem_pw" cssClass="error-color"/></div>
+				<div id="login_Pw"></div>
+				<form:errors path="mem_pw" cssClass="error-color"/>
 			</li>
 			<li>
 				<label for="pw_confirm">비밀번호 확인</label>

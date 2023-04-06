@@ -66,14 +66,14 @@ $(function(){
 			return;
 		}
 		
-		if(mem_pw!='' && pw_confirm!=''){
+		if(mem_pw.length >= 8 && pw_confirm.length >= 8){
 			if(mem_pw == pw_confirm){
 				$("#confirmMsg").text("비밀번호 일치").css('color','#000');
 				return;
 			}
 			if(mem_pw != pw_confirm){
 				$("#confirmMsg").text("비밀번호 불일치").css('color','#E65962');
-				return;
+				return;					
 			}
 		}
 	});
@@ -82,6 +82,13 @@ $(function(){
 	
 	$('#register_form').submit(function(){
 		//공백입력시
+		if($('#mem_pw').val() != $('#pw_confirm').val()){
+			alert('비밀번호가 불일치합니다.');
+			$('#mem_pw').val('').focus();
+			$('#pw_confirm').val('');
+			return false;
+		}
+		
 		if($('#mem_id').val().trim()==''){
 			$("#login_Id").text("아이디를 입력하세요");
 			$('#mem_id').val('').focus();
@@ -105,6 +112,7 @@ $(function(){
 		if(!right_pw.test(mem_pw.value)){
       		$('#login_Pw').text("8~16자의 영문 대소문자, 숫자로 입력하세요.");
 			$('#mem_pw').val('').focus();
+			$('#pw_confirm').val('');
 			return false;
 		}
     	
