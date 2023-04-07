@@ -64,7 +64,8 @@ public class AppConfig implements WebMvcConfigurer{
 		configurer.setDefinitions(new String[] {
 				"/WEB-INF/tiles-def/main.xml",
 				"/WEB-INF/tiles-def/YM.xml",
-				"/WEB-INF/tiles-def/HJ.xml"
+				"/WEB-INF/tiles-def/HJ.xml",
+				"/WEB-INF/tiles-def/KJ.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;
