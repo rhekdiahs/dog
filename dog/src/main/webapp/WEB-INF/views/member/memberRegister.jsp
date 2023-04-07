@@ -59,7 +59,13 @@ function numberphone(e){
 				<input type="text" id="email_direct" name="email_direct" placeholder="이메일 입력"/>
 				<input type="hidden" id="mem_email" name="mem_email" value="">
 			</li>
-
+			<li>
+				<div class="mail-check-box">
+					<input class="form-control mail-check-input" placeholder="인증번호 6자리 입력" disabled="disabled" maxlength="6">
+					<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+				</div>
+				<div id="mail-check-warn"></div>
+			</li>
 			
 			<li>
 				<label for="phone">전화번호 (선택)</label>
