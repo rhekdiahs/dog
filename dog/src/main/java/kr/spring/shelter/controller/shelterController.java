@@ -18,7 +18,7 @@ public class shelterController {
 	@Autowired
 	private shelterService shelterService;
 
-    @GetMapping("/shelter")
+    @GetMapping("/shelter/shelterList.do")
     public String news(Model model) throws Exception{
         List<shelterVO> list = shelterService.getNewsDatas();
         logger.debug("<<크롤링 리스트>> : " + list);
