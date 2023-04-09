@@ -28,7 +28,5 @@ public class CafeServiceImpl implements CafeService{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 	
 }

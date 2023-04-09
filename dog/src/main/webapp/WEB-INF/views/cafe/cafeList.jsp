@@ -10,13 +10,13 @@
 	<script>
 		var container = document.getElementById('map');
 		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
+			center: new kakao.maps.LatLng(37.497385823817254, 126.99414216182518),
+			level: 7
 		};
 
 		var map = new kakao.maps.Map(container, options);
 	</script>	
-	<form action="cafeList.do" id="search_region" method="get">
+	<form action="cafeMap.do" id="search_region" method="get">
 		<ul class="search" style="list-style: none;">
 			<li>
 				<select name="keyfield" id="keyfield">
@@ -42,7 +42,19 @@
 				<input type="submit" value="찾기">
 		</ul>
 	</form>
-	<div>	
+	<div>
+	 <table class="table">
+	          <tr>
+	              <th>제목</th>
+	              <th>이미지</th>
+	          </tr>
+	          <c:forEach var="cafeCrawl" items="${CafeCrawl}">
+	          <tr>
+	              <td><a href="${cafeCrawl.url}"><span>${cafeCrawl.subject}</span></a></td>
+	              <td><a href="${cafeCrawl.url}"><img src="${cafeCrawl.image}"></a></td>
+	          </tr>
+	          </c:forEach>
+	</table>
 	</div>
 </div>
 <!-- 중앙컨텐츠 끝 -->
