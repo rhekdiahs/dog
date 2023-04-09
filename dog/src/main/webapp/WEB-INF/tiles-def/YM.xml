@@ -17,5 +17,10 @@
     	<put-attribute name="title" value="로그인"/>
     	<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>     
     </definition>
+    
+    <definition name="hospitalMain" extends="memberRegister">
+    	<put-attribute name="title" value="병원메인"/>
+    	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalMain.jsp"/>     
+    </definition>
   
 </tiles-definitions>

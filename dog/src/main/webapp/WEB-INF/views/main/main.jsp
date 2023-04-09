@@ -12,4 +12,5 @@
 	</c:if>
 	<a href="${pageContext.request.contextPath}/cafe/cafeList.do">카페 목록</a>
 	<a href="${pageContext.request.contextPath}/shelter/shelterList.do">임시보호소</a>
+	<a href="${pageContext.request.contextPath}/hospital/main.do">병원</a>
 </div>
