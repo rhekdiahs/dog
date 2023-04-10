@@ -26,4 +26,9 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO selectCheckMember(String mem_id) {
 		return memberMapper.selectCheckMember(mem_id);
 	}
+
+	@Override
+	public MemberVO selectKakaoCheck(String kakao_email) {
+		return memberMapper.selectKakaoCheck(kakao_email);
+	}
 }

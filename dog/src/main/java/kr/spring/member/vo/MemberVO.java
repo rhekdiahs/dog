@@ -25,6 +25,8 @@ public class MemberVO {
 	private Date mem_regdate;
 	private Date mem_mdate;
 	
+	private String mem_kakao;
+	
 	//아이디 찾기 시 전체 아이디
 	private String[] mem_all_id;
 
@@ -174,6 +176,14 @@ public class MemberVO {
 
 	public void setMem_auth(int mem_auth) {
 		this.mem_auth = mem_auth;
+	}
+
+	public String getMem_kakao() {
+		return mem_kakao;
+	}
+
+	public void setMem_kakao(String mem_kakao) {
+		this.mem_kakao = mem_kakao;
 	}
 	
 	

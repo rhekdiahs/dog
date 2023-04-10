@@ -84,7 +84,7 @@ public class MemberController {
 		if(result.hasErrors()) {
 			return form();
 		}
-		
+		memberVO.setMem_kakao("");
 		//회원가입
 		memberService.insertMember(memberVO);
 		
@@ -101,6 +101,8 @@ public class MemberController {
 	/*=====================================
     				로그인
 	====================================*/
+	
+	//-----------------일반-----------------//
 	
 	//로그인 폼 호출
 	@GetMapping("/member/login.do")
@@ -152,6 +154,37 @@ public class MemberController {
 		}
 	}
 	
+	//-----------------카카오-----------------//
+	@GetMapping("/member/kakaoForm.do")
+	public String kakaoForm() {
+		return "memberKakaoRegister";
+	}
+	
+	@PostMapping("/member/registerKakaoUser.do")
+	public String submitKakao(@Valid MemberVO memberVO, BindingResult result, HttpSession session, Model model) {
+		
+		logger.debug("<<카카오톡 회원가입>> : " + memberVO);
+		
+		//유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return kakaoForm();
+		}
+		memberVO.setMem_phone("");
+		//회원가입
+		memberService.insertMember(memberVO);
+		
+		MemberVO member = null;
+		member = memberService.selectCheckMember(memberVO.getMem_id());
+		
+		session.setAttribute("user", member);
+		session.setAttribute("user_num", member.getMem_num());
+		
+		model.addAttribute("accessMsg", "회원가입이 완료되었습니다.");
+
+		return "common/notice";
+		
+		
+	}
 	/*=====================================
 					로그아웃
 	 ====================================*/	

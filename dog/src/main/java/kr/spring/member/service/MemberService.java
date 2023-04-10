@@ -9,4 +9,7 @@ public interface MemberService {
 	
 	//아이디 중복체크
 	public MemberVO selectCheckMember(String mem_id);
+	
+	//카카오 로그인 확인
+	public MemberVO selectKakaoCheck(String kakao_email);
 }

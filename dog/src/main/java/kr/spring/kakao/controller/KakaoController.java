@@ -1,5 +1,7 @@
 package kr.spring.kakao.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -38,10 +40,10 @@ private static final Logger logger = LoggerFactory.getLogger(KakaoController.cla
 		String access_Token = kakao.getToken(code);
 		System.out.println("controller access_token : " + access_Token);
 		
-		//session.setAttribute("access_Token", access_Token);
+		session.setAttribute("access_Token", access_Token);
 		
-		return "main";
-		/*HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+		
+		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
 		
 		//mem_id
 		String kakao_id = (String)userInfo.get("kakao_email");
@@ -53,13 +55,10 @@ private static final Logger logger = LoggerFactory.getLogger(KakaoController.cla
 		String kakao_name = (String)userInfo.get("kakao_name");     	
 		//mem_email
 		String kakao_email = (String)userInfo.get("kakao_email");
-		//mem_photo
-		String kakao_image = (String)userInfo.get("kakao_image");
-
 
 		MemberVO member = memberService.selectKakaoCheck(kakao_email);
 		
-		if(member!=null) { //회원가입 했음
+		if(member != null) { //회원가입 했음
 			logger.debug("<<카카오톡 인증 성공>> : " + member.getMem_id());
 			
 			member.setMem_id(member.getMem_id());
@@ -79,8 +78,7 @@ private static final Logger logger = LoggerFactory.getLogger(KakaoController.cla
 			model.addAttribute("kakao_name", kakao_name);
 			
 			return "memberKakaoRegister";
-		}*/
+		}
 
-		
 	}
 }
