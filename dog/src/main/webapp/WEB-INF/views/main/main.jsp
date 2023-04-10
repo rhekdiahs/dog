@@ -10,6 +10,7 @@
 	<a href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
 	<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>
 	</c:if>
+	<a href="${pageContext.request.contextPath}/walk/list.do">산책경로</a>
 	<a href="${pageContext.request.contextPath}/cafe/cafeList.do">카페 목록</a>
 	<a href="${pageContext.request.contextPath}/shelter/shelterList.do">임시보호소</a>
 	<a href="${pageContext.request.contextPath}/hospital/main.do">병원</a>
