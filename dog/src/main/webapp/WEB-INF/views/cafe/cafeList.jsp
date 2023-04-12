@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 <!-- 중앙컨텐츠 시작 -->
 <div id="main_body">
 	<div id="map" style="width:500px;height:400px;"></div>
@@ -43,17 +43,21 @@
 		</ul>
 	</form>
 	<div>
-	 <table class="table">
-	          <tr>
-	              <th>제목</th>
-	              <th>이미지</th>
-	          </tr>
-	          <c:forEach var="cafeCrawl" items="${CafeCrawl}">
-	          <tr>
-	              <td><a href="${cafeCrawl.url}"><span>${cafeCrawl.subject}</span></a></td>
-	              <td><a href="${cafeCrawl.url}"><img src="${cafeCrawl.image}"></a></td>
-	          </tr>
-	          </c:forEach>
+	 <table class="table table-sm">
+	     <tr>
+	         <th>제목</th>
+	         <th>이미지</th>
+	         <th>종류</th>
+	         <th>주소</th>
+	     </tr>
+	     <c:forEach var="cafeCrawl" items="${CafeCrawl}">
+	     <tr>
+	         <td><a href="${cafeCrawl.url}"><span>${cafeCrawl.subject}</span></a></td>
+	         <td><a href="${cafeCrawl.url}"><img src="${cafeCrawl.image}"></a></td>
+	         <td><span>${cafeCrawl.type}</span></td>
+	         <td><span>${cafeCrawl.address}</span></td>
+	     </tr>
+	     </c:forEach>
 	</table>
 	</div>
 </div>

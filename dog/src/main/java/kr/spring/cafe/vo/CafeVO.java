@@ -2,7 +2,12 @@ package kr.spring.cafe.vo;
 
 import java.sql.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class CafeVO {
+	@Value("${property.key.apikey}")
+	private String apikey;
+	
 	private int cafe_num;
 	private double cafe_lat;
 	private double cafe_lng;

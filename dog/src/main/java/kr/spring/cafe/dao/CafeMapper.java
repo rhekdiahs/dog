@@ -26,5 +26,4 @@ public interface CafeMapper {
 	public void insertCafeDetail(CafeVO cafeVO);
 	
 	
-	
 }
