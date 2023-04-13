@@ -8,7 +8,7 @@ import kr.spring.walk.vo.WalkVO;
 @Mapper
 public interface WalkMapper {
 	//산책경로 등록
-	@Insert("INSERT INTO WALK")
+	@Insert("INSERT INTO WALK (walk_num, walk_position) VALUES (walk_seq.nextval,#{walk_position})")
 	public void regsiterWalk(WalkVO walk);
 	
 	//산책경로 정보 불러오기(회원 이름도 같이 불러와야함)
