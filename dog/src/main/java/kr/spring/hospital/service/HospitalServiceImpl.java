@@ -26,4 +26,9 @@ public class HospitalServiceImpl implements HospitalService{
 		return hospitalMapper.selectInsertedHosList();
 	}
 
+	@Override
+	public void updateCoords(String coord_x, String coord_y, Integer hospital_num) {
+		hospitalMapper.updateCoords(coord_x, coord_y, hospital_num);
+	}
+
 }

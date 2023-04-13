@@ -11,6 +11,7 @@ public class HospitalVO {
 	private String hospital_region;
 	private String coord_x;
 	private String coord_y;
+	private String road;
 	
 	private int h_info_num;
 	private String h_info_name;
@@ -107,6 +108,14 @@ public class HospitalVO {
 	}
 	public void setH_info_image_name(String h_info_image_name) {
 		this.h_info_image_name = h_info_image_name;
+	}
+
+	public String getRoad() {
+		return road;
+	}
+
+	public void setRoad(String road) {
+		this.road = road;
 	}
 	
 	
