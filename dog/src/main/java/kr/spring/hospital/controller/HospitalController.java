@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -32,9 +33,109 @@ public class HospitalController {
 	public HospitalVO initCommand() {
 		return new HospitalVO();
 	}
+	public static String getClientIP(HttpServletRequest request) {
+	    String ip = request.getHeader("X-Forwarded-For");
+	    logger.info("> X-FORWARDED-FOR : " + ip);
+
+	    if (ip == null) {
+	        ip = request.getHeader("Proxy-Client-IP");
+	        logger.info("> Proxy-Client-IP : " + ip);
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("WL-Proxy-Client-IP");
+	        logger.info(">  WL-Proxy-Client-IP : " + ip);
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("HTTP_CLIENT_IP");
+	        logger.info("> HTTP_CLIENT_IP : " + ip);
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+	        logger.info("> HTTP_X_FORWARDED_FOR : " + ip);
+	    }
+	    if (ip == null) {
+	        ip = request.getRemoteAddr();
+	        logger.info("> getRemoteAddr : "+ip);
+	    }
+	    logger.info("> Result : IP Address : "+ip);
+
+	    return ip;
+	}
+	
+	@RequestMapping("/hospital/curCityAjax.do")
+	@ResponseBody
+	public Map<String, String> curCityAjax(String curCity){
+		String keyfield;
+		System.out.println(curCity);
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		
+		if(curCity.equals("Seoul")) {
+			keyfield = "서울특별시";
+		}else if(curCity.equals("Busan")) {
+			keyfield = "부산광역시";
+		}else if(curCity.equals("Daegu")) {
+			keyfield = "대구광역시";
+		}else if(curCity.equals("Incheon")) {
+			keyfield = "인천광역시";
+		}else if(curCity.equals("Gwanju")) {
+			keyfield = "광주광역시";
+		}else if(curCity.equals("Daejeon")) {
+			keyfield = "대전광역시";
+		}else if(curCity.equals("Ulsan")) {
+			keyfield = "울산광역시";
+		}else if(curCity.equals("Sejong-si")) {
+			keyfield = "세종특별자치시";
+		}else if(curCity.equals("Gyeonggi-do")) {
+			keyfield = "경기도";
+		}else if(curCity.equals("Gangwon-do")) {
+			keyfield = "강원도";
+		}else if(curCity.equals("Chungcheongbuk-do")) {
+			keyfield = "충청북도";
+		}else if(curCity.equals("Chungcheongnam-do")) {
+			keyfield = "충청남도";
+		}else if(curCity.equals("Jeollabuk-do")) {
+			keyfield = "전라북도";
+		}else if(curCity.equals("Jeollanam-do")) {
+			keyfield = "전라남도";
+		}else if(curCity.equals("Gyeongsangbuk-do")) {
+			keyfield = "경상북도";
+		}else if(curCity.equals("Gyeongsangnam-do")) {
+			keyfield = "경상남도";
+		}else if(curCity.equals("Jeju-do")) {
+			keyfield = "제주도";
+		}else {
+			keyfield = "--선택";
+		}
+		
+		System.out.println(keyfield);
+		mapAjax.put("result", keyfield);
+		
+		return mapAjax;
+	}
 	
 	@RequestMapping("/hospital/main.do")
-	public String hospital_main(Model model) {
+	public String hospital_main(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, 
+								Model model, HttpServletRequest request, 
+								@RequestParam(value = "keyfield", defaultValue = "--선택") String keyfield) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyfield", keyfield);
+		
+		int count = hospitalService.selectRegionListCount(map);
+		
+		PagingUtil page = new PagingUtil(keyfield, null, currentPage, count, 10, 5, "h_selectOption.do");
+		
+		List<HospitalVO> list = null;
+		
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = hospitalService.selectStoredHosList(map);
+		}
+		
+		model.addAttribute("list",list);
+		model.addAttribute("page", page.getPage());
 		
 		//List<HospitalVO> list = null;
 		//list = hospitalService.selectStoredHosList();
@@ -44,10 +145,10 @@ public class HospitalController {
 		for(int i = 0; i < list.size(); i++) {
 			list.get(i).setRoad(list.get(i).getRoad().split(",")[0]);
 		}*/
-		
+		String ip = getClientIP(request);
 		
 		//model.addAttribute("list", list);
-		
+		model.addAttribute("ip", ip);
 		return "hospitalMain";
 	}
 	
