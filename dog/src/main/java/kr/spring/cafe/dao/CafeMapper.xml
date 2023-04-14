@@ -4,11 +4,86 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.cafe.dao.CafeMapper">
 
-	<select id="selectCafeCount" parameterType="map" resultType="Integer">
+	<sql id="selectOption">
+		<where>
+		<if test="keyfield != null">
+			<if test="keyfield == '서울특별시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '부산광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '대구광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '인천광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '광주광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '대전광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '울산광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '세종특별자치시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경기도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '강원도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '충청북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '충청남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '전라북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '전라남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경상북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경상남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '제주특별자치도'">
+				cafe_region = #{keyfield}
+			</if>
+		</if>
+		</where>
+	</sql>
+
+	<select id="selectCafeCount" parameterType="map" resultType="integer">
 		SELECT
 		COUNT(*)
 		FROM cafe
+		<include refid="selectOption"></include>
 	</select>	
+
+	<select id="selectCafeList" parameterType="map" resultType="cafeVO">
+	SELECT
+	  *
+	FROM (SELECT 
+			a.*,
+			rownum rnum
+		  FROM (SELECT
+		  		  *
+		  		FROM cafe
+		  		<include refid="selectOption"></include>
+		  		)a)
+	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+	]]>
+	</select>
 
 </mapper>
 

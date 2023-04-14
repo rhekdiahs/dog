@@ -22,10 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import kr.spring.cafe.vo.CafeCrawl;
-
 @Service
 public class CafeCrawlService {
+	/*
 	private static final Logger logger = LoggerFactory.getLogger(CafeCrawlService.class);
 	
 	
@@ -53,6 +52,7 @@ public class CafeCrawlService {
 		logger.debug("카페 크롤링 테스트 : " + cafeList);
 		return cafeList;
 	}
+	*/
 	
 	/*
 	//selenium

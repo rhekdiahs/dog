@@ -9,9 +9,11 @@ public class CafeVO {
 	private String apikey;
 	
 	private int cafe_num;
-	private double cafe_lat;
-	private double cafe_lng;
+	private double cafe_x;
+	private double cafe_y;
 	private String cafe_region;
+	private String cafe_addr;
+	private String cafe_cate;
 	
 	private int cafe_detail_num;
 	private String cafe_name;
@@ -33,20 +35,20 @@ public class CafeVO {
 		this.cafe_num = cafe_num;
 	}
 
-	public double getCafe_lat() {
-		return cafe_lat;
+	public double getCafe_x() {
+		return cafe_x;
 	}
 
-	public void setCafe_lat(double cafe_lat) {
-		this.cafe_lat = cafe_lat;
+	public void setCafe_x(double cafe_x) {
+		this.cafe_x = cafe_x;
 	}
 
-	public double getCafe_lng() {
-		return cafe_lng;
+	public double getCafe_y() {
+		return cafe_y;
 	}
 
-	public void setCafe_lng(double cafe_lng) {
-		this.cafe_lng = cafe_lng;
+	public void setCafe_y(double cafe_y) {
+		this.cafe_y = cafe_y;
 	}
 
 	public String getCafe_region() {
@@ -55,6 +57,22 @@ public class CafeVO {
 
 	public void setCafe_region(String cafe_region) {
 		this.cafe_region = cafe_region;
+	}
+
+	public String getCafe_addr() {
+		return cafe_addr;
+	}
+
+	public void setCafe_addr(String cafe_addr) {
+		this.cafe_addr = cafe_addr;
+	}
+
+	public String getCafe_cate() {
+		return cafe_cate;
+	}
+
+	public void setCafe_cate(String cafe_cate) {
+		this.cafe_cate = cafe_cate;
 	}
 
 	public int getCafe_detail_num() {
@@ -139,14 +157,13 @@ public class CafeVO {
 
 	@Override
 	public String toString() {
-		return "CafeVO [cafe_num=" + cafe_num + ", cafe_lat=" + cafe_lat + ", cafe_lng=" + cafe_lng + ", cafe_region="
-				+ cafe_region + ", cafe_detail_num=" + cafe_detail_num + ", cafe_name=" + cafe_name + ", cafe_type="
-				+ cafe_type + ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name
-				+ ", cafe_status=" + cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date="
-				+ cafe_modify_date + ", mem_num=" + mem_num + "]";
+		return "CafeVO [apikey=" + apikey + ", cafe_num=" + cafe_num + ", cafe_x=" + cafe_x + ", cafe_y=" + cafe_y
+				+ ", cafe_region=" + cafe_region + ", cafe_addr=" + cafe_addr + ", cafe_cate=" + cafe_cate
+				+ ", cafe_detail_num=" + cafe_detail_num + ", cafe_name=" + cafe_name + ", cafe_type=" + cafe_type
+				+ ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name + ", cafe_status="
+				+ cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date=" + cafe_modify_date
+				+ ", mem_num=" + mem_num + "]";
 	}
-
-	
 	
 }
 

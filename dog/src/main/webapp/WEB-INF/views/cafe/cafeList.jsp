@@ -16,49 +16,57 @@
 
 		var map = new kakao.maps.Map(container, options);
 	</script>	
-	<form action="cafeMap.do" id="search_region" method="get">
+	<form action="cafeList.do" id="search_region" method="get">
 		<ul class="search" style="list-style: none;">
 			<li>
-				<select name="keyfield" id="keyfield">
-					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>서울특별시</option>
-					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>부산광역시</option>
-					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>대구광역시</option>
-					<option value="4" <c:if test="${param.keyfield == 4}">selected</c:if>>인천광역시</option>
-					<option value="5" <c:if test="${param.keyfield == 5}">selected</c:if>>광주광역시</option>
-					<option value="6" <c:if test="${param.keyfield == 6}">selected</c:if>>대전광역시</option>
-					<option value="7" <c:if test="${param.keyfield == 7}">selected</c:if>>울산광역시</option>
-					<option value="8" <c:if test="${param.keyfield == 8}">selected</c:if>>세종특별자치시</option>
-					<option value="9" <c:if test="${param.keyfield == 9}">selected</c:if>>경기도</option>
-					<option value="10" <c:if test="${param.keyfield == 10}">selected</c:if>>강원도</option>
-					<option value="11" <c:if test="${param.keyfield == 11}">selected</c:if>>충청북도</option>
-					<option value="12" <c:if test="${param.keyfield == 12}">selected</c:if>>충청남도</option>
-					<option value="13" <c:if test="${param.keyfield == 13}">selected</c:if>>전라북도</option>
-					<option value="14" <c:if test="${param.keyfield == 14}">selected</c:if>>전라남도</option>
-					<option value="15" <c:if test="${param.keyfield == 15}">selected</c:if>>경상북도</option>
-					<option value="16" <c:if test="${param.keyfield == 16}">selected</c:if>>경상남도</option>
-					<option value="17" <c:if test="${param.keyfield == 17}">selected</c:if>>제주특별자치도</option>
+				<select name="keyfield" id="keyfield" onchange="changeSelect()">
+					<option selected="selected">--선택</option>
+					<option value="서울특별시" <c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울특별시</option>
+					<option value="부산광역시" <c:if test="${param.keyfield == '부산광역시'}">selected</c:if>>부산광역시</option>
+					<option value="대구광역시" <c:if test="${param.keyfield == '대구광역시'}">selected</c:if>>대구광역시</option>
+					<option value="인천광역시" <c:if test="${param.keyfield == '인천광역시'}">selected</c:if>>인천광역시</option>
+					<option value="광주광역시" <c:if test="${param.keyfield == '광주광역시'}">selected</c:if>>광주광역시</option>
+					<option value="대전광역시" <c:if test="${param.keyfield == '대전광역시'}">selected</c:if>>대전광역시</option>
+					<option value="울산광역시" <c:if test="${param.keyfield == '울산광역시'}">selected</c:if>>울산광역시</option>
+					<option value="세종특별자치시" <c:if test="${param.keyfield == '세종특별자치시'}">selected</c:if>>세종특별자치시</option>
+					<option value="경기도" <c:if test="${param.keyfield == '경기도'}">selected</c:if>>경기도</option>
+					<option value="강원도" <c:if test="${param.keyfield == '강원도'}">selected</c:if>>강원도</option>
+					<option value="충청북도" <c:if test="${param.keyfield == '충청북도'}">selected</c:if>>충청북도</option>
+					<option value="충청남도" <c:if test="${param.keyfield == '충청남도'}">selected</c:if>>충청남도</option>
+					<option value="전라북도" <c:if test="${param.keyfield == '전라북도'}">selected</c:if>>전라북도</option>
+					<option value="전라남도" <c:if test="${param.keyfield == '전라남도'}">selected</c:if>>전라남도</option>
+					<option value="경상북도" <c:if test="${param.keyfield == '경상북도'}">selected</c:if>>경상북도</option>
+					<option value="경상남도" <c:if test="${param.keyfield == '경상남도'}">selected</c:if>>경상남도</option>
+					<option value="제주특별자치도" <c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주특별자치도</option>
 				</select>	
 				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 				<input type="submit" value="찾기">
 		</ul>
 	</form>
+	<c:if test="${count > 0}">
 	<div>
 	 <table class="table table-sm">
 	     <tr>
-	         <th>제목</th>
-	         <th>이미지</th>
-	         <th>종류</th>
-	         <th>주소</th>
+	         <th>카페 번호</th>
+	         <th>카페 종류</th>
+	         <th>카페 좌표(x)</th>
+	         <th>카페 좌표(y)</th>
+	         <th>카페 지역</th>
+	         <th>카페 주소</th>
 	     </tr>
-	     <c:forEach var="cafeCrawl" items="${CafeCrawl}">
+	     <c:forEach var="cafe" items="${cafe}">
 	     <tr>
-	         <td><a href="${cafeCrawl.url}"><span>${cafeCrawl.subject}</span></a></td>
-	         <td><a href="${cafeCrawl.url}"><img src="${cafeCrawl.image}"></a></td>
-	         <td><span>${cafeCrawl.type}</span></td>
-	         <td><span>${cafeCrawl.address}</span></td>
+	       <td>${cafe.cafe_num}</td>
+	       <td>${cafe.cafe_cate}</td>
+	       <td>${cafe.cafe_x}</td>
+	       <td>${cafe.cafe_y}</td>
+	       <td>${cafe.cafe_region}</td>
+	       <td>${cafe.cafe_addr}</td>
 	     </tr>
 	     </c:forEach>
 	</table>
 	</div>
+	<div class="align-center">${page}</div>
+	</c:if>
 </div>
 <!-- 중앙컨텐츠 끝 -->
