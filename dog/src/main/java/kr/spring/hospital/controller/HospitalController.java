@@ -101,8 +101,8 @@ public class HospitalController {
 			keyfield = "경상북도";
 		}else if(curCity.equals("Gyeongsangnam-do")) {
 			keyfield = "경상남도";
-		}else if(curCity.equals("Jeju-do")) {
-			keyfield = "제주도";
+		}else if(curCity.equals("Jeju City")) {
+			keyfield = "제주특별자치도";
 		}else {
 			keyfield = "--선택";
 		}

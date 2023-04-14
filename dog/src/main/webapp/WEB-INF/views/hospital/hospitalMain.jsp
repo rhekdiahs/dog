@@ -162,6 +162,11 @@
 		coordY = 33.4273366;
 		zoomLevel = 10;
 	}
+	if(decodeURI(link) == '--선택' || curCity == ''){
+		coordX = 128;
+		coordY = 36.6;
+		zoomLevel = 13;
+	}
 	
 	/* 시도별 중심좌표 끝 */
 	
@@ -180,6 +185,9 @@
 	
     <c:forEach var="list" items="${list}">
     	/* db에서 주소 불러와서 geocoder로 검색, 나온 좌표 ajax로 hospital_num이랑 컨트롤러에 넘겨줌, 해당 num 좌표 업데이트
+    	
+    	var geocoder = new kakao.maps.services.Geocoder();
+    	
     	geocoder.addressSearch('${list.road}', function(result, status){
     		if(status === kakao.maps.services.Status.OK){
     			result_x = result[0].x;

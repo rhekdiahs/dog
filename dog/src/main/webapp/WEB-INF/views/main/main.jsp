@@ -5,11 +5,11 @@
 	$(function(){
 		if(sessionStorage.getItem('curCity') == '' || sessionStorage.getItem('curCity') == null){
 			$.ajax({
-				url: "https://geolocation-db.com/jsonp",
+				url: "https://geolocation-db.com/jsonp/",
 				jsonpCallback: "callback",
 				dataType: "jsonp",
 				success: function( location ) {
-					sessionStorage.setItem('curCity', location.city);
+					sessionStorage.setItem('curCity', location.state);
 				}
 			});
 		}	
