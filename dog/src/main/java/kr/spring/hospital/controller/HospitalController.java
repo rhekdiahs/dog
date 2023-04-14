@@ -77,7 +77,7 @@ public class HospitalController {
 			keyfield = "대구광역시";
 		}else if(curCity.equals("Incheon")) {
 			keyfield = "인천광역시";
-		}else if(curCity.equals("Gwanju")) {
+		}else if(curCity.equals("Gwangju")) {
 			keyfield = "광주광역시";
 		}else if(curCity.equals("Daejeon")) {
 			keyfield = "대전광역시";
