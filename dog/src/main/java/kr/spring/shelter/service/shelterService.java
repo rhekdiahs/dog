@@ -14,41 +14,68 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 
 import kr.spring.shelter.controller.shelterController;
 import kr.spring.shelter.vo.shelterVO;
 
+@SpringBootApplication
 @Service
 public class shelterService {
-	private static String URL = "https://search.naver.com/search.naver?where=nexearch&sm=tab_jum&query=%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C";
-	private static final Logger logger = LoggerFactory.getLogger(shelterController.class);
-	@PostConstruct
-	public List<shelterVO> getNewsDatas() throws IOException {
-        List<shelterVO> newsList = new ArrayList<>();
-		/*
-		 * System.setProperty("webdriver.chrome.driver",
-		 * "C:\\Users\\민경준\\Desktop\\chromedriver_win32\\chromedriver.exe"); WebDriver
-		 * driver = new ChromeDriver(); driver.get(URL); WebElement element =
-		 * driver.findElement(By.className("vcshc")); element.click(); driver.quit();
-		 */
+	private WebDriver driver;
+
+    private static final String url = "https://search.naver.com/search.naver?where=nexearch&sm=tab_jum&query=%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C";
+	private static final Logger logger = LoggerFactory.getLogger(shelterService.class);
+    public List<shelterVO> process() {
+    	List<shelterVO>  list = new ArrayList<>();
+        //크롬 드라이버 셋팅 (드라이버 설치한 경로 입력)
+    	System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
         
-        Document document = Jsoup.connect(URL).get();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");   // 브라우저 안띄움
+        options.addArguments("--remote-allow-origins=*");//모든 도메인 요청 허용
+        driver = new ChromeDriver(options);
+        //브라우저 선택
 
-        Elements contents = document.select("section ul.R1Lzz li");
-
-        for (Element content : contents) {
-        	shelterVO shelter = shelterVO.builder()
-                    .subject(content.select("span.place_bluelink").text())		// 제목
-                    .url(content.select("div div a").attr("abs:href"))		// 링크
-                    .location(content.select("span.Q8Zql").text())		// 위치
-                    .address(content.select("div.MaJkh  div.o8CtQ").text())		// 도로명
-                    .build();
-            newsList.add(shelter);
+        try {
+             list= getDataList();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        logger.debug("<<크롤링 service 리스트>> : " + newsList);
-        return newsList;
-	}
+
+        driver.close();	//탭 닫기
+        driver.quit();	//브라우저 닫기
+        
+        return list;
+    }
+
+
+    /**
+     * data가져오기
+     */
+    public List<shelterVO> getDataList() throws InterruptedException {
+    	List<shelterVO>  list = new ArrayList<>();
+        driver.get(url);    //브라우저에서 url로 이동한다.
+        Thread.sleep(1000); //브라우저 로딩될때까지 잠시 기다린다.
+
+        //크롤링 목록
+        List<WebElement> contents = driver.findElements(By.cssSelector("section ul.R1Lzz li"));
+       
+        for (WebElement content : contents) {
+        	WebElement cl = content.findElement(By.cssSelector("div.rDx68 span.Q8Zql a.vcshc"));
+        	cl.click();
+        	shelterVO shelter = shelterVO.builder()
+                    .subject(content.findElement(By.cssSelector("span.place_bluelink")).getText())		// 제목
+                    .url(content.findElement(By.cssSelector("div div a")).getAttribute("href"))		// 링크
+                    .location(content.findElement(By.cssSelector("span.Q8Zql")).getText()) 			// 위치
+                    .address(content.findElement(By.cssSelector("div.MaJkh div.o8CtQ")).getText().replaceAll("도로명", "").replaceAll("복사", "").trim()) // 주소
+                    .build();
+            list.add(shelter);
+        }
+        return list;
+    }
 }
