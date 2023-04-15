@@ -9,14 +9,15 @@ public class CafeVO {
 	private String apikey;
 	
 	private int cafe_num;
-	private double cafe_x;
-	private double cafe_y;
+	private String cafe_name;
+	private String cafe_x;
+	private String cafe_y;
 	private String cafe_region;
 	private String cafe_addr;
 	private String cafe_cate;
 	
 	private int cafe_detail_num;
-	private String cafe_name;
+	private String cafe_detail_name;
 	private int cafe_type;
 	private String cafe_content;
 	private String cafe_image_name;
@@ -35,19 +36,27 @@ public class CafeVO {
 		this.cafe_num = cafe_num;
 	}
 
-	public double getCafe_x() {
+	public String getCafe_name() {
+		return cafe_name;
+	}
+
+	public void setCafe_name(String cafe_name) {
+		this.cafe_name = cafe_name;
+	}
+
+	public String getCafe_x() {
 		return cafe_x;
 	}
 
-	public void setCafe_x(double cafe_x) {
+	public void setCafe_x(String cafe_x) {
 		this.cafe_x = cafe_x;
 	}
 
-	public double getCafe_y() {
+	public String getCafe_y() {
 		return cafe_y;
 	}
 
-	public void setCafe_y(double cafe_y) {
+	public void setCafe_y(String cafe_y) {
 		this.cafe_y = cafe_y;
 	}
 
@@ -83,12 +92,12 @@ public class CafeVO {
 		this.cafe_detail_num = cafe_detail_num;
 	}
 
-	public String getCafe_name() {
-		return cafe_name;
+	public String getCafe_detail_name() {
+		return cafe_detail_name;
 	}
 
-	public void setCafe_name(String cafe_name) {
-		this.cafe_name = cafe_name;
+	public void setCafe_detail_name(String cafe_detail_name) {
+		this.cafe_detail_name = cafe_detail_name;
 	}
 
 	public int getCafe_type() {
@@ -157,12 +166,12 @@ public class CafeVO {
 
 	@Override
 	public String toString() {
-		return "CafeVO [apikey=" + apikey + ", cafe_num=" + cafe_num + ", cafe_x=" + cafe_x + ", cafe_y=" + cafe_y
-				+ ", cafe_region=" + cafe_region + ", cafe_addr=" + cafe_addr + ", cafe_cate=" + cafe_cate
-				+ ", cafe_detail_num=" + cafe_detail_num + ", cafe_name=" + cafe_name + ", cafe_type=" + cafe_type
-				+ ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name + ", cafe_status="
-				+ cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date=" + cafe_modify_date
-				+ ", mem_num=" + mem_num + "]";
+		return "CafeVO [cafe_num=" + cafe_num + ", cafe_name=" + cafe_name + ", cafe_x=" + cafe_x
+				+ ", cafe_y=" + cafe_y + ", cafe_region=" + cafe_region + ", cafe_addr=" + cafe_addr + ", cafe_cate="
+				+ cafe_cate + ", cafe_detail_num=" + cafe_detail_num + ", cafe_detail_name=" + cafe_detail_name
+				+ ", cafe_type=" + cafe_type + ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name
+				+ ", cafe_status=" + cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date="
+				+ cafe_modify_date + ", mem_num=" + mem_num + "]";
 	}
 	
 }

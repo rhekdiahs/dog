@@ -47,7 +47,8 @@
 	<div>
 	 <table class="table table-sm">
 	     <tr>
-	         <th>카페 번호</th>
+	     	 <th>카페 번호</th>
+	         <th>카페 이름</th>
 	         <th>카페 종류</th>
 	         <th>카페 좌표(x)</th>
 	         <th>카페 좌표(y)</th>
@@ -57,6 +58,7 @@
 	     <c:forEach var="cafe" items="${cafe}">
 	     <tr>
 	       <td>${cafe.cafe_num}</td>
+	       <td>${cafe.cafe_name}</td>
 	       <td>${cafe.cafe_cate}</td>
 	       <td>${cafe.cafe_x}</td>
 	       <td>${cafe.cafe_y}</td>

@@ -17,10 +17,12 @@ public class CafeServiceImpl implements CafeService{
 	@Autowired
 	private CafeMapper cafeMapper;
 	
+	
 	@Override
 	public List<CafeVO> selectCafeList(Map<String, Object> map) {
-		return cafeMapper.selectCafeList(map);
+	  return cafeMapper.selectCafeList(map);
 	}
+	 
 	
 
 	@Override
@@ -39,4 +41,16 @@ public class CafeServiceImpl implements CafeService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateCoords(String coord_x, String coord_y, Integer hospital_num) {
+		cafeMapper.updateCoords(coord_x, coord_y, hospital_num);
+	}
+
+	/*
+		@Override
+		public List<CafeVO> selectCafeList() {
+			return cafeMapper.selectCafeList();
+		}
+	*/
 }
