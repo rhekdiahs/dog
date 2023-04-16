@@ -1,0 +1,38 @@
+@charset "UTF-8";
+*{
+	margin : 0;
+	padding : 0;
+	text-decoration:none;
+	list-style-type : none; 
+}
+@font-face {
+    font-family: 'neon';
+    src: url('../font/NanumSquareNeo-dEb.ttf') format('truetype');
+}
+#main_div {
+	text-align : center;
+}
+#main_logo{
+	width : 980px;
+	height : 620px;
+	margin-bottom : 100px;
+}
+
+.menu-grid{
+	width : 900px;
+	margin : 0 auto;
+	display : grid;
+	grid-template-columns : repeat(2,1fr);
+	grid-template-rows : repeat(2, 1fr);
+	row-gap : 100px;
+	column-gap : 150px;
+	margin-bottom : 5px;
+}
+.menu-list{
+	border-radius : 20px;
+	padding : 50px 0;
+	background: #FDF7C6;
+	font-size : 40px;
+	font-family : neon;
+	color : black;	
+}
