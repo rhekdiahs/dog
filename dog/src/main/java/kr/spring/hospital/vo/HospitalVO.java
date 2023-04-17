@@ -12,6 +12,10 @@ public class HospitalVO {
 	private String coord_x;
 	private String coord_y;
 	private String road;
+	private String h_name;
+	private String h_address;
+	private String h_phone;
+	private String h_link;
 	
 	private int h_info_num;
 	private String h_info_name;
@@ -116,6 +120,38 @@ public class HospitalVO {
 
 	public void setRoad(String road) {
 		this.road = road;
+	}
+
+	public String getH_name() {
+		return h_name;
+	}
+
+	public void setH_name(String h_name) {
+		this.h_name = h_name;
+	}
+
+	public String getH_address() {
+		return h_address;
+	}
+
+	public void setH_address(String h_address) {
+		this.h_address = h_address;
+	}
+
+	public String getH_link() {
+		return h_link;
+	}
+
+	public void setH_link(String h_link) {
+		this.h_link = h_link;
+	}
+
+	public String getH_phone() {
+		return h_phone;
+	}
+
+	public void setH_phone(String h_phone) {
+		this.h_phone = h_phone;
 	}
 	
 	
