@@ -32,7 +32,33 @@
 	border-radius : 20px;
 	padding : 50px 0;
 	background: #FDF7C6;
-	font-size : 40px;
+	font-size : 50px;
 	font-family : neon;
 	color : black;	
+}
+.menu-login{
+	margin-top : 90px;
+	font-family : neon;
+	font-size : 30px;
+}
+.menu-login a{
+	padding : 0 20px;
+	color : black;
+}
+#main_header{
+	width : 980px;
+	height : 80px;
+	background : #FDF7C6;
+	margin : 0 auto;
+}
+#menu_homeBtn{
+	padding-top : 5px;
+	padding-left : 10px;
+	width : 60px;
+	
+}
+#menu_notiBtn{
+	padding-top : 5px;
+	padding-right : 10px;
+	width : 60px;
 }
