@@ -13,52 +13,58 @@
 	text-align : center;
 }
 #main_logo{
-	width : 980px;
-	height : 620px;
-	margin-bottom : 100px;
+	width : 360px;
+	height : 280px;
+	margin-bottom : 30px;
 }
 
 .menu-grid{
-	width : 900px;
+	width : 100vw;
 	margin : 0 auto;
 	display : grid;
 	grid-template-columns : repeat(2,1fr);
 	grid-template-rows : repeat(2, 1fr);
-	row-gap : 100px;
-	column-gap : 150px;
+	row-gap : 20px;
+	column-gap : 25px;
 	margin-bottom : 5px;
 }
 .menu-list{
-	border-radius : 20px;
-	padding : 50px 0;
+	border-radius : 5px;
+	padding : 5px 0;
 	background: #FDF7C6;
-	font-size : 50px;
+	font-size : 15px;
 	font-family : neon;
 	color : black;	
 }
+.menu-list:nth-child(1), .menu-list:nth-child(3){
+	margin-left : 65px;
+}
+.menu-list:nth-child(2), .menu-list:nth-child(4){
+	margin-right : 65px;
+}
 .menu-login{
-	margin-top : 90px;
+	margin-top : 30px;
 	font-family : neon;
-	font-size : 30px;
+	font-size : 15px;
 }
 .menu-login a{
 	padding : 0 20px;
 	color : black;
 }
 #main_header{
-	width : 980px;
-	height : 80px;
+	width : 100vw;
+	height : 40px;
 	background : #FDF7C6;
 	margin : 0 auto;
 }
 #menu_homeBtn{
 	padding-top : 5px;
 	padding-left : 10px;
-	width : 60px;
+	width : 30px;
 	
 }
 #menu_notiBtn{
 	padding-top : 5px;
 	padding-right : 10px;
-	width : 60px;
+	width : 30px;
 }
