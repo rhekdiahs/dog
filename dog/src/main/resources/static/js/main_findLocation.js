@@ -26,3 +26,18 @@ function withCurCity(){
 		}
 	});
 }
+
+function withCafeCity(){
+	$.ajax({
+		url : "/hospital/curCityAjax.do",
+		data : {curCity : sessionStorage.getItem('curCity')},
+		type : 'post',
+		dataType : 'json',
+		success : function(param){
+			location.href = '/cafe/cafeList.do?keyfield=' + param.result;
+		},
+		error : function(){
+			
+		}
+	});
+}

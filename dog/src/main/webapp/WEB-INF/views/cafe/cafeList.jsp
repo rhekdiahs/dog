@@ -7,11 +7,12 @@
 <!-- 중앙컨텐츠 시작 -->
 <div id="main_body">
 	<div id="map" style="width:500px;height:400px;"></div>
+	<script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 	<script>
 		var container = document.getElementById('map');
 		var options = {
-			center: new kakao.maps.LatLng(37.497385823817254, 126.99414216182518),
-			level: 7
+			center: new kakao.maps.LatLng(coordY, coordX),
+			level: zoomLevel
 		};
 
 		var map = new kakao.maps.Map(container, options);
@@ -38,7 +39,12 @@
 					<option value="경상북도" <c:if test="${param.keyfield == '경상북도'}">selected</c:if>>경상북도</option>
 					<option value="경상남도" <c:if test="${param.keyfield == '경상남도'}">selected</c:if>>경상남도</option>
 					<option value="제주특별자치도" <c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주특별자치도</option>
-				</select>	
+				</select>
+				<script type="text/javascript">
+					$('#keyfield').change(function(){
+						location.href = "/cafe/cafeList.do?keyfield=" + $(this).val();
+					});
+				</script>	
 				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 				<input type="submit" value="찾기">
 		</ul>
@@ -47,22 +53,14 @@
 	<div>
 	 <table class="table table-sm">
 	     <tr>
-	     	 <th>카페 번호</th>
 	         <th>카페 이름</th>
 	         <th>카페 종류</th>
-	         <th>카페 좌표(x)</th>
-	         <th>카페 좌표(y)</th>
-	         <th>카페 지역</th>
 	         <th>카페 주소</th>
 	     </tr>
 	     <c:forEach var="cafe" items="${cafe}">
 	     <tr>
-	       <td>${cafe.cafe_num}</td>
-	       <td>${cafe.cafe_name}</td>
+	       <td><a href="cafeDetail.do?cafe_num=${cafe.cafe_num}">${cafe.cafe_name}</a></td>
 	       <td>${cafe.cafe_cate}</td>
-	       <td>${cafe.cafe_x}</td>
-	       <td>${cafe.cafe_y}</td>
-	       <td>${cafe.cafe_region}</td>
 	       <td>${cafe.cafe_addr}</td>
 	     </tr>
 	     </c:forEach>
@@ -70,5 +68,42 @@
 	</div>
 	<div class="align-center">${page}</div>
 	</c:if>
+	<script>
+	var test_dicts = {};
+
+    var test_arrays = [];
+	
+    <c:forEach var="cafe" items="${cafe}">
+    
+    	test_dicts['title'] = '${cafe.cafe_addr}';
+
+    	test_dicts['latlng'] = new kakao.maps.LatLng("${cafe.cafe_y}", "${cafe.cafe_x}");
+
+    	test_arrays.push(test_dicts);
+
+    	var test_dicts = {};    
+    </c:forEach>
+
+	// 마커 이미지의 이미지 주소입니다
+	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	    
+	for (var i = 0; i < test_arrays.length; i ++) {
+	    
+	    // 마커 이미지의 이미지 크기 입니다
+	    var imageSize = new kakao.maps.Size(24, 35); 
+	    
+	    // 마커 이미지를 생성합니다    
+	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+	    
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: test_arrays[i].latlng, // 마커를 표시할 위치
+	        title : test_arrays[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        image : markerImage // 마커 이미지 
+	    });
+	    
+	}
+	</script>
 </div>
 <!-- 중앙컨텐츠 끝 -->

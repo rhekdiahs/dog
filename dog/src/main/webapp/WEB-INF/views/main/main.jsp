@@ -8,7 +8,7 @@
 	<div class = "menu-grid">
 		<a class = "menu-list" href="${pageContext.request.contextPath}/walk/list.do">산책경로</a>
 
-		<a class = "menu-list" href="${pageContext.request.contextPath}/cafe/cafeList.do">카페 목록</a>
+		<a class = "menu-list" href="javascript:void(0);" onclick="withCafeCity()">카페 목록</a>
 
 		<a class = "menu-list" href="${pageContext.request.contextPath}/shelter/shelterList.do">임시보호소</a>
 		<a class = "menu-list" href = "javascript:void(0);" onclick="withCurCity()">병원</a>
