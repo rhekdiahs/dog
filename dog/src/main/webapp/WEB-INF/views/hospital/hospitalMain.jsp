@@ -135,38 +135,43 @@
 	        overlay.setMap(null);
 	    };
 	    contentName.appendChild(closeBtn);
-	    
-	    var imgDiv = document.createElement("div");
-		imgDiv.className = "img";
-		info.appendChild(imgDiv);
 		
 	    var contentImg = document.createElement("img");
+	    contentImg.className = "image";
 	    if(pos.h_info_image_name == ''){
 	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
 	    }else{
 	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/hospital/photoView.do?" + pos.hospital_num)
 	    }
-	    contentImg.setAttribute("width", "50");
-	    contentImg.setAttribute("heigth", "50");
-		imgDiv.appendChild(contentImg);
+	    contentImg.setAttribute("width", "55");
+	    contentImg.setAttribute("height", "55");
+	    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 7px;");
+		info.appendChild(contentImg);
 		
 	    var contentRoad = document.createElement("div");
 	    contentRoad.className = "addr1";
-	    contentRoad.appendChild(document.createTextNode("도로명주소: " + pos.road));
+	    contentRoad.appendChild(document.createTextNode(pos.road));
 	    info.appendChild(contentRoad);
 	    
 	    var contentAddr = document.createElement("div");
 	    contentAddr.className = "addr2";
-	    contentAddr.appendChild(document.createTextNode("지번주소: " + pos.h_address));
+	    contentAddr.appendChild(document.createTextNode("(지번) " + pos.h_address));
 	    info.appendChild(contentAddr);
 	    
 	    var contentPhone = document.createElement("div");
 	    contentPhone.className = "phone";
-	    contentPhone.appendChild(document.createTextNode("전화번호: " + pos.h_phone));
+	    var contentPhoneImg = document.createElement('img');
+	    contentPhoneImg.className = "phoneImg";
+	    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png";
+	    contentPhoneImg.setAttribute("width", "13");
+	    contentPhoneImg.setAttribute("height", "13");
+	    contentPhoneImg.setAttribute("style", "position : relative; top : 2px;");
+	    contentPhone.appendChild(contentPhoneImg)
+	    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
 	    info.appendChild(contentPhone);
 	    var contentAddr = document.createElement("div");
 	    contentAddr.className = "h_address";
-	    contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
+	    //contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
 	    info.appendChild(contentAddr);
 	    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 	    var overlay = new daum.maps.CustomOverlay({
