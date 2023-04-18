@@ -5,6 +5,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab928e5929563772b2932e6182f6b7d9&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
+<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
 
 <div id = "map"></div>
@@ -43,23 +45,13 @@
 		</form>
 		<div>
 			<table>
-			    <tr>
-			     	<th>번호</th>
-			        <th>지역</th>
-			        <th>x좌표</th>
-			        <th>y좌표</th>
-			        <th>24시</th>
-			        <th>도로명주소</th>
-			    </tr>
-			    <c:forEach var="list" items="${list}">
+			    <c:forEach var="list" items="${list}" varStatus="status">
 		     	<tr>
-		     	<td>${list.hospital_num }</td>
-			        <td>${list.hospital_region}</td>
-			        <td>${list.coord_x}</td>
-			        <td>${list.coord_y}</td>
+		     		<td>${status.count}</td>
+		     		<td>${list.h_name}</td>
 			        <td>
-		         	<c:if test = "${list.hospital_type == 0}">일반</c:if>
-		         	<c:if test = "${list.hospital_type == 1}">24시</c:if>
+		         	<c:if test = "${list.hospital_type == 0}">일반병원</c:if>
+		         	<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
 			        </td>
 			        <td>${list.road }</td>
 			    </tr>
@@ -84,17 +76,7 @@
 	};
 
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-	/*========================= 
-	 지도 화면 크기에 맞춰서 사이즈 설정
-	===========================*/
-	function resizeMap() {
-	    var container = document.getElementById('map');
-	    container.style.width = visualViewport.width + 'px';
-	    container.style.height = visualViewport.width + 'px'; 
-	}
-	function relayout() {    
-	    map.relayout();
-	}
+
 	/*========================= 
 		   병원 리스트 가져오기
 	===========================*/
@@ -183,8 +165,5 @@
 	      });
 	});
 	
-	$(function(){
-		resizeMap();
-		relayout();
-	});
+
 </script>
