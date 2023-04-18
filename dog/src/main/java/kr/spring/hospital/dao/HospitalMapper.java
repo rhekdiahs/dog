@@ -26,6 +26,9 @@ public interface HospitalMapper {
 	@Select("SELECT * FROM hospital h LEFT OUTER JOIN hospital_detail d ON h.hospital_num = d.hospital_num WHERE d.h_info_num IS NOT NULL")
 	public List<HospitalVO> selectInsertedHosList();
 	
+	@Select("SELECT * FROM hospital h LEFT OUTER JOIN hostpital_detail d ON h.hospital_num = d.hospital_num WHERE hospital_num = ${hospital_num}")
+	public HospitalVO selectHospital(Integer hospital_num);
+	
 	@Update("UPDATE hospital SET coord_x = ${coord_x}, coord_y = ${coord_y} WHERE hospital_num = ${hospital_num}")
 	public void updateCoords(@Param(value="coord_x") String coord_x, 
 			                @Param(value="coord_y") String coord_y,

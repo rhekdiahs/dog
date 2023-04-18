@@ -38,5 +38,10 @@ public class HospitalServiceImpl implements HospitalService{
 		System.out.println(map.get("keyfield"));
 		return hospitalMapper.selectRegionListCount(map);
 	}
+
+	@Override
+	public HospitalVO selectHospital(Integer hospital_num) {
+		return hospitalMapper.selectHospital(hospital_num);
+	}
 	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -186,4 +187,24 @@ public class HospitalController {
 		System.out.println(cnt);
 	}
 	*/
+	//프로필 사진 공통코드
+	public void viewProfile(HospitalVO hospital, HttpServletRequest request, Model model) {
+		if(hospital.getH_info_image_name() == null) {
+			byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/defaltHospitalImg.png"));
+			model.addAttribute("imageFile", readbyte);
+			model.addAttribute("filename", "defaltHospitalImg.png");
+		}else {
+			model.addAttribute("imageFile", hospital.getH_info_image());
+			model.addAttribute("filename", hospital.getH_info_image_name());
+		}
+	}
+	@RequestMapping("/mypage/photoView.do")
+	public String getProfile(@RequestParam(value = "hospital_num", defaultValue = "1") int hospital_num,HttpServletRequest request, Model model) {
+		
+		HospitalVO hospital = hospitalService.selectHospital(hospital_num);
+
+		viewProfile(hospital,request,model);
+		
+		return "imageView";
+	}
 }

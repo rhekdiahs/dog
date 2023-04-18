@@ -6,6 +6,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab928e5929563772b2932e6182f6b7d9&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
 
@@ -86,6 +87,8 @@
 	
     <c:forEach var="list" items="${list}">
     	test_dicts['type'] = '${list.hospital_type}'; //타입
+    	test_dicts['h_info_image_name'] = '${list.h_info_image_name}'; //이미지이름
+    	test_dicts['hospital_num'] = '${list.hospital_num}'; // 번호
     	test_dicts['road'] = '${list.road}';	//도로명주소
     	test_dicts['h_name'] = '${list.h_name}';	//상호명
     	test_dicts['h_address'] = '${list.h_address}';	//지번주소
@@ -121,30 +124,43 @@
 	    content.appendChild(info);
 	    
 	    var contentName = document.createElement("div");
-	    contentName.className = "h-name";
+	    contentName.className = "title";
 	    contentName.appendChild(document.createTextNode(pos.h_name));
 		info.appendChild(contentName);
 
 	    var closeBtn = document.createElement('button');
-	    closeBtn.appendChild(document.createTextNode('닫기'));
 	    // 닫기 이벤트 추가
 	    closeBtn.onclick = function() {
 	        overlay.setMap(null);
 	    };
 	    contentName.appendChild(closeBtn);
-
+	    
+	    var imgDiv = document.createElement("div");
+		imgDiv.className = "img";
+		info.appendChild(imgDiv);
+		
+	    var contentImg = document.createElement("img");
+	    if(pos.h_info_image_name == ''){
+	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
+	    }else{
+	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/hospital/photoView.do?" + pos.hospital_num)
+	    }
+	    contentImg.setAttribute("width", "50");
+	    contentImg.setAttribute("heigth", "50");
+		imgDiv.appendChild(contentImg);
+		
 	    var contentRoad = document.createElement("div");
-	    contentRoad.className = "road";
+	    contentRoad.className = "addr1";
 	    contentRoad.appendChild(document.createTextNode("도로명주소: " + pos.road));
 	    info.appendChild(contentRoad);
 	    
 	    var contentAddr = document.createElement("div");
-	    contentAddr.className = "h_address";
+	    contentAddr.className = "addr2";
 	    contentAddr.appendChild(document.createTextNode("지번주소: " + pos.h_address));
 	    info.appendChild(contentAddr);
 	    
 	    var contentPhone = document.createElement("div");
-	    contentPhone.className = "h_phone";
+	    contentPhone.className = "phone";
 	    contentPhone.appendChild(document.createTextNode("전화번호: " + pos.h_phone));
 	    info.appendChild(contentPhone);
 	    var contentAddr = document.createElement("div");
