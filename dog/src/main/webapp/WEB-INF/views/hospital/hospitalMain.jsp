@@ -6,7 +6,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab928e5929563772b2932e6182f6b7d9&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
-
 <div id = "map"></div>
 	<div class = "wrap">
 		<form action="h_selectOption.do" id="search_region" method="get">
