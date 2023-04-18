@@ -6,6 +6,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab928e5929563772b2932e6182f6b7d9&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
+
 <div id = "map"></div>
 	<div class = "wrap">
 		<form action="h_selectOption.do" id="search_region" method="get">
@@ -72,17 +73,31 @@
 		</div>
 	</div>
 <script>
+	/*========================= 
+			지도 옵션 세팅
+	===========================*/
 	const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	
 	let options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(coordY, coordX), //지도의 중심좌표.
 		level: zoomLevel //지도의 레벨(확대, 축소 정도)
 	};
-	
+
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-	
-	var geocoder = new kakao.maps.services.Geocoder();
-	
+	/*========================= 
+	 지도 화면 크기에 맞춰서 사이즈 설정
+	===========================*/
+	function resizeMap() {
+	    var container = document.getElementById('map');
+	    container.style.width = visualViewport.width + 'px';
+	    container.style.height = visualViewport.width + 'px'; 
+	}
+	function relayout() {    
+	    map.relayout();
+	}
+	/*========================= 
+		   병원 리스트 가져오기
+	===========================*/
     var test_dicts = {};
 
     var hospital_arrays = [];
@@ -98,14 +113,14 @@
     	hospital_arrays.push(test_dicts);
     	var test_dicts = {};    
     </c:forEach>
-
-	// 마커 이미지의 이미지 주소입니다
+	/*========================= 
+		   마커, 오버레이 그리기
+	===========================*/
 	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 	var clickedOverlay = null;
 	hospital_arrays.forEach(function (pos) {
 	    // 마커 이미지의 이미지 크기 입니다
-	    var imageSize = new kakao.maps.Size(24, 35); 
-	    
+	    var imageSize = new kakao.maps.Size(24, 35);
 	    // 마커 이미지를 생성합니다    
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    // 마커를 생성합니다
@@ -150,16 +165,15 @@
 	    contentPhone.className = "h_phone";
 	    contentPhone.appendChild(document.createTextNode("전화번호: " + pos.h_phone));
 	    info.appendChild(contentPhone);
+	    var contentAddr = document.createElement("div");
+	    contentAddr.className = "h_address";
+	    contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
+	    info.appendChild(contentAddr);
 	    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 	    var overlay = new daum.maps.CustomOverlay({
 	        position: pos.latlng,
 	        content: content
 	    });
-
-	    // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-/* 	    kakao.maps.event.addListener(marker, 'click', function() {
-	        overlay.setMap(map);
-	    }); */
 	    kakao.maps.event.addListener(marker, 'click', function() {
 	        if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
@@ -168,5 +182,9 @@
 	        clickedOverlay = overlay;
 	      });
 	});
-
+	
+	$(function(){
+		resizeMap();
+		relayout();
+	});
 </script>
