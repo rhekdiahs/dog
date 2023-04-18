@@ -75,7 +75,8 @@
 		center: new kakao.maps.LatLng(coordY, coordX), //지도의 중심좌표.
 		level: zoomLevel //지도의 레벨(확대, 축소 정도)
 	};
-
+	container.style.width = visualViewport.width + 'px';
+    container.style.height = visualViewport.width + 'px';
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
 	/*========================= 
@@ -182,8 +183,9 @@
 	        }
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
+	        map.setLevel(5);
+	        map.panTo(marker.getPosition());
 	      });
-	});
-	
+	});		
 
 </script>

@@ -4,13 +4,20 @@
 	function resizeMap() {
 	    var container = document.getElementById('map');
 	    container.style.width = visualViewport.width + 'px';
-	    container.style.height = visualViewport.width + 'px'; 
+	    container.style.height = visualViewport.width + 'px';
 	}
-	function relayout() {    
+	function relayout() {
 	    map.relayout();
 	}
-
-	$(function(){
+	
+	let resizeTimer = null;
+	function resizeComplete() {
+		var origin = new kakao.maps.LatLng(coordY, coordX)
+	  	map.setCenter(origin);
+	}
+	
+	window.addEventListener('resize', function() {
 		resizeMap();
-		relayout();
-	});
+	  	clearTimeout(resizeTimer);
+	  	resizeTimer = setTimeout(resizeComplete, 400);
+	}, false);
