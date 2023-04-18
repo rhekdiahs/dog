@@ -139,6 +139,7 @@
 		    contentImage.src = "${pageContext.request.contextPath}/image_bundle/dog_cafe.png";
 		    contentImage.setAttribute("width", "73");
 		    contentImage.setAttribute("height", "70");
+		    contentImage.setAttribute("style", "margin-top: 5px;")
 			info.appendChild(contentImage);
 		    
 		    var contentRoad = document.createElement("div");
@@ -153,9 +154,15 @@
 		    
 		    var contentPhone = document.createElement("div");
 		    contentPhone.className = "phone";
-		    contentPhone.appendChild(document.createTextNode(pos.cafe_phone));
-		    info.appendChild(contentPhone);
 		    
+		 	var contentPhoneImg = document.createElement("img");
+		 	contentPhoneImg.className = "phoneImg";
+		 	contentPhoneImg.src="${pageContext.request.contextPath}/image_bundle/phone_img.png";
+		 	contentPhoneImg.setAttribute("style", "margin-top: -2px;")
+		 	contentPhone.appendChild(contentPhoneImg);
+		 	contentPhone.appendChild(document.createTextNode(" " + pos.cafe_phone));
+		 	info.appendChild(contentPhone);
+		 	
 		    var contentDetail = document.createElement("a");
 		    contentDetail.className = "detail";
 		    contentDetail.innerHTML = "상세보기";

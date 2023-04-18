@@ -65,14 +65,14 @@
    	white-space:nowrap;
    	text-overflow : ellipsis;
 	position: relative;
-	margin: 7px 0 0 65px;
+	margin: 7px 0 0 70px;
 }
 
 .info .addr2 {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	position: relative;
-	margin: 7px 0 0 65px;
+	margin: 7px 0 0 70px;
 	font-size: 11px;
 	color: #888;
 	margin-top: -1px;
@@ -80,13 +80,18 @@
 
 .info .phone {
 	position: relative;
-	margin: 7px 0 0 65px;
-	margin-top: -1px;
+	margin-left: 70px;
+}
+
+.info .phoneImg{
+	position: relative;
+	width: 13px;
+	height: 13px;
 }
 
 .info .detail {
 	position: relative;
-	margin: 7px 0 0 65px;
+	margin: 7px 0 0 70px;
 	color: #5085BB;
 }
 

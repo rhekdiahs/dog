@@ -145,7 +145,7 @@
 	    }
 	    contentImg.setAttribute("width", "55");
 	    contentImg.setAttribute("height", "55");
-	    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 7px;");
+	    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 5px;");
 		info.appendChild(contentImg);
 		
 	    var contentRoad = document.createElement("div");
@@ -162,10 +162,8 @@
 	    contentPhone.className = "phone";
 	    var contentPhoneImg = document.createElement('img');
 	    contentPhoneImg.className = "phoneImg";
-	    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png";
-	    contentPhoneImg.setAttribute("width", "13");
-	    contentPhoneImg.setAttribute("height", "13");
-	    contentPhoneImg.setAttribute("style", "position : relative; top : 2px;");
+	    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/phone_img.png";
+	    contentPhoneImg.setAttribute("style", "margin-top: 2px;")
 	    contentPhone.appendChild(contentPhoneImg)
 	    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
 	    info.appendChild(contentPhone);
