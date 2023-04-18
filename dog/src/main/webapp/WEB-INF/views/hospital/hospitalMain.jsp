@@ -128,7 +128,8 @@
 	    contentName.appendChild(document.createTextNode(pos.h_name));
 		info.appendChild(contentName);
 
-	    var closeBtn = document.createElement('button');
+	    var closeBtn = document.createElement('div');
+	    closeBtn.className = "close";
 	    // 닫기 이벤트 추가
 	    closeBtn.onclick = function() {
 	        overlay.setMap(null);
