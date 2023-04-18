@@ -137,7 +137,8 @@
 		    var contentImage = document.createElement("img");
 		    contentImage.className = "image";
 		    contentImage.src = "${pageContext.request.contextPath}/image_bundle/dog_cafe.png";
-		    //contentImage.appendChild(document.createTextNode());
+		    contentImage.setAttribute("width", "73");
+		    contentImage.setAttribute("height", "70");
 			info.appendChild(contentImage);
 		    
 		    var contentRoad = document.createElement("div");
