@@ -1,13 +1,16 @@
 package kr.spring.walk.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,5 +64,38 @@ public class WalkController {
 		return map;
 	}
 	
-	//DB에서 가져온 x,y좌표를 홀수짝수로 해가지고 저장해가지고 jsp에 보내서 JS에서 그 쌍을 가지고 drawingMap OK.
+	
+	@RequestMapping("/walk/viewList.do")
+	public String viewWalkList(Model model) {
+		List<WalkVO> list = walkService.getWalkList();
+		model.addAttribute("list", list);
+		return "viewList";
+	}
+
+	@RequestMapping("/walk/viewMap.do")
+	public String viewMap(@RequestParam Integer walk_num, Model model) {
+		String walk_position = walkService.getWalkPosition(walk_num);
+		logger.debug("좌표확인좀? " + walk_position);
+		
+		String[] walk_position_arr = walk_position.split(", ");
+		
+		List<String[]> list = new ArrayList<String[]>();
+		for(int i=0; i<walk_position_arr.length; i+=2) {
+			list.add(Arrays.copyOfRange(walk_position_arr, i, i+2));
+		}
+		
+		for(int i=0;i<list.size();i++) {
+		logger.debug("리스트확인좀? " + Arrays.toString(list.get(i)));
+		}
+		
+		Integer center = (int)Math.round(Math.floor(list.size() /2));
+		
+		logger.debug("<<<<< 중간 좌표 index >>>>>" + center);
+		logger.debug("<<<<<<<< 중간 (x,y) 좌표>>>>" + Arrays.toString(list.get(center)));
+		
+		model.addAttribute("list", list);
+		model.addAttribute("center",center);
+		
+		return "viewMap";
+	}
 }

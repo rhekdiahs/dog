@@ -1,7 +1,10 @@
 package kr.spring.walk.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import kr.spring.walk.vo.WalkVO;
 
@@ -11,6 +14,13 @@ public interface WalkMapper {
 	@Insert("INSERT INTO WALK (walk_num, walk_position) VALUES (walk_seq.nextval,#{walk_position})")
 	public void regsiterWalk(WalkVO walk);
 	
+	//산책경로 리스트 뽑기
+	@Select("SELECT walk_num,walk_position FROM WALK")
+	public List<WalkVO> getWalkList();
+	
+	//좌표 불러오기
+	@Select("SELECT walk_position FROM WALK WHERE walk_num=#{walk_num}")
+	public String getWalkPosition(Integer walk_num);
 	//산책경로 정보 불러오기(회원 이름도 같이 불러와야함)
 	
 	//북마크(?) 어떻게 해야함 ..

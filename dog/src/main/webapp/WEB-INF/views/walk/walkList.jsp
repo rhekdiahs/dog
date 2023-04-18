@@ -125,3 +125,6 @@
 	}
 	
 </script>
+
+<br>
+<a href="${pageContext.request.contextPath}/walk/viewList.do">👉경로 목록👈</a>
