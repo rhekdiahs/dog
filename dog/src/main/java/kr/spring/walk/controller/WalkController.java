@@ -32,10 +32,24 @@ public class WalkController {
 	}
 	
 	@RequestMapping("/walk/list.do")
-	public String walkList() {
+	public String walkList(Model model) {
+		List<WalkVO> list = walkService.getWalkList();
+		List<String> path = new ArrayList<String>();
+		int len = list.size();
+		
+		for(int i=0;i<len;i++) {
+			path.add(i,list.get(i).getWalk_position());
+		}
+		
+		model.addAttribute("list", list);
 		return "walkList";
 	}
-
+	
+	@RequestMapping("/walk/register.do")
+	public String registerWalk() {
+		return "registerWalk";
+	}
+	
 	//DB에 산책경로 좌표 저장
 	@RequestMapping("/walk/insertPoints.do")
 	@ResponseBody
@@ -64,16 +78,9 @@ public class WalkController {
 		return map;
 	}
 	
-	
-	@RequestMapping("/walk/viewList.do")
-	public String viewWalkList(Model model) {
-		List<WalkVO> list = walkService.getWalkList();
-		model.addAttribute("list", list);
-		return "viewList";
-	}
 
-	@RequestMapping("/walk/viewMap.do")
-	public String viewMap(@RequestParam Integer walk_num, Model model) {
+	@RequestMapping("/walk/viewWalk.do")
+	public String viewWalk(@RequestParam Integer walk_num, Model model) {
 		String walk_position = walkService.getWalkPosition(walk_num);
 		logger.debug("좌표확인좀? " + walk_position);
 		
@@ -96,6 +103,6 @@ public class WalkController {
 		model.addAttribute("list", list);
 		model.addAttribute("center",center);
 		
-		return "viewMap";
+		return "viewWalk";
 	}
 }

@@ -8,6 +8,7 @@
 </c:forEach>
 <span id="centerPoint" data-point="${center}" style="display:none;"></span>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing"></script>
+<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <script type="text/javascript">
 	var center = $('#centerPoint').attr('data-point');			//중간좌표
 	console.log("center는" + center);

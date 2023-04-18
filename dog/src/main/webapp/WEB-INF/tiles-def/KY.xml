@@ -9,12 +9,12 @@
     	<put-attribute name="title" value="산책 경로 리스트"/>
     	<put-attribute name="body" value="/WEB-INF/views/walk/walkList.jsp"/>
     </definition>
-	<definition name="viewList" extends="main">
-    	<put-attribute name="title" value="산책 경로 리스트"/>
-    	<put-attribute name="body" value="/WEB-INF/views/walk/viewList.jsp"/>
+	<definition name="registerWalk" extends="main">
+    	<put-attribute name="title" value="산책 경로 등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/walk/registerWalk.jsp"/>
     </definition>
-	<definition name="viewMap" extends="main">
+	<definition name="viewWalk" extends="main">
     	<put-attribute name="title" value="산책 경로"/>
-    	<put-attribute name="body" value="/WEB-INF/views/walk/viewMap.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/walk/viewWalk.jsp"/>
     </definition>
 </tiles-definitions>
