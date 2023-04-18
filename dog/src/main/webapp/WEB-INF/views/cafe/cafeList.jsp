@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
+<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
 <!-- 중앙컨텐츠 시작 -->
 <div id="main_body">
-	<div id="map" style="width:980px;height:980px; margin: auto;"></div>
+	<div id="map"></div>
 	<script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 	<script>
 		var container = document.getElementById('map');
@@ -69,6 +71,9 @@
 	<div class="align-center">${page}</div>
 	</c:if>
 <script>
+		/*========================= 
+		지도 화면 크기에 맞춰서 사이즈 설정
+		===========================*/
 		var test_dicts = {};
 	
 	    var cafe_arrays = [];
@@ -76,7 +81,11 @@
 	    <c:forEach var="cafe" items="${cafe}">
 	    
 	    	test_dicts['cafe_name'] = '${cafe.cafe_name}';
-	
+			test_dicts['cafe_type'] = '${cafe.cafe_type}';
+			test_dicts['cafe_addr1'] = '${cafe.cafe_addr1}';
+			test_dicts['cafe_addr2'] = '${cafe.cafe_addr2}';
+			test_dicts['cafe_phone'] = '${cafe.cafe_phone}';
+			test_dicts['cafe_site'] = '${cafe.cafe_site}';
 	    	test_dicts['latlng'] = new kakao.maps.LatLng("${cafe.cafe_y}", "${cafe.cafe_x}");
 	
 	    	cafe_arrays.push(test_dicts);
@@ -109,12 +118,12 @@
 		    content.appendChild(info);
 		    
 		    var contentName = document.createElement("div");
-		    contentName.className = "name";
+		    contentName.className = "title";
 		    contentName.appendChild(document.createTextNode(pos.cafe_name));
 			info.appendChild(contentName);
 	
-		    var closeBtn = document.createElement('button');
-		    closeBtn.appendChild(document.createTextNode('닫기'));
+		    var closeBtn = document.createElement('div');
+		    closeBtn.className = "close";
 		    // 닫기 이벤트 추가
 		    closeBtn.onclick = function() {
 		        overlay.setMap(null);
@@ -123,18 +132,24 @@
 	
 		    var contentRoad = document.createElement("div");
 		    contentRoad.className = "addr1";
-		    contentRoad.appendChild(document.createTextNode("도로명주소: " + pos.cafe_addr1));
+		    contentRoad.appendChild(document.createTextNode(pos.cafe_addr1));
 		    info.appendChild(contentRoad);
 		    
 		    var contentAddr = document.createElement("div");
 		    contentAddr.className = "addr2";
-		    contentAddr.appendChild(document.createTextNode("지번주소: " + pos.cafe_addr2));
+		    contentAddr.appendChild(document.createTextNode("(지번) " + pos.cafe_addr2));
 		    info.appendChild(contentAddr);
 		    
 		    var contentPhone = document.createElement("div");
 		    contentPhone.className = "phone";
-		    contentPhone.appendChild(document.createTextNode("전화번호: " + pos.cafe_phone));
+		    contentPhone.appendChild(document.createTextNode(pos.cafe_phone));
 		    info.appendChild(contentPhone);
+		    
+		    var contentSite = document.createElement("div");
+		    contentSite.className = "site";
+		    contentSite.appendChild(document.createTextNode(pos.cafe_site));
+		    info.appendChild(contentSite);
+		    
 		    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 		    var overlay = new daum.maps.CustomOverlay({
 		        position: pos.latlng,
