@@ -129,7 +129,17 @@
 		        overlay.setMap(null);
 		    };
 		    contentName.appendChild(closeBtn);
-	
+		    
+		    /* var contentBody = document.createElement("div");
+		    contentBody.className = "body";
+		    info.appendChild(contentBody); */
+		    
+		    var contentImage = document.createElement("img");
+		    contentImage.className = "image";
+		    contentImage.src = "${pageContext.request.contextPath}/image_bundle/dog_cafe.png";
+		    //contentImage.appendChild(document.createTextNode());
+			info.appendChild(contentImage);
+		    
 		    var contentRoad = document.createElement("div");
 		    contentRoad.className = "addr1";
 		    contentRoad.appendChild(document.createTextNode(pos.cafe_addr1));
@@ -145,10 +155,13 @@
 		    contentPhone.appendChild(document.createTextNode(pos.cafe_phone));
 		    info.appendChild(contentPhone);
 		    
-		    var contentSite = document.createElement("div");
-		    contentSite.className = "site";
-		    contentSite.appendChild(document.createTextNode(pos.cafe_site));
-		    info.appendChild(contentSite);
+		    var contentDetail = document.createElement("a");
+		    contentDetail.className = "detail";
+		    contentDetail.innerHTML = "상세보기";
+		    <c:forEach var="cafe" items="${cafe}">
+		    contentDetail.href = "cafeDetail.do?cafe_num=${cafe.cafe_num}";
+		    </c:forEach>
+		    info.appendChild(contentDetail);
 		    
 		    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 		    var overlay = new daum.maps.CustomOverlay({

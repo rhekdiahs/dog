@@ -7,7 +7,7 @@
 	bottom: 40px;
 	width: 288px;
 	height: 132px;
-	margin-left: -142px;
+	margin-left: -144px;
 	text-align: left;
 	overflow: hidden;
 	font-size: 12px;
@@ -28,6 +28,7 @@
 .cont-wrap .info:nth-child(1) {
 	border: 0;
 	box-shadow: 0px 1px 2px #888;
+	overflow: hidden;
 }
 
 .info .title {
@@ -54,24 +55,40 @@
 	cursor: pointer;
 }
 
+
+.info .image{
+	position: absolute;
+	width: 73px;
+	height: 70px;
+}
+
 .info .addr1 {
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
 	position: relative;
-	margin: 5px 0 0 10px;
+	margin: 7px 0 0 65px;
 }
 
 .info .addr2 {
-	margin: 5px 0 0 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+	margin: 7px 0 0 65px;
 	font-size: 11px;
 	color: #888;
 	margin-top: -1px;
 }
 
 .info .phone {
-	margin: 5px 0 0 10px;
+	position: relative;
+	margin: 7px 0 0 65px;
 	margin-top: -1px;
 }
 
-.info .site {
+.info .detail {
+	position: relative;
+	margin: 7px 0 0 65px;
 	color: #5085BB;
 }
 
