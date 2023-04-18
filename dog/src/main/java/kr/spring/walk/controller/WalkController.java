@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.beust.jcommander.internal.Console;
+
 import kr.spring.walk.service.WalkService;
 import kr.spring.walk.vo.WalkVO;
 
@@ -31,6 +33,7 @@ public class WalkController {
 		return new WalkVO();
 	}
 	
+	//모든 산책경로 리스트
 	@RequestMapping("/walk/list.do")
 	public String walkList(Model model) {
 		List<WalkVO> list = walkService.getWalkList();
@@ -41,10 +44,13 @@ public class WalkController {
 			path.add(i,list.get(i).getWalk_position());
 		}
 		
+		model.addAttribute("path",path);
 		model.addAttribute("list", list);
+		
 		return "walkList";
 	}
 	
+	//산책경로 등록
 	@RequestMapping("/walk/register.do")
 	public String registerWalk() {
 		return "registerWalk";
@@ -78,7 +84,7 @@ public class WalkController {
 		return map;
 	}
 	
-
+	//선택한 산책경로 보기
 	@RequestMapping("/walk/viewWalk.do")
 	public String viewWalk(@RequestParam Integer walk_num, Model model) {
 		String walk_position = walkService.getWalkPosition(walk_num);
