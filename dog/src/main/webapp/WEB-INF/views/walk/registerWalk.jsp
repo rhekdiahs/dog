@@ -112,7 +112,7 @@
 	// 선과 다각형의 꼭지점 정보를 kakao.maps.LatLng객체로 생성하고 배열로 반환하는 함수입니다 
 	function pointsToPath(points) {
 	    var len = points.length, 
-	        path = [], 
+	        path = [],
 	        i = 0;
 
 	    for (; i < len; i++) { 

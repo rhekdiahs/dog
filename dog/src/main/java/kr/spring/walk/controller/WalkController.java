@@ -37,14 +37,18 @@ public class WalkController {
 	@RequestMapping("/walk/list.do")
 	public String walkList(Model model) {
 		List<WalkVO> list = walkService.getWalkList();
-		List<String> path = new ArrayList<String>();
-		int len = list.size();
-		
-		for(int i=0;i<len;i++) {
-			path.add(i,list.get(i).getWalk_position());
-		}
-		
-		model.addAttribute("path",path);
+		/*
+		 * List<String> path = new ArrayList<String>(); int len = list.size();
+		 * 
+		 * for(int i=0;i<len;i++) { path.add(i,list.get(i).getWalk_position()); }
+		 * 
+		 * logger.debug("타입확인 ㅈ같네 레알 ~~ *.*.*." + path.get(0).getClass().getName());
+		 * logger.debug("String 인가요?" + path.get(0));
+		 * 
+		 * logger.debug("이게무슨" + list.get(0).getWalk_position()); //String 타입 확인 완료
+		 * 
+		 * model.addAttribute("path",path);
+		 */
 		model.addAttribute("list", list);
 		
 		return "walkList";

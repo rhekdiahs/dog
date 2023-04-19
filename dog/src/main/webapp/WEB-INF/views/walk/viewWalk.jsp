@@ -61,6 +61,7 @@
 	        });
 			
 	        overlays.push(polyline);
+	        console.log(polyline);
 	    }
 	    
 
@@ -73,8 +74,23 @@
 			overlays.push(marker); 
 	}
 	
-	 
-		$(function() {
-			drawPolyline();
-		});
+	//선그리기 
+	$(function() {
+		drawPolyline();
+	});
+	
+	
+	//데이터 경로 저장
+	function pointsToPath(points) {
+	    var len = points.length, 
+	        path = [],
+	        i = 0;
+
+	    for (; i < len; i++) { 
+	        var latlng = new kakao.maps.LatLng(points[i].y, points[i].x);
+	        path.push(latlng); 
+	    }
+
+	    return path;
+	}
 </script>
