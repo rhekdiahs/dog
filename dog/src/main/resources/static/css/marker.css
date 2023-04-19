@@ -44,6 +44,11 @@
 	font-weight: bold;
 }
 
+.info .link{
+	text-decoration: none;
+	color: black;
+}
+
 .info .close {
 	background-image: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
 	position: absolute;

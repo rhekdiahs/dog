@@ -122,8 +122,15 @@
 		    
 		    var contentName = document.createElement("div");
 		    contentName.className = "title";
-		    contentName.appendChild(document.createTextNode(pos.cafe_name));
-			info.appendChild(contentName);
+		    
+			var contentLink = document.createElement("a");
+			contentLink.className = "link";
+		    contentLink.appendChild(document.createTextNode(pos.cafe_name));
+		    <c:forEach var="cafe" items="${cafe}">
+		    contentLink.href = "cafeDetail.do?cafe_num=${cafe.cafe_num}";
+		    </c:forEach>
+		    contentName.appendChild(contentLink);
+		    info.appendChild(contentName);
 	
 		    var closeBtn = document.createElement('div');
 		    closeBtn.className = "close";
