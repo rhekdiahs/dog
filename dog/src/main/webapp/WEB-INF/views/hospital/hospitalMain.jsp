@@ -199,7 +199,7 @@
 	        clickedTr.style.background = '#feea3e';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
-	        map.setLevel(5);
+	        map.setLevel(map.getLevel());
 	        map.panTo(marker.getPosition());
 	    });
 	    var clicked = document.getElementById(pos.hospital_num);
@@ -212,7 +212,7 @@
 	        clickedTr.style.background = '#feea3e';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
-	        map.setLevel(5);
+	        map.setLevel(map.getLevel());
 	        map.panTo(marker.getPosition());
 	    });
 	});
