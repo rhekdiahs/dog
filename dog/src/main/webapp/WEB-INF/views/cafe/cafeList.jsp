@@ -17,6 +17,9 @@
 			level: zoomLevel
 		};
 
+	    container.style.width = visualViewport.width + 'px';
+	    container.style.height = visualViewport.width + 'px';
+		
 		var map = new kakao.maps.Map(container, options);
 	</script>	
 	<form action="cafeList.do" id="search_region" method="get">
@@ -187,6 +190,8 @@
 		        }
 		        overlay.setMap(map);
 		        clickedOverlay = overlay;
+		        map.setLevel(5);
+		        map.panTo(marker.getPosition());
 		      });
 		});
 	</script>

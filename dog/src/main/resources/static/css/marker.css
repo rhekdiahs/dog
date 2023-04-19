@@ -32,6 +32,9 @@
 }
 
 .info .title {
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
 	padding: 5px 0 0 10px;
 	margin-bottom: 5px;
 	height: 35px;
