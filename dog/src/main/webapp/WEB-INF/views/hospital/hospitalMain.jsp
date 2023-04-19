@@ -47,7 +47,7 @@
 		<div>
 			<table>
 			    <c:forEach var="list" items="${list}" varStatus="status">
-		     	<tr>
+		     	<tr id = "${list.hospital_num}">
 		     		<td>${status.count}</td>
 		     		<td>${list.h_name}</td>
 			        <td>
@@ -104,7 +104,8 @@
 	===========================*/
 	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 	var clickedOverlay = null;
-	hospital_arrays.forEach(function (pos) {
+	var clickedTr = null;
+	hospital_arrays.forEach(function (pos, index) {
 	    // 마커 이미지의 이미지 크기 입니다
 	    var imageSize = new kakao.maps.Size(24, 35);
 	    // 마커 이미지를 생성합니다    
@@ -116,7 +117,6 @@
 	        title : pos.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	        image : markerImage // 마커 이미지 
 	    });
-
 	    var content = document.createElement('div');
 		content.className = 'cont-wrap';
 		
@@ -126,7 +126,14 @@
 	    
 	    var contentName = document.createElement("div");
 	    contentName.className = "title";
-	    contentName.appendChild(document.createTextNode(pos.h_name));
+	    
+	    var contentLink = document.createElement("a");
+		contentLink.className = "link";
+		contentLink.appendChild(document.createTextNode(pos.h_name));
+	    <c:forEach var="hospital" items="${list}">
+	    contentLink.href = "hospitalDetail.do?hospital_num=${hospital.hospital_num}";
+	    </c:forEach>
+	    contentName.appendChild(contentLink);
 		info.appendChild(contentName);
 
 	    var closeBtn = document.createElement('div');
@@ -180,12 +187,27 @@
 	    kakao.maps.event.addListener(marker, 'click', function() {
 	        if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
+	        	clickedTr.style.background = '';
 	        }
+	        clickedTr = document.getElementById(pos.hospital_num);
+	        clickedTr.style.background = '#feea3e';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
 	        map.setLevel(5);
 	        map.panTo(marker.getPosition());
-	      });
-	});		
-
+	    });
+	    var clicked = document.getElementById(pos.hospital_num);
+	    clicked.addEventListener('click', function(){
+	    	if (clickedOverlay) {
+	        	clickedOverlay.setMap(null);
+	        	clickedTr.style.background = '';
+	        }
+	        clickedTr = document.getElementById(pos.hospital_num);
+	        clickedTr.style.background = '#feea3e';
+	        overlay.setMap(map);
+	        clickedOverlay = overlay;
+	        map.setLevel(5);
+	        map.panTo(marker.getPosition());
+	    });
+	});
 </script>
