@@ -167,13 +167,16 @@
 	    info.appendChild(contentAddr);
 	    
 	    var contentPhone = document.createElement("div");
-	    contentPhone.className = "phone";
-	    var contentPhoneImg = document.createElement('img');
-	    contentPhoneImg.className = "phoneImg";
-	    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/phone_img.png";
-	    contentPhoneImg.setAttribute("style", "margin-top: 2px;")
-	    contentPhone.appendChild(contentPhoneImg)
-	    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
+
+	    if(pos.h_phone != ""){
+		    contentPhone.className = "phone";
+		    var contentPhoneImg = document.createElement('img');
+		    contentPhoneImg.className = "phoneImg";
+		    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/phone_img.png";
+		    contentPhoneImg.setAttribute("style", "margin-top: 2px;");
+		    contentPhone.appendChild(contentPhoneImg)
+		    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
+	    }
 	    info.appendChild(contentPhone);
 	    var contentAddr = document.createElement("div");
 	    contentAddr.className = "h_address";
