@@ -178,10 +178,13 @@
 		    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
 	    }
 	    info.appendChild(contentPhone);
-	    var contentAddr = document.createElement("div");
-	    contentAddr.className = "h_address";
+	    
+	    var contentBookmark = document.createElement("img");
+	    contentBookmark.className = "bookmark";
+	    contentBookmark.src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png";
+	    contentBookmark.setAttribute("style", "position : absolute; bottom : 60px; left : 260px; width : 25px; height : 25px; cursor : pointer;");
+	    info.appendChild(contentBookmark);
 	    //contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
-	    info.appendChild(contentAddr);
 	    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 	    var overlay = new daum.maps.CustomOverlay({
 	        position: pos.latlng,

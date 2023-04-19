@@ -76,6 +76,7 @@ a:hover, a:active{
 	overflow : hidden;
    	white-space:nowrap;
    	text-overflow : ellipsis;
+   	width : 191px;
 	position: relative;
 	margin: 7px 0 0 70px;
 }
@@ -84,6 +85,7 @@ a:hover, a:active{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	position: relative;
+	width : 191px;
 	margin: 7px 0 0 70px;
 	font-size: 11px;
 	color: #888;
