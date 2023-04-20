@@ -28,11 +28,10 @@ public class PagingUtil {
 	public PagingUtil(String keyfield, String keyword, int currentPage, int count, int rowCount,
 			int pageCount,String pageUrl,String addKey) {
 		
-		String sub_url = ""; //uri 링크 뒤에 붙이는 파라미터
+		String sub_url = "";
 		if(keyword != null) sub_url = "&keyfield="+keyfield+"&keyword="+keyword;
-		else if(keyword == null) sub_url = "&keyfield="+keyfield; //서지현 - 관리자페이지 추가
-		
-		if(addKey != null) sub_url += "&cat="+addKey; //분실물 페이지 추가
+		else if(keyword == null) sub_url = "&keyfield="+keyfield;
+		if(addKey != null) sub_url += addKey;
 		
 		// 전체 페이지 수
 		int totalPage = (int) Math.ceil((double) count / rowCount);
@@ -53,12 +52,11 @@ public class PagingUtil {
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
-		/*
 		// 이전 block 페이지
 		page = new StringBuffer();
 		if (currentPage > pageCount) {
 			page.append("<a href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url +">");
-			page.append("[이전]");
+			page.append("<");
 			page.append("</a>");
 		}
 		//페이지 번호.현재 페이지는 빨간색으로 강조하고 링크를 제거.
@@ -82,49 +80,9 @@ public class PagingUtil {
 		// 다음 block 페이지
 		if (totalPage - startPage >= pageCount) {
 			page.append("<a href="+pageUrl+"?pageNum="+ (endPage + 1) + sub_url +">");
-			page.append("[다음]");
+			page.append(">");
 			page.append("</a>");
 		}
-		*/
-		page = new StringBuffer();
-		page.append("<nav aria-label='Page navigation example'><ul class='pagination justify-content-center'>");
-			//현재페이지가 페이지의 개수보다 클 때, 이전 block 페이지 표시
-			if (currentPage > pageCount) {
-				page.append("<li class='page-item'>"
-							+ "<a href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url +" "
-									+ "class='page-link' aria-label='Previous' style='color:#E65962;'>");
-				page.append("<span aria-hidden='true'>");
-				page.append("&laquo;");
-				page.append("</span></a></li>");
-			}
-			//페이지 번호.현재 페이지 링크를 제거.
-			for (int i = startPage; i <= endPage; i++) {
-				if (i > totalPage) {
-					break;
-				}
-				if (i == currentPage) {
-					page.append("<li class='page-item active' aria-current='page'>"
-							+ "<a class='page-link' style='border-color:#E65962; background-color: #E65962; color:white;'>");
-					page.append(i);
-					page.append("</a></li>");
-				} else {
-					page.append("<li class='page-item'>");
-					page.append("<a class='page-link' style='color:#E65962;' href='"+pageUrl+"?pageNum=");
-					page.append(i);
-					page.append(sub_url+"'>");
-					page.append(i);
-					page.append("</a></li>");
-				}
-			}
-			// 다음 block 페이지
-			if (totalPage - startPage >= pageCount) {
-				page.append("<li class='page-item'>");
-				page.append("<a href='"+pageUrl+"?pageNum="+ (endPage + 1) + sub_url +"' class='page-link' "
-								+"aria-label='Next' style='color:#E65962;'>");
-				page.append("&raquo;");
-				page.append("</a>");
-			}
-		page.append("</ul></nav>");		
 	}
 	public StringBuffer getPage() {
 		return page;

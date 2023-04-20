@@ -71,8 +71,8 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<div>
-			${page }
+		<div style = "text-align : center;">
+			${page}
 		</div>
 	</div>
 <script>
@@ -213,7 +213,7 @@
 	    kakao.maps.event.addListener(marker, 'click', function() {
 	    	var elem = document.getElementById(pos.hospital_num);
 	    	let rect = elem.getBoundingClientRect();
-	    	$(".place-list").scrollTop(rect.top);
+	    	//$(".place-list").scrollTop(rect.top);
 	    	//$('.place-list').scrollTop(index * rect.height);
 	    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
 	        if (clickedOverlay) {
@@ -229,8 +229,13 @@
 	    });
 	    
 	    var clicked = document.getElementById(pos.hospital_num);
+	    
 	    clicked.addEventListener('click', function(){
-	    	//var offset = $('#'+pos.hospital_num).offset({top: 600});
+	    	var elem = document.getElementById(pos.hospital_num);
+	    	let rect = elem.getBoundingClientRect();
+	    	//$(".place-list").scrollTop(rect.top);
+	    	//$('.place-list').scrollTop(index * rect.height);
+	    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
 	    	if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
 	        	clickedTr.style.background = '';
