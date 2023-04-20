@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
+import kr.spring.util.StringUtil;
 
 @Controller
 public class HospitalController {
@@ -178,6 +180,20 @@ public class HospitalController {
 		return "hospitalMain";
 	}
 	
+	@RequestMapping("/hospital/hospitalDetail.do")
+	public ModelAndView hospital_detail(@RequestParam int hospital_num) {
+		
+		HospitalVO hospital = hospitalService.selectHospital(hospital_num);
+		
+		hospital.setH_name(StringUtil.useNoHtml(hospital.getH_name()));
+		if(hospital.getH_info_detail() != null) {
+			hospital.setH_info_detail(StringUtil.useBrNoHtml(hospital.getH_info_detail()));
+		}
+
+		return new ModelAndView("hospitalDetail", "hospital", hospital);
+	}
+	
+	
 	/* 사용 끝
 	 * @RequestMapping("/hospital/insertCoords.do")
 	@ResponseBody
@@ -199,7 +215,7 @@ public class HospitalController {
 		}
 	}
 	@RequestMapping("/mypage/photoView.do")
-	public String getProfile(@RequestParam(value = "hospital_num", defaultValue = "1") int hospital_num,HttpServletRequest request, Model model) {
+	public String getProfile(@RequestParam int hospital_num,HttpServletRequest request, Model model) {
 		
 		HospitalVO hospital = hospitalService.selectHospital(hospital_num);
 

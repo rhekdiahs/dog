@@ -1,0 +1,76 @@
+@charset "UTF-8";
+body::-webkit-scrollbar { display:none; }
+hr{
+	border : 1px solid lightgray;
+	width : 96%;
+	margin : 0 auto;
+}
+h3{
+	margin-bottom : 15px;
+}
+.wrap-detail{
+	width : 100vw;
+}
+.content-header{
+	text-align : center;
+	margin-top : 20px;
+}
+.nameNcat{
+	margin : 5px 0;
+}
+.content-title{
+	display : inline-block;
+	max-width : 100vw;
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
+}
+.content-category{
+	font-size : 17px;
+	color : #8cdcfc;
+}
+.direct-scroll{
+	padding : 30px 20px;
+	height : 50px;
+	display : flex;
+	margin : 0 auto;
+	justify-content: center;
+	align-items: center;
+}
+.direct-scroll li{
+	width:25%;
+	cursor : pointer;
+}
+.direct-scroll li:not(:last-child){
+	border-right : 1px solid navajowhite;
+}
+.margin-detail{
+	margin : 20px 10px 0 10px;
+}
+.detail-cat{
+	text-align : center;
+	font-size : 18px;
+}
+.detail-icon{
+	float : left;
+	width : 20px;
+	height : 20px;
+}
+.padding-text{
+	padding-left : 25px;
+}
+.margin-bot{
+	margin-bottom : 10px;
+}
+#map{
+	margin : 0 auto;
+	width : 90vw;
+	height : 90vw;
+	border : 1px solid gray;
+	border-radius : 5px;
+}
+.label {margin-bottom: 96px;}
+.label * {display: inline-block;vertical-align: top;}
+.label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}

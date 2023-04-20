@@ -53,8 +53,8 @@
 							</a>
 						</div>
 						<div class = "list-title">
-							<a href = "#" class = "title-index"><strong>${status.count}</strong></a>
-							<a href = "#" class = "title-index"><strong>${list.h_name}</strong></a>
+							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${status.count}</strong></a>
+							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${list.h_name}</strong></a>
 							<span>
 							<c:if test = "${list.hospital_type == 0}"><small>일반병원</small></c:if>
 		         			<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
@@ -71,7 +71,7 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<div style = "text-align : center;">
+		<div id = "pageDiv" style = "text-align : center;">
 			${page}
 		</div>
 	</div>
@@ -89,8 +89,10 @@
     container.style.height = visualViewport.width + 'px';
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
+	var pageDiv = document.getElementById('pageDiv');
+	var rectPage = pageDiv.getBoundingClientRect();
 	var rect = container.getBoundingClientRect();
-	$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom)/*  - parseInt(40) */ + 'px');
+	$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height) + 'px');
 	/*========================= 
 		   병원 리스트 가져오기
 	===========================*/
@@ -142,9 +144,7 @@
 	    var contentLink = document.createElement("a");
 		contentLink.className = "link";
 		contentLink.appendChild(document.createTextNode(pos.h_name));
-	    <c:forEach var="hospital" items="${list}">
-	    contentLink.href = "hospitalDetail.do?hospital_num=${hospital.hospital_num}";
-	    </c:forEach>
+	    contentLink.href = "hospitalDetail.do?hospital_num=" + pos.hospital_num;
 	    contentName.appendChild(contentLink);
 		info.appendChild(contentName);
 
@@ -161,7 +161,7 @@
 	    if(pos.h_info_image_name == ''){
 	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
 	    }else{
-	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/hospital/photoView.do?" + pos.hospital_num)
+	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=" + pos.hospital_num)
 	    }
 	    contentImg.setAttribute("width", "55");
 	    contentImg.setAttribute("height", "55");
@@ -200,9 +200,7 @@
 	    var contentDetail = document.createElement("a");
 	    contentDetail.className = "detail";
 	    contentDetail.innerHTML = "상세보기";
-	    <c:forEach var="hospital" items="${list}">
-	    contentDetail.href = "hospitalDetail.do?hospital_num=${hospital.hospital_num}";
-	    </c:forEach>
+	    contentDetail.href = "hospitalDetail.do?hospital_num=" + pos.hospital_num;
 	    info.appendChild(contentDetail);
 	    //contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
 	    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
@@ -247,9 +245,9 @@
 	        map.setLevel(5);
 	        map.panTo(marker.getPosition());
 	    });
-		kakao.maps.event.addListener(map, 'click', function() {
+		/* kakao.maps.event.addListener(map, 'click', function() {
 	        overlay.setMap(null);
-	    });
+	    }); */
 	});
 
 </script>

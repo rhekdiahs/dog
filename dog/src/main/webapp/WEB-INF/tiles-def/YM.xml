@@ -28,6 +28,11 @@
     	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalMain.jsp"/>     
     </definition>
     
+    <definition name="hospitalDetail" extends="memberRegister">
+    	<put-attribute name="title" value="병원상세"/>
+    	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalDetail.jsp"/>     
+    </definition>
+    
 
   
 </tiles-definitions>
