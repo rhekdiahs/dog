@@ -10,6 +10,21 @@
 <title><tiles:getAsString name="title"/></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script>
+jQuery(function($) {
+	//출처: https://sweet-myo.tistory.com/168
+	$("body").css("display", "none");
+	$("body").fadeIn(500);
+	$("a.transition").click(function(event){
+	event.preventDefault();
+	linkLocation = this.href;
+	$("body").fadeOut(1000, redirectPage);
+	});
+	function redirectPage() {
+	window.location = linkLocation;
+	}
+	});
+</script>
 
 </head>
 <body>
