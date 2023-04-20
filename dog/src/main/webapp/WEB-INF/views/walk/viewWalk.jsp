@@ -3,15 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div id="map" style="width:500px;height:400px;"></div>
-<c:forEach var="walk" items="${list}" varStatus="status">
-<span>${walk[0]}</span>
-</c:forEach>
 <span id="centerPoint" data-point="${center}" style="display:none;"></span>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <script type="text/javascript">
 	var center = $('#centerPoint').attr('data-point');			//중간좌표
-	console.log("center는" + center);
 	
 	//Drawing Manager에서 데이터를 가져와 도형을 표시할 아래쪽 지도 div
 	var mapContainer = document.getElementById('map'),
@@ -19,7 +15,7 @@
 			<c:forEach var="center" items="${list}" begin="${center}" end="${center}">
 	        center: new kakao.maps.LatLng(${center[1]}, ${center[0]}), // 지도의 중심좌표
 	        </c:forEach>
-	        level: 3 // 지도의 확대 레벨
+	        level: 6 // 지도의 확대 레벨
 	    };
 	
 	// 지도 div와 지도 옵션으로 지도를 생성합니다
@@ -49,7 +45,6 @@
 	function drawPolyline() {
 		//var len = lines.length, i = 0;
 
-	    for (var i=0; i < fullPath.length; i++) {	//x좌표,y좌표
 	        //var style = lines.options;
 	        var polyline = new kakao.maps.Polyline({
 	            map: map,
@@ -59,16 +54,24 @@
 	            //strokeStyle: style.strokeStyle,
 	            //strokeWeight: style.strokeWeight
 	        });
-			
+	        var polyline2 = new kakao.maps.Polyline({
+	            map: '',
+	            path: fullPath,
+	            strokeColor: '#39f',//style.strokeColor,
+	            strokeOpacity: 1
+	            //strokeStyle: style.strokeStyle,
+	            //strokeWeight: style.strokeWeight
+	        });
+	        console.log(fullPath);
 	        overlays.push(polyline);
 	        console.log(polyline);
-	    }
+	        console.log('길이: ' +polyline2.getLength());
 	    
 
 	   //마커 표시
 		var marker = new kakao.maps.Marker({
 				map : map,
-				position : new kakao.maps.LatLng(xPoint,yPoint),
+				position : new kakao.maps.LatLng(xPoint,yPoint)
 			});
 	
 			overlays.push(marker); 
