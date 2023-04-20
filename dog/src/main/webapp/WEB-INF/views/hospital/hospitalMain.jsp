@@ -7,13 +7,10 @@
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
-
-<div id = "map"></div>
 	<div class = "wrap">
 		<form action="h_selectOption.do" id="search_region" method="get">
-			<ul class="search" style="list-style: none;">
+			<ul id = "searchBar" class="search" style="list-style: none;">
 				<li>
 					<select name="keyfield" id="keyfield" onchange="changeSelect()">
 						<option selected="selected">--선택</option>
@@ -44,25 +41,38 @@
 					<input type="submit" value="찾기">
 			</ul>
 		</form>
+		<div id = "map"></div>
+		<div id = "forFit"></div>
 		<div>
-			<table>
-			    <c:forEach var="list" items="${list}" varStatus="status">
-		     	<tr id = "${list.hospital_num}">
-		     		<td>${status.count}</td>
-		     		<td>${list.h_name}</td>
-			        <td>
-		         	<c:if test = "${list.hospital_type == 0}">일반병원</c:if>
-		         	<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
-			        </td>
-			        <td>${list.road }</td>
-			    </tr>
-			    </c:forEach>
-			</table>
+			<ul id = "place-list" class = "place-list">
+				<c:forEach var="list" items="${list}" varStatus="status">
+					<li id = "${list.hospital_num}">
+						<div class = "place-bookmark">
+							<a href = "#">
+								<img src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png">
+							</a>
+						</div>
+						<div class = "list-title">
+							<a href = "#" class = "title-index"><strong>${status.count}</strong></a>
+							<a href = "#" class = "title-index"><strong>${list.h_name}</strong></a>
+							<span>
+							<c:if test = "${list.hospital_type == 0}"><small>일반병원</small></c:if>
+		         			<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
+							</span>
+						</div>
+						<div class = "list-content">
+							<p>${list.road }</p>
+							<p><small>(지번)${list.h_address}</small></p>
+							<c:if test = "${!empty list.h_phone}">
+							<p>${list.h_phone}</p>
+							</c:if>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
 		</div>
 		<div>
 			${page }
-			<br>
-			${ip}
 		</div>
 	</div>
 <script>
@@ -78,7 +88,9 @@
 	container.style.width = visualViewport.width + 'px';
     container.style.height = visualViewport.width + 'px';
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
+	
+	var rect = container.getBoundingClientRect();
+	$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom)/*  - parseInt(40) */ + 'px');
 	/*========================= 
 		   병원 리스트 가져오기
 	===========================*/
@@ -191,6 +203,11 @@
 	        content: content
 	    });
 	    kakao.maps.event.addListener(marker, 'click', function() {
+	    	var elem = document.getElementById(pos.hospital_num);
+	    	let rect = elem.getBoundingClientRect();
+	    	$(".place-list").scrollTop(rect.top);
+	    	$('.place-list').scrollTop(index * rect.height);
+
 	        if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
 	        	clickedTr.style.background = '';
@@ -202,8 +219,10 @@
 	        map.setLevel(map.getLevel());
 	        map.panTo(marker.getPosition());
 	    });
+	    
 	    var clicked = document.getElementById(pos.hospital_num);
 	    clicked.addEventListener('click', function(){
+	    	//var offset = $('#'+pos.hospital_num).offset({top: 600});
 	    	if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
 	        	clickedTr.style.background = '';

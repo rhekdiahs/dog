@@ -52,10 +52,13 @@
 	color : black;
 }
 #main_header{
+	position : sticky;
+	top : 0px;
 	width : 100vw;
 	height : 40px;
 	background : #FDF7C6;
 	margin : 0 auto;
+	z-index: 1001;
 }
 #menu_homeBtn{
 	padding-top : 5px;
