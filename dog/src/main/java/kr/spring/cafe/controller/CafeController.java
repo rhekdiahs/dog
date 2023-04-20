@@ -95,7 +95,14 @@ public class CafeController {
 	}
 	*/
 	
-	//@GetMapping("/cafe/cafeDetail.do")
+	@RequestMapping("/cafe/cafeDetail.do")
+	public ModelAndView detail(@RequestParam int cafe_num) {
+		logger.debug("카페 번호 : " + cafe_num);
+		
+		CafeVO cafe = cafeService.selectCafedetail();
+		
+		return new ModelAndView("cafeDetail", "cafe", cafe);
+	}
 	
 }
 

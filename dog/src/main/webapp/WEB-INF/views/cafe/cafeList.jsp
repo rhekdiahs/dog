@@ -3,25 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
-<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/cafeList.css">
+<script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
+<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <!-- 중앙컨텐츠 시작 -->
-<div id="main_body">
-	<div id="map"></div>
-	<script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(coordY, coordX),
-			level: zoomLevel
-		};
-
-	    container.style.width = visualViewport.width + 'px';
-	    container.style.height = visualViewport.width + 'px';
-		
-		var map = new kakao.maps.Map(container, options);
-	</script>	
+<div id="main-body">
 	<form action="cafeList.do" id="search_region" method="get">
 		<ul class="search" style="list-style: none;">
 			<li>
@@ -52,28 +39,57 @@
 				</script>	
 				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 				<input type="submit" value="찾기">
-		</ul>
+		</ul>	
 	</form>
-	<c:if test="${count > 0}">
-	<div>
-	 <table class="table table-sm">
-	     <tr>
-	         <th>카페 이름</th>
-	         <th>카페 종류</th>
-	         <th>카페 주소</th>
-	     </tr>
-	     <c:forEach var="cafe" items="${cafe}">
-	     <tr>
-	       <td><a href="cafeDetail.do?cafe_num=${cafe.cafe_num}">${cafe.cafe_name}</a></td>
-	       <td>${cafe.cafe_cate}</td>
-	       <td>${cafe.cafe_addr1}</td>
-	     </tr>
-	     </c:forEach>
-	</table>
-	</div>
-	<div class="align-center">${page}</div>
-	</c:if>
+	<div id="map"></div>
+	<div id = "forFit"></div>
+		<div>
+			<ul id="place-list" class="place-list">
+				<c:forEach var="cafe" items="${cafe}" varStatus="status">
+					<li id="${cafe.cafe_num}">
+						<div class="place-bookmark">
+							<a href="#"> <img
+								src="${pageContext.request.contextPath}/image_bundle/bookmark0.png">
+							</a>
+						</div>
+						<div class="list-title">
+							<a href="#" class="title-index"><strong>${status.count}</strong></a>
+							<a href="#" class="title-index"><strong>${cafe.cafe_name}</strong></a>
+							<span class="cafe-cate"> 
+								<c:if test="${cafe.cafe_cate == 0}"><small>애견 카페</small></c:if> 
+								<c:if test="${cafe.cafe_cate == 1}"><small>애견 동반 카페</small></c:if>
+							</span>
+						</div>
+						<div class="list-content">
+							<p class="cafe-addr1">${cafe.cafe_addr1}</p>
+							<p class="cafe-addr2">
+								<small>(지번)${cafe.cafe_addr2}</small>
+							</p>
+							<c:if test="${!empty cafe.cafe_phone}">
+								<p class="cafe-phone">${cafe.cafe_phone}</p>
+							</c:if>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="align-center">${page}</div>
+</div>
 <script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(coordY, coordX),
+			level: zoomLevel
+		};
+		
+		container.style.width = visualViewport.width + 'px';
+		container.style.height = visualViewport.width + 'px';
+		
+		var map = new kakao.maps.Map(container, options);
+		
+		var rect = container.getBoundingClientRect();
+		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom)/*  - parseInt(40) */ + 'px');
+
 		/*========================= 
 		지도 화면 크기에 맞춰서 사이즈 설정
 		===========================*/
@@ -82,9 +98,9 @@
 	    var cafe_arrays = [];
 		
 	    <c:forEach var="cafe" items="${cafe}">
-	    
+	    	test_dicts['cafe_num'] = '${cafe.cafe_num}';
 	    	test_dicts['cafe_name'] = '${cafe.cafe_name}';
-			test_dicts['cafe_type'] = '${cafe.cafe_type}';
+			test_dicts['cafe_type'] = '${cafe.cafe_cate}';
 			test_dicts['cafe_addr1'] = '${cafe.cafe_addr1}';
 			test_dicts['cafe_addr2'] = '${cafe.cafe_addr2}';
 			test_dicts['cafe_phone'] = '${cafe.cafe_phone}';
@@ -98,8 +114,10 @@
 	
 		// 마커 이미지의 이미지 주소입니다
 		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-		var clickedOverlay = null;    
-		cafe_arrays.forEach(function (pos) {
+		var clickedOverlay = null;
+		var clickedTr = null;
+		
+		cafe_arrays.forEach(function (pos, index) {
 		    // 마커 이미지의 이미지 크기 입니다
 		    var imageSize = new kakao.maps.Size(24, 35); 
 		    
@@ -181,26 +199,50 @@
 		    </c:forEach>
 		    info.appendChild(contentDetail);
 		    
+		    var contentBookmark = document.createElement("img");
+		    contentBookmark.className = "bookmark";
+		    contentBookmark.src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png";
+		    contentBookmark.setAttribute("style", "position : absolute; bottom : 60px; left : 260px; width : 25px; height : 25px; cursor : pointer;");
+		    info.appendChild(contentBookmark);
+		    
 		    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 		    var overlay = new daum.maps.CustomOverlay({
 		        position: pos.latlng,
 		        content: content
 		    });
-	
-		    // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-	/* 	    kakao.maps.event.addListener(marker, 'click', function() {
-		        overlay.setMap(map);
-		    }); */
+
 		    kakao.maps.event.addListener(marker, 'click', function() {
+		    	var elem = document.getElementById(pos.cafe_num);
+		    	let rect = elem.getBoundingClientRect();
+		    	$(".place-list").scrollTop(rect.top);
+		    	//$('.place-list').scrollTop(index * rect.height);
+		    	$('.place-list').animate({scrollTop:index * rect.height}, 680);
+		    	
 		        if (clickedOverlay) {
 		        	clickedOverlay.setMap(null);
+		        	clickedTr.style.background = '';
 		        }
+		        clickedTr = document.getElementById(pos.cafe_num);
+		        clickedTr.style.background = '#feea3e';
 		        overlay.setMap(map);
 		        clickedOverlay = overlay;
-		        map.setLevel(5);
+		        map.setLevel(map.getLevel());
 		        map.panTo(marker.getPosition());
 		      });
+		    
+		    var clicked = document.getElementById(pos.cafe_num);
+		    clicked.addEventListener('click', function(){
+		    	if(clickedOverlay){
+		    		clickedOverlay.setMap(null);
+		    		clickedTr.style.background = '';
+		    	}
+		    	clickedTr = document.getElementById(pos.cafe_num);
+		    	clickedTr.style.background = '#feea3e';
+		    	overlay.setMap(map);
+		    	clickedOverlay = overlay;
+		    	map.setLevel(5);
+		    	map.panTo(marker.getPosition());
+		    });
 		});
 	</script>
-</div>
 <!-- 중앙컨텐츠 끝 -->

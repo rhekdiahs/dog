@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+small{
+	font-size : 12px;
+	opacity : 0.8;
+}
+a{
+	color : black;
+}
+#map{
+	position : sticky;
+	margin : 0 auto;
+	top : 40px;
+	z-index: 1000;
+}
+.main-body{
+	margin : 0 auto;
+}
+#keyfield {
+	border-radius : 5px;
+	font-size : 16px;
+}
+.place-list{
+	overflow:auto;
+}
+.place-list li{
+	height : 140px;
+	padding : 15px 15px;
+	border-bottom : 1px solid;
+}
+
+.place-bookmark{
+	float : right;
+	
+}
+.place-bookmark img{
+	width : 30px;
+	height : 30px;
+}
+
+.list-content p{
+	margin: 3px 0;
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
+}
+.cafe-addr1{
+	font-size: 15px;
+}
+
+.cafe-addr2{
+	margin: 0 auto;
+}
+
+.cafe-phone{
+	font-size: 15px;
+}
+

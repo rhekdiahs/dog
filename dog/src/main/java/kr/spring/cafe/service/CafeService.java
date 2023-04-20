@@ -18,7 +18,7 @@ public interface CafeService {
 	public int selectCafeCount(Map<String, Object> map);
 	
 	//카페 상세
-	public int selectCafedetailnum();
+	public CafeVO selectCafedetail();
 	
 	//카페 등록
 	public void insertCafeDetail(CafeVO cafeVO);

@@ -24,13 +24,15 @@ public interface CafeMapper {
 	public int selectCafeCount(Map<String, Object> map);
 	
 	//카페 상세
-	@Select("SELECT cafe_detail_seq.nextval FROM dual")
-	public int selectCafedetailnum();
+	@Select("SELECT c.cafe_num, c.cafe_addr1, c.cafe_cate, c.cafe_name, c.cafe_phone, c.cafe_site, c.cafe_addr2 "
+		  + "FROM cafe c LEFT OUTER JOIN cafe_detail d ON c.cafe_num = d.cafe_num "
+		  + "WHERE c.cafe_num = #{cafe_num}")
+	public CafeVO selectCafedetail();
 	
 	//카페 등록
-	@Insert("INSERT INTO cafe_detail (cafe_detail_num,cafe_name,cafe_type, "
+	@Insert("INSERT INTO cafe_detail (cafe_detail_num,cafe_detail_name,cafe_type, "
 		  + "cafe_content,cafe_image_name,cafe_image,cafe_status,cafe_num,mem_num) "
-		  + "VALUES (cafe_detail_seq.nextval,#{cafe_name},#{cafe_type},#{cafe_content},"
+		  + "VALUES (cafe_detail_seq.nextval,#{cafe_detail_name},#{cafe_type},#{cafe_content},"
 		  + "#{cafe_image_name},#{cafe_image},#{cafe_status},#{cafe_num},#{mem_num})")
 	public void insertCafeDetail(CafeVO cafeVO);
 	

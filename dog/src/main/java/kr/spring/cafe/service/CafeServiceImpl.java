@@ -31,9 +31,8 @@ public class CafeServiceImpl implements CafeService{
 	}
 	
 	@Override
-	public int selectCafedetailnum() {
-		// TODO Auto-generated method stub
-		return 0;
+	public CafeVO selectCafedetail() {
+		return cafeMapper.selectCafedetail();
 	}
 
 	@Override
