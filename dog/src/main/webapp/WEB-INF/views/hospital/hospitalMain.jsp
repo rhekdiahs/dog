@@ -196,6 +196,14 @@
 	    contentBookmark.src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png";
 	    contentBookmark.setAttribute("style", "position : absolute; bottom : 60px; left : 260px; width : 25px; height : 25px; cursor : pointer;");
 	    info.appendChild(contentBookmark);
+	    
+	    var contentDetail = document.createElement("a");
+	    contentDetail.className = "detail";
+	    contentDetail.innerHTML = "상세보기";
+	    <c:forEach var="hospital" items="${list}">
+	    contentDetail.href = "hospitalDetail.do?hospital_num=${hospital.hospital_num}";
+	    </c:forEach>
+	    info.appendChild(contentDetail);
 	    //contentAddr.appendChild(document.createTextNode("화면크기: " + window.innerWidth));
 	    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 	    var overlay = new daum.maps.CustomOverlay({
@@ -206,8 +214,8 @@
 	    	var elem = document.getElementById(pos.hospital_num);
 	    	let rect = elem.getBoundingClientRect();
 	    	$(".place-list").scrollTop(rect.top);
-	    	$('.place-list').scrollTop(index * rect.height);
-
+	    	//$('.place-list').scrollTop(index * rect.height);
+	    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
 	        if (clickedOverlay) {
 	        	clickedOverlay.setMap(null);
 	        	clickedTr.style.background = '';
@@ -231,8 +239,12 @@
 	        clickedTr.style.background = '#feea3e';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
-	        map.setLevel(map.getLevel());
+	        map.setLevel(5);
 	        map.panTo(marker.getPosition());
 	    });
+		kakao.maps.event.addListener(map, 'click', function() {
+	        overlay.setMap(null);
+	    });
 	});
+
 </script>
