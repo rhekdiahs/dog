@@ -15,7 +15,7 @@ public class CafeVO {
 	private String cafe_region;
 	private String cafe_addr1;
 	private String cafe_addr2;
-	private String cafe_cate;
+	private int cafe_cate;
 	private String cafe_phone;
 	private String cafe_site;
 	
@@ -28,6 +28,12 @@ public class CafeVO {
 	private int cafe_status;
 	private Date cafe_reg_date;
 	private Date cafe_modify_date;
+	public String getApikey() {
+		return apikey;
+	}
+	public void setApikey(String apikey) {
+		this.apikey = apikey;
+	}
 	public int getCafe_num() {
 		return cafe_num;
 	}
@@ -70,10 +76,10 @@ public class CafeVO {
 	public void setCafe_addr2(String cafe_addr2) {
 		this.cafe_addr2 = cafe_addr2;
 	}
-	public String getCafe_cate() {
+	public int getCafe_cate() {
 		return cafe_cate;
 	}
-	public void setCafe_cate(String cafe_cate) {
+	public void setCafe_cate(int cafe_cate) {
 		this.cafe_cate = cafe_cate;
 	}
 	public String getCafe_phone() {
@@ -142,7 +148,6 @@ public class CafeVO {
 	public void setCafe_modify_date(Date cafe_modify_date) {
 		this.cafe_modify_date = cafe_modify_date;
 	}
-	
 	@Override
 	public String toString() {
 		return "CafeVO [apikey=" + apikey + ", cafe_num=" + cafe_num + ", cafe_name=" + cafe_name + ", cafe_x=" + cafe_x
@@ -152,7 +157,7 @@ public class CafeVO {
 				+ cafe_type + ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name
 				+ ", cafe_status=" + cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date="
 				+ cafe_modify_date + "]";
-	}	
-	
+	}
+
 }
 
