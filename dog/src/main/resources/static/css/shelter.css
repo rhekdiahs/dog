@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.location_con01 {
+    padding: 10px 0;
+}
+.inner {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.sub_tit {
+    text-align: center;
+}
+.footer-map{
+	margin: 0 auto;
+}
+.extd{
+	width:100px;
+}
+.ex tr{
+	margin:10px;
+}
+.ex tr td{
+	margin:10px;
+	overflow: auto;
+}
