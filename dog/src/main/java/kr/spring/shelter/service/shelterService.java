@@ -89,7 +89,6 @@ public class shelterService {
     
       //상세페이지 보기 
 	  public List<shelterVO> getDataDetailList(String url2) throws InterruptedException {
-		//url2 = "https://map.naver.com/v5/search/임시보호소";
 		System.setProperty("webdriver.chrome.driver", driverPath);
 	  	ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");   // 브라우저 안띄움
@@ -106,18 +105,13 @@ public class shelterService {
 	        
 	        
 		    driver2.get(url2);    //브라우저에서 url로 이동한다.
-		    Thread.sleep(3000); //브라우저 로딩될때까지 잠시 기다린다.
-		    
-		    WebElement elementInNewIframe = driver2.findElement(By.tagName("title"));
-		    //...
-		    System.out.println("iframe2---------------------------" + elementInNewIframe);
-		    String bodytest = elementInNewIframe.getAttribute("innerHTML");
-		    System.out.println("iframe3---------------------------" + bodytest);
+		    Thread.sleep(2000); //브라우저 로딩될때까지 잠시 기다린다.
 	        	
 	    	String su = driver2.findElement(By.cssSelector("#_title > span.Fc1rA")).getText();//이름
 	    	String ph;//번호
 	    	String ti;// 시간
 	    	String ex;// 설명
+	    	String home;//홈페이지
 	    	
 	    	try{
 	    		driver2.findElement(By.cssSelector("span.xlx7Q"));
@@ -140,6 +134,14 @@ public class shelterService {
 	    	    ex = "설명이 없습니다.";
 	   		}
 	    	
+	    	try{
+	    		driver2.findElement(By.cssSelector("div.jO09N > a.CHmqa"));
+	    		home = driver2.findElement(By.cssSelector("div.jO09N > a.CHmqa")).getAttribute("href");
+	    	}catch(NoSuchElementException e) {
+	    	    home = "홈페이지가 없습니다.";
+	   		}
+	    	
+	    	
 	    	String ad = driver2.findElement(By.cssSelector("#app-root > div > div > div > div:nth-child(6) > div > div.place_section.no_margin.vKA6F > div > div > div.O8qbU.tQY7D > div > a > span.LDgIH")).getText();
 	    		        	
 	    	shelterVO shelter = shelterVO.builder()
@@ -148,6 +150,7 @@ public class shelterService {
 	                .address(ad.replaceAll("도로명", "").replaceAll("복사", "").replaceAll("지번", "").trim()) // 주소
 	                .time(ti)
 	                .explanation(ex)
+	                .blog(home)
 	                .build();
 	        list.add(shelter);
 	        

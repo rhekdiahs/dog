@@ -14,5 +14,6 @@ public class shelterVO {
     private String phone;//전화번호
     private String explanation;//설명
     private String time;//영업시간
+    private String blog;//홈페이지
 }
 

@@ -148,6 +148,14 @@
 			    						output += '<td class="extd">' + "설명 " + '</td>';
 			    						output += '<td>' + item.explanation + '</td>';
 			    						output += '</tr>';
+			    						output += '<tr>';
+			    						output += '<td class="extd">' + "홈페이지 " + '</td>';
+			    						if(item.blog == "홈페이지가 없습니다."){
+			    						output += '<td>' + item.blog + '</td>';
+			    						}else{
+			    							output += '<td><a href="'+item.blog+'">' + item.blog + '</a></td>';
+			    						}
+			    						output += '</tr>';
 			    						
 			    						$('.ex').append(output);
 			    					});
