@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+#main_div{
+	background : #faf5ef;
+	width : 80vw;
+	height : 100vw;
+	margin : 30px auto;
+	border-radius : 60px;
+	display : table;
+}
+.wrap-cont{
+	display: table-cell;
+	vertical-align : middle;
+}
+.login-btn{
+	background : #feb69f;
+	border : none;
+	border-radius : 5px;
+	width : 130px;
+	height : 30px;
+	color : white;
+	margin-bottom : 20px;
+	margin-top : 10px;
+}
+.inputWrap{
+	padding : 5px 5px;
+	border : 1px solid navajowhite;
+	border-radius : 10px;
+	margin : 10px auto ;
+	width : 70vw;
+	height : 30px;
+	background : white;
+}
+.align-left{
+	float : left;
+	width : 50vw;
+	height : 30px;
+	border: none;
+	background : none;
+}
+.checkSome{
+	float : right;
+	height : 30px;
+	border : none;
+	background : white;
+	font-size : 12px;
+	font-weight :bold;
+	color : #494949;
+}
+#user_email{
+	width : 35vw;
+}
+
+#confirmEmail{
+	float : right;
+	height : 30px;
+	border : none;
+	background : none;
+	font-size : 12px;
+	font-weight :bold;
+	color : #494949;
+}
+#email_address{
+	height : 30px;
+	border : none;
+	background : none;
+}
+#message_id{
+	margin-bottom: 5px;
+}

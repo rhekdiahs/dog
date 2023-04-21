@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+input[type="text"], input[type="password"]{
+	padding : 10px 5px;
+	border : 1px solid navajowhite;
+	border-radius : 10px;
+	margin-bottom : 10px;
+}
+#main_div{
+	background : #faf5ef;
+	width : 80vw;
+	height : 100vw;
+	margin : 0 auto;
+	border-radius : 100px;
+	display : table;
+}
+.wrap-cont{
+	display: table-cell;
+	vertical-align : middle;
+}
+
+#4orDog_title{
+	width : 90vw;
+}
+#login_form ul li{
+	width :80%;
+	margin : 0 auto;
+}
+.login-btn{
+	background : #feb69f;
+	border : none;
+	border-radius : 5px;
+	width : 130px;
+	height : 30px;
+	color : white;
+	margin-bottom : 20px;
+}
+.align-left{
+}
