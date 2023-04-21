@@ -39,7 +39,7 @@ public class shelterController {
     //=======주소 좌표로 바꾸기=========//
  	@RequestMapping("/shelter/shelterAddress.do")
  	@ResponseBody // json
- 	public Map<String, Object> SearchMember() {
+ 	public Map<String, Object> addressmap() {
 
  		Map<String, Object> mapAjax = new HashMap<String, Object>();
 
@@ -48,6 +48,22 @@ public class shelterController {
  		mapAjax.put("list", list);
  		
  		logger.debug("<<주소 넘기기>> : " + list);
+ 		return mapAjax;
+ 	}
+ 	
+	//=======상세 페이지 만들기=========//
+ 	@RequestMapping("/shelter/shelterDetail.do")
+ 	@ResponseBody // json
+ 	public Map<String, Object> detail(String url) throws InterruptedException {
+ 		
+ 		Map<String, Object> mapAjax = new HashMap<String, Object>();
+ 		logger.debug("<<=====================상세 페이지 시작1====================>> : ");
+ 		List<shelterVO> list = shelterService.getDataDetailList(url);
+ 		logger.debug("<<=====================상세 페이지 시작2====================>> : ");
+ 		mapAjax.put("result", "success");
+ 		mapAjax.put("list", list);
+ 		
+ 		logger.debug("<<상세 페이지>> : " + list);
  		return mapAjax;
  	}
 
