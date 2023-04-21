@@ -7,6 +7,12 @@ small{
 a{
 	color : black;
 }
+input[type="search"], input[type="submit"]{
+  	vertical-align: middle;
+}
+select{
+  vertical-align: middle;
+}
 #map{
 	position : sticky;
 	margin : 0 auto;
@@ -16,9 +22,34 @@ a{
 .wrap{
 	margin : 0 auto;
 }
+.inputWrap{
+	height : 100%;
+	padding : 5px 10px;
+	border : 1px solid;
+	border-radius : 5px;
+	margin : 10px 15px;
+}
 #keyfield {
+	float : left;
+	height : 25px;
 	border-radius : 5px;
 	font-size : 16px;
+	padding-top : 3px;
+	border : none;
+	background: none;
+}
+#keyword{
+	width : 70%;
+	height : 25px;
+	border : none;
+	padding-left: 10px;
+}
+#submitBtn{
+	float : right;
+	height : 25px;
+	border : none;
+	background : none;
+	padding-top: 1px;
 }
 .place-list{
 	overflow:auto;
@@ -26,7 +57,7 @@ a{
 .place-list li{
 	height : 105px;
 	padding : 15px 15px;
-	border-bottom : 1px solid;
+	border-bottom : 2px solid lightgray;
 }
 .place-bookmark{
 	float : right;

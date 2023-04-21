@@ -124,6 +124,7 @@ public class HospitalController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyfield", keyfield);
 		
+		
 		int count = hospitalService.selectRegionListCount(map);
 		
 		PagingUtil page = new PagingUtil(keyfield, null, currentPage, count, 10, 5, "h_selectOption.do");
@@ -156,14 +157,16 @@ public class HospitalController {
 	}
 	
 	@RequestMapping("/hospital/h_selectOption.do")
-	public String selectedMain(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, @RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, HttpSession session, Model model) {
+	public String selectedMain(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, @RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, String keyword, HttpSession session, Model model) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
 		
+		System.out.println(keyword);
 		int count = hospitalService.selectRegionListCount(map);
 		
-		PagingUtil page = new PagingUtil(keyfield, null, currentPage, count, 10, 5, "h_selectOption.do");
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 10, 5, "h_selectOption.do");
 		
 		List<HospitalVO> list = null;
 		

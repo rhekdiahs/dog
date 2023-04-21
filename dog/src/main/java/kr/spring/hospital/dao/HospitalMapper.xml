@@ -3,7 +3,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.hospital.dao.HospitalMapper">
-
+	<sql id = "searchKeyword">
+		AND (h_name LIKE '%' || #{keyword} || '%' OR
+		road LIKE '%' || #{keyword} || '%' OR
+		h_address LIKE '%' || #{keyword} || '%'
+		<if test = "keyword == '24시' or keyword == '24시병원' or keyword == '24시 병원'">
+		 OR hospital_type = 1
+		</if>
+		)
+	</sql>
 	<sql id="selectOption">
 		<where>
 		<if test="keyfield != null">
@@ -57,6 +65,9 @@
 			</if>
 			<if test="keyfield == '제주특별자치도'">
 				hospital_region = #{keyfield}
+			</if>
+			<if test = "keyword != null and keyword != ''">
+				<include refid="searchKeyword"></include>
 			</if>
 		</if>
 		</where>

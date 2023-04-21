@@ -11,34 +11,36 @@
 	<div class = "wrap">
 		<form action="h_selectOption.do" id="search_region" method="get">
 			<ul id = "searchBar" class="search" style="list-style: none;">
-				<li>
-					<select name="keyfield" id="keyfield" onchange="changeSelect()">
-						<option selected="selected">--선택</option>
-						<option value="서울특별시" <c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울특별시</option>
-						<option value="부산광역시" <c:if test="${param.keyfield == '부산광역시'}">selected</c:if>>부산광역시</option>
-						<option value="대구광역시" <c:if test="${param.keyfield == '대구광역시'}">selected</c:if>>대구광역시</option>
-						<option value="인천광역시" <c:if test="${param.keyfield == '인천광역시'}">selected</c:if>>인천광역시</option>
-						<option value="광주광역시" <c:if test="${param.keyfield == '광주광역시'}">selected</c:if>>광주광역시</option>
-						<option value="대전광역시" <c:if test="${param.keyfield == '대전광역시'}">selected</c:if>>대전광역시</option>
-						<option value="울산광역시" <c:if test="${param.keyfield == '울산광역시'}">selected</c:if>>울산광역시</option>
-						<option value="세종특별자치시" <c:if test="${param.keyfield == '세종특별자치시'}">selected</c:if>>세종특별자치시</option>
-						<option value="경기도" <c:if test="${param.keyfield == '경기도'}">selected</c:if>>경기도</option>
-						<option value="강원도" <c:if test="${param.keyfield == '강원도'}">selected</c:if>>강원도</option>
-						<option value="충청북도" <c:if test="${param.keyfield == '충청북도'}">selected</c:if>>충청북도</option>
-						<option value="충청남도" <c:if test="${param.keyfield == '충청남도'}">selected</c:if>>충청남도</option>
-						<option value="전라북도" <c:if test="${param.keyfield == '전라북도'}">selected</c:if>>전라북도</option>
-						<option value="전라남도" <c:if test="${param.keyfield == '전라남도'}">selected</c:if>>전라남도</option>
-						<option value="경상북도" <c:if test="${param.keyfield == '경상북도'}">selected</c:if>>경상북도</option>
-						<option value="경상남도" <c:if test="${param.keyfield == '경상남도'}">selected</c:if>>경상남도</option>
-						<option value="제주특별자치도" <c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주특별자치도</option>
-					</select>
-					<script type="text/javascript">
-						$('#keyfield').change(function(){
-							location.href = "/hospital/h_selectOption.do?keyfield=" + $(this).val();
-						});
-					</script>	
-					<input type="search" name="keyword" id="keyword" value="${param.keyword}">
-					<input type="submit" value="찾기">
+				<li>	
+					<div class = "inputWrap">
+						<select name="keyfield" id="keyfield">
+							<option selected="selected">--선택</option>
+							<option value="서울특별시" <c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울</option>
+							<option value="부산광역시" <c:if test="${param.keyfield == '부산광역시'}">selected</c:if>>부산</option>
+							<option value="대구광역시" <c:if test="${param.keyfield == '대구광역시'}">selected</c:if>>대구</option>
+							<option value="인천광역시" <c:if test="${param.keyfield == '인천광역시'}">selected</c:if>>인천</option>
+							<option value="광주광역시" <c:if test="${param.keyfield == '광주광역시'}">selected</c:if>>광주</option>
+							<option value="대전광역시" <c:if test="${param.keyfield == '대전광역시'}">selected</c:if>>대전</option>
+							<option value="울산광역시" <c:if test="${param.keyfield == '울산광역시'}">selected</c:if>>울산</option>
+							<option value="세종특별자치시" <c:if test="${param.keyfield == '세종특별자치시'}">selected</c:if>>세종</option>
+							<option value="경기도" <c:if test="${param.keyfield == '경기도'}">selected</c:if>>경기</option>
+							<option value="강원도" <c:if test="${param.keyfield == '강원도'}">selected</c:if>>강원</option>
+							<option value="충청북도" <c:if test="${param.keyfield == '충청북도'}">selected</c:if>>충북</option>
+							<option value="충청남도" <c:if test="${param.keyfield == '충청남도'}">selected</c:if>>충남</option>
+							<option value="전라북도" <c:if test="${param.keyfield == '전라북도'}">selected</c:if>>전북</option>
+							<option value="전라남도" <c:if test="${param.keyfield == '전라남도'}">selected</c:if>>전남</option>
+							<option value="경상북도" <c:if test="${param.keyfield == '경상북도'}">selected</c:if>>경북</option>
+							<option value="경상남도" <c:if test="${param.keyfield == '경상남도'}">selected</c:if>>경남</option>
+							<option value="제주특별자치도" <c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주</option>
+						</select>
+						<script type="text/javascript">
+							$('#keyfield').change(function(){
+								location.href = "/hospital/h_selectOption.do?keyfield=" + $(this).val();
+							});
+						</script>	
+						<input type="search" name="keyword" id="keyword" value="${param.keyword}">
+						<input type="submit" id = "submitBtn" value="찾기">
+					</div>
 			</ul>
 		</form>
 		<div id = "map"></div>
