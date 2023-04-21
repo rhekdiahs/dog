@@ -57,7 +57,7 @@
 						<div class = "list-title">
 							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${status.count}</strong></a>
 							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${list.h_name}</strong></a>
-							<span>
+							<span style = "font-size : 12px;">
 							<c:if test = "${list.hospital_type == 0}"><small>일반병원</small></c:if>
 		         			<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
 							</span>
