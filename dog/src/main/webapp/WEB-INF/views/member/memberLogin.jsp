@@ -38,12 +38,15 @@ function loginWithKakao() {
 				<li><span id="login_Pw"></span></li>
 			</ul>  
 			<div class="align-center">
-				<form:button class = "login-btn">Login</form:button>
+				<form:button class = "login-btn">Login</form:button><br>
+				<button id = "kakao-login-btn" onclick = "javascript:loginWithKakao()">카카오 로그인</button>
+				<!-- <a id="kakao-login-btn" href="javascript:loginWithKakao()">카카오 로그인</a> -->
 			</div>
-			<p style = "font-size : 13px; color : gray; opacity : 0.7; margin-bottom : 10px;">간편로그인</p>                                        
-			<a id="kakao-login-btn" href="javascript:loginWithKakao()">
-	  				<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="100" alt="카카오 로그인" />
-				</a>
+			<p style = "margin-bottom : 10px;">
+			<a href = "#" style ="font-size : 13px; color : gray; opacity : 0.7;">아이디 찾기</a>
+			&nbsp;<span style ="font-size : 13px; color : gray; opacity : 0.7;">|</span>&nbsp;
+			<a href = "#" style ="font-size : 13px; color : gray; opacity : 0.7;">비밀번호 찾기</a>
+			</p>                                        
 		</form:form>
 	</div>
 </div>
