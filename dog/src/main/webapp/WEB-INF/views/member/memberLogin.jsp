@@ -43,9 +43,9 @@ function loginWithKakao() {
 				<!-- <a id="kakao-login-btn" href="javascript:loginWithKakao()">카카오 로그인</a> -->
 			</div>
 			<p style = "margin-bottom : 10px;">
-			<a href = "#" style ="font-size : 13px; color : gray; opacity : 0.7;">아이디 찾기</a>
+			<a href = "/member/findId.do" style ="font-size : 13px; color : gray; opacity : 0.7;">아이디 찾기</a>
 			&nbsp;<span style ="font-size : 13px; color : gray; opacity : 0.7;">|</span>&nbsp;
-			<a href = "#" style ="font-size : 13px; color : gray; opacity : 0.7;">비밀번호 찾기</a>
+			<a href = "/member/findPw.do" style ="font-size : 13px; color : gray; opacity : 0.7;">비밀번호 찾기</a>
 			</p>                                        
 		</form:form>
 	</div>

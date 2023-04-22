@@ -11,7 +11,7 @@
 	<div class = "wrap">
 		<form action="h_selectOption.do" id="search_region" method="get">
 			<ul id = "searchBar" class="search" style="list-style: none;">
-				<li>	
+				<li>
 					<div class = "inputWrap">
 						<select name="keyfield" id="keyfield">
 							<option selected="selected">--선택</option>
@@ -37,10 +37,11 @@
 							$('#keyfield').change(function(){
 								location.href = "/hospital/h_selectOption.do?keyfield=" + $(this).val();
 							});
-						</script>	
+						</script>
 						<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 						<input type="submit" id = "submitBtn" value="찾기">
 					</div>
+				</li>
 			</ul>
 		</form>
 		<div id = "map"></div>

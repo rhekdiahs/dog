@@ -23,6 +23,18 @@
     	<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>     
     </definition>
     
+    <definition name="memberFindId" extends="memberRegister">
+    	<put-attribute name="title" value="아이디찾기"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberFindId.jsp"/>     
+    </definition>
+    
+    <definition name="memberFindPw" extends="memberRegister">
+    	<put-attribute name="title" value="비밀번호찾기"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberFindPw.jsp"/>     
+    </definition>
+    
+    
+    
     <definition name="hospitalMain" extends="memberRegister">
     	<put-attribute name="title" value="병원메인"/>
     	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalMain.jsp"/>     
@@ -33,6 +45,6 @@
     	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalDetail.jsp"/>     
     </definition>
     
-
+    
   
 </tiles-definitions>

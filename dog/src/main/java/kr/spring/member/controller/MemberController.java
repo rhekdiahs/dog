@@ -1,5 +1,6 @@
 package kr.spring.member.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -196,4 +197,63 @@ public class MemberController {
 		
 		return "redirect:/main/main.do";
 	}
+	
+	
+	/*=====================================
+					아이디 찾기
+	====================================*/
+	
+	   //아이디 찾기 폼 호출
+	   @GetMapping("/member/findId.do")
+	   public String findIdForm() {
+	      return "memberFindId";
+	   }
+	   
+	   //아이디 찾기 처리
+	   @PostMapping("/member/findId.do")
+	   public String FindIdSubmit(@Valid MemberVO member, BindingResult result, HttpServletRequest request, Model model) {
+
+	      String mem_name = request.getParameter("mem_name");
+	      String mem_email = request.getParameter("mem_email");
+	      
+	      member.setMem_all_id(memberService.find_id(mem_name, mem_email));
+	      String[] all_id = member.getMem_all_id();
+	      
+	      
+	      if(all_id.length==0) {
+	         model.addAttribute("message","존재하지 않는 계정입니다.");
+	         model.addAttribute("url", "/member/findId.do");
+	         return "common/resultView";
+	      }else {
+	         model.addAttribute("accessMsg", mem_name+"님의 아이디는<br><br>" + Arrays.toString(all_id) + "<br><br>입니다");
+	         return "common/notice";
+	      }
+	   }
+	   /*=====================================
+					   비밀번호 찾기
+		====================================*/
+	   //비밀번호 찾기 폼 호출
+	   @GetMapping("/member/findPw.do")
+	   public String findPwForm() {
+	      return "memberFindPw";
+	   }
+	   
+	   //비밀번호 찾기 처리
+	   @PostMapping("/member/findPw.do")
+	   public String FindPwsubmit(@Valid MemberVO member, BindingResult result, HttpServletRequest request, Model model) {
+	      String mem_id = request.getParameter("mem_id");
+	      String mem_email = request.getParameter("mem_email");
+	      
+	      String mem_pw = memberService.find_pw(mem_id, mem_email);
+
+	      if(mem_pw==null) {
+	         model.addAttribute("message","존재하지 않는 계정입니다.");
+	         model.addAttribute("url", "/member/findPw.do");
+	         return "common/resultView";
+	      }else {
+	         model.addAttribute("accessMsg", "비밀번호는 [" + mem_pw + "] 입니다");
+	         return "common/notice";
+	      }
+	      
+	   }
 }
