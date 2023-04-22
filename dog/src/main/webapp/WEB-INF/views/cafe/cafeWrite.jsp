@@ -11,9 +11,10 @@
         <div class="option">
 		<button id="selfCheck" onclick="check()">버튼1</button>
 		<button id="searchCheck" onclick="active()">버튼2</button>
+		<button id = "toggleBtn">토글버튼</button>
             <div id="searchBox" style="display: none;">
                  <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="search" placeholder="내용 입력" value="" id="keyword" size="15"> 
+                    키워드 : <input type="search" placeholder="내용입력" value="" id="keyword" size="15"> 
                     <button type="submit" id="submit">검색하기</button> 
                 </form>
             </div>
@@ -34,7 +35,7 @@
 		</div>
 		<div>
 			<span>카페명</span>
-			<input type="text">
+			<input type="text" id = "aaa">
 		</div>
 		<div>
 			<span>주소</span>
