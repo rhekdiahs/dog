@@ -31,8 +31,8 @@ public class CafeServiceImpl implements CafeService{
 	}
 	
 	@Override
-	public CafeVO selectCafedetail() {
-		return cafeMapper.selectCafedetail();
+	public CafeVO selectCafedetail(Integer cafe_num) {
+		return cafeMapper.selectCafedetail(cafe_num);
 	}
 
 	@Override

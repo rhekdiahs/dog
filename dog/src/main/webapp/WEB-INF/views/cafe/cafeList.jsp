@@ -53,8 +53,8 @@
 							</a>
 						</div>
 						<div class="list-title">
-							<a href="#" class="title-index"><strong>${status.count}</strong></a>
-							<a href="#" class="title-index"><strong>${cafe.cafe_name}</strong></a>
+							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${status.count}</strong></a>
+							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${cafe.cafe_name}</strong></a>
 							<span class="cafe-cate"> 
 								<c:if test="${cafe.cafe_cate == 0}"><small>애견 카페</small></c:if> 
 								<c:if test="${cafe.cafe_cate == 1}"><small>애견 동반 카페</small></c:if>
@@ -144,9 +144,7 @@
 			var contentLink = document.createElement("a");
 			contentLink.className = "link";
 		    contentLink.appendChild(document.createTextNode(pos.cafe_name));
-		    <c:forEach var="cafe" items="${cafe}">
-		    contentLink.href = "cafeDetail.do?cafe_num=${cafe.cafe_num}";
-		    </c:forEach>
+		    contentLink.href = "cafeDetail.do?cafe_num="+pos.cafe_num;
 		    contentName.appendChild(contentLink);
 		    info.appendChild(contentName);
 	
@@ -194,9 +192,7 @@
 		    var contentDetail = document.createElement("a");
 		    contentDetail.className = "detail";
 		    contentDetail.innerHTML = "상세보기";
-		    <c:forEach var="cafe" items="${cafe}">
-		    contentDetail.href = "cafeDetail.do?cafe_num=${cafe.cafe_num}";
-		    </c:forEach>
+		    contentDetail.href = "cafeDetail.do?cafe_num="+pos.cafe_num;
 		    info.appendChild(contentDetail);
 		    
 		    var contentBookmark = document.createElement("img");
@@ -214,7 +210,7 @@
 		    kakao.maps.event.addListener(marker, 'click', function() {
 		    	var elem = document.getElementById(pos.cafe_num);
 		    	let rect = elem.getBoundingClientRect();
-		    	$(".place-list").scrollTop(rect.top);
+		    	//$(".place-list").scrollTop(rect.top);
 		    	//$('.place-list').scrollTop(index * rect.height);
 		    	$('.place-list').animate({scrollTop:index * rect.height}, 680);
 		    	
@@ -232,6 +228,10 @@
 		    
 		    var clicked = document.getElementById(pos.cafe_num);
 		    clicked.addEventListener('click', function(){
+		    	var elem = document.getElementById(pos.cafe_num);
+		    	let rect = elem.getBoundingClientRect();
+		    	$('.place-list').animate({scrollTop:index * rect.height}, 680);
+		    	
 		    	if(clickedOverlay){
 		    		clickedOverlay.setMap(null);
 		    		clickedTr.style.background = '';

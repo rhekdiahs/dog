@@ -97,12 +97,25 @@ public class CafeController {
 	
 	@RequestMapping("/cafe/cafeDetail.do")
 	public ModelAndView detail(@RequestParam int cafe_num) {
+		
+		CafeVO cafe = cafeService.selectCafedetail(cafe_num);
+		
 		logger.debug("카페 번호 : " + cafe_num);
 		
-		CafeVO cafe = cafeService.selectCafedetail();
 		
-		return new ModelAndView("cafeDetail", "cafe", cafe);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("cafeDetail");
+		mav.addObject("cafe", cafe);
+		
+		return mav;
 	}
+	
+	@GetMapping("/cafe/cafeWrite.do")
+	public String form() {
+		return "cafeWrite";
+	}
+	
+	
 	
 }
 

@@ -24,10 +24,10 @@ public interface CafeMapper {
 	public int selectCafeCount(Map<String, Object> map);
 	
 	//카페 상세
-	@Select("SELECT c.cafe_num, c.cafe_addr1, c.cafe_cate, c.cafe_name, c.cafe_phone, c.cafe_site, c.cafe_addr2 "
-		  + "FROM cafe c LEFT OUTER JOIN cafe_detail d ON c.cafe_num = d.cafe_num "
-		  + "WHERE c.cafe_num = #{cafe_num}")
-	public CafeVO selectCafedetail();
+	@Select("SELECT * FROM "
+		  + "cafe c LEFT OUTER JOIN cafe_detail d "
+		  + "ON c.cafe_num = d.cafe_num WHERE c.cafe_num = #{cafe_num}")
+	public CafeVO selectCafedetail(Integer cafe_num);
 	
 	//카페 등록
 	@Insert("INSERT INTO cafe_detail (cafe_detail_num,cafe_detail_name,cafe_type, "
