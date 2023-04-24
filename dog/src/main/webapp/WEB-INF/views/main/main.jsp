@@ -6,7 +6,7 @@
 <div id = "main_div">
 	<img id = "main_logo" src = "${pageContext.request.contextPath}/image_bundle/logo1.png">
 	<div class = "menu-grid">
-		<a class = "menu-list" href="${pageContext.request.contextPath}/walk/list.do">산책경로</a>
+		<a class = "menu-list" href="javascript:void(0);" onclick="withWalkCityList()">산책경로</a>
 
 		<a class = "menu-list" href="javascript:void(0);" onclick="withCafeCity()">카페 목록</a>
 
@@ -16,7 +16,7 @@
 	<div class = "menu-login">
 		<c:if test="${!empty user}">
 		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
-		<a href = "#">마이페이지</a>
+		<a href = "${pageContext.request.contextPath}/mypage/mypageMain.do">마이페이지</a>
 		</c:if>
 		<c:if test="${empty user}">
 		<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>
