@@ -127,7 +127,7 @@ public class WalkController {
 	
 	//지역 설정
 	@RequestMapping("/walk/selectRegionFromRegister.do")
-	public String selectRegionFromRegister(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield) {
+	public String selectRegionFromRegister(@RequestParam(value = "keyfield", defaultValue = "서울특별시", required = false) String keyfield) {
 		return "registerWalk";
 	}
 	

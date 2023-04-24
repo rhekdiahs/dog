@@ -51,7 +51,13 @@
 	});
 </script>
 </form:form>
-  	<p class="modes">
+<div style="width:100%;">
+	<form style="min-width:300px;" onsubmit="searchPlaces(); return false;">
+		<input type="text" value="" placeholder="[지역 + 장소]로 검색 하세요. ex)서울 시장" id="keyword" size="15" style="width:85%;">
+		<button type="submit" style="width:13%;">검색</button>
+	</form>
+</div>
+<p class="modes">
 	    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
 	    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
 	    <button id="reset_btn" disabled="disabled" onclick="location.reload(true);" >초기화</button>
@@ -61,6 +67,8 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing,services"></script>
 <script type="text/javascript">
 
+	var keyfield = decodeURI(link);
+	
 	var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var mapOption = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(coordY,coordX), //지도의 중심좌표.
@@ -173,13 +181,7 @@
 		//해당 지점까지의 거리 계산
 		kakao.maps.event.addListener(map, 'mousemove', function (mouseEvent) {
 			if (drawingFlag){
-				
-				if(moveDistance == 1000){
-					alert("CAN'T DRAW");
-					confirm('Restart?');
-					drawFlag = false;
-				} else if(moveDistance < 1000){
-					
+
 					clickPolyline = new kakao.maps.Polyline({
 			            map: '',
 			            path: clickLtnlng,//pathsOfList,
@@ -203,7 +205,7 @@
 					content = '<div class="dotOverlay distanceInfo">총거리 <span class="number">' + moveDistance + '</span>m</div>';
 					
 					showDistance(content, mousePos);
-				}
+				
 			}
 		});
 		
@@ -218,6 +220,7 @@
     		//mouseEvent.coords.Ma;
 
    			if(drawingFlag){
+   				
    				console.log('클릭할 때마다 나와야되는데' + mouseEvent.latLng);
 	   		    clickPos = mouseEvent.latLng;	// 마우스로 클릭한 위치 좌표(object type)
 	   		 	clickLtnlng.push(clickPos);		//배열에 넣어줌
@@ -256,11 +259,9 @@
 	    if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
 	        console.log('Exist');
 	    	
-	    	if(moveDistance < 1000){
 		        // 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
 		        distanceOverlay.setPosition(position);
 		        distanceOverlay.setContent(content);
-	    	}
 	    	
 	    } else { // 커스텀 오버레이가 생성되지 않은 상태이면
 	        console.log('NO Exist');
@@ -276,11 +277,63 @@
 		            zIndex: 3  
 		        });      
 	    	}else if(moveDistance == 1000){
-	    		drawingFlag = false;
-	    		allReset();    
+	    		alert('1000M 이상 금지');    
 	    	}
 	    }
  	}
+  	
+		//장소검색하기
+		var ps = new kakao.maps.services.Places(); 
+		var region = $('#keyfield').val();
+		if(region == ''){
+			console.log('지역 없음');
+		}
+		
+		function searchPlaces() {
+			console.log(region);
+			
+			var link = document.location.href.split('keyfield=')[1];
+		    var keyword = $('#keyword').val();
+		    
+		    console.log(link);
+			console.log(keyword);
+			console.log(keyfield);
+		    
+		   /*  if (!keyword.replace(/^\s+|\s+$/g, '')) {
+		        alert('검색어를 입력해주세요');
+		        return false;
+		    }
+ */
+		    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+		    ps.keywordSearch(keyword, placesSearchCB); 
+		    
+		}
+		
+		function placesSearchCB (data, status, pagination) {
+			if (status === kakao.maps.services.Status.OK) {
+
+		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+		        // LatLngBounds 객체에 좌표를 추가합니다
+		        var bounds = new kakao.maps.LatLngBounds();
+
+		        for (var i=0; i<data.length; i++) {
+		            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+		        }       
+
+		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+		        map.setBounds(bounds);
+		        
+		    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+		        alert('검색 결과가 존재하지 않습니다.');
+		        return;
+		    }else if (status === kakao.maps.services.Status.ERROR) {
+		        alert('검색 결과 중 오류가 발생했습니다.');
+		        return;
+
+		    }
+		}
+		
+		console.log(region);
  	
 	function getPointsAndPost() {		//저장하기
 	    // Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
@@ -310,11 +363,9 @@
 		    } */		    
 	    }
 		console.log(xAndY);							//String[]
+		
+		
   
-		
-		var region = $('#keyfield').val();
-		console.log(region);
-		
 		$.ajax({
 			url : 'insertPoints.do',
 			traditional : true,						//필수
@@ -338,4 +389,6 @@
 			}
 		});
 	}
+		
+		
 </script>
