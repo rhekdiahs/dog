@@ -60,7 +60,7 @@
 <p class="modes">
 	    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
 	    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
-	    <button id="reset_btn" disabled="disabled" onclick="location.reload(true);" >초기화</button>
+	    <button id="reset_btn" disabled="disabled" onclick="resetMap();" >초기화</button>
 	    <button id="register_btn" onclick="getPointsAndPost();">저장</button>
 	</p>
 <div id="map" style="width:100%;height:400px;"></div>
@@ -68,12 +68,23 @@
 <script type="text/javascript">
 
 	var keyfield = decodeURI(link);
+	var curLink = window.location.href;
 	
 	var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-	var mapOption = { //지도를 생성할 때 필요한 기본 옵션
-		center: new kakao.maps.LatLng(coordY,coordX), //지도의 중심좌표.
-		level: 4 //지도의 레벨(확대, 축소 정도)
-	};
+	if(curLink.split('mapCen=')[1] == null){
+		var mapOption = { //지도를 생성할 때 필요한 기본 옵션
+			center: new kakao.maps.LatLng(coordY,coordX), //지도의 중심좌표.
+			level: 4 //지도의 레벨(확대, 축소 정도)
+		};
+	}else{
+		var a = curLink.split('mapCen=')[1].split(',')[0];
+		var b = curLink.split('mapCen=')[1].split(',')[1];
+		var mapOption = { //지도를 생성할 때 필요한 기본 옵션
+			center: new kakao.maps.LatLng(a,b), //지도의 중심좌표.
+			level: 2 //지도의 레벨(확대, 축소 정도)
+		};
+	}
+	
 	
 	var map = new kakao.maps.Map(mapContainer, mapOption), //지도 생성 및 객체 리턴
 		overlays = [];
@@ -117,6 +128,10 @@
            map: '',
            path: clickLtnlng
     }); 
+	function resetMap(){
+		var mapCen = map.getCenter();
+		location.href = '/walk/register.do?keyfield='+keyfield + '&mapCen=' + mapCen.Ma + ','+mapCen.La;
+	}
 	
 	// 버튼 클릭 시 호출되는 핸들러 입니다
 	function selectOverlay(type) {
@@ -134,7 +149,7 @@
             strokeColor: '#fb6f41',
             strokeOpacity: 1
 	    }); 
-		clickLtnlng = [];
+		//clickLtnlng = [];
 	    drawingFlag=false;
 		drawable.disabled = true;
 		undrawable.disabled = true;
@@ -202,10 +217,9 @@
 				    }); 
 					
 					moveDistance = Math.round(clickPolyline.getLength() + moveLine.getLength());
-					content = '<div class="dotOverlay distanceInfo">총거리 <span class="number">' + moveDistance + '</span>m</div>';
+					content = '<div class="dotOverlay distanceInfo" style = "background : white; z-index : 1000; position : relative; top : 25px;">총거리 <span class="number">' + moveDistance + '</span>m</div>';
 					
 					showDistance(content, mousePos);
-				
 			}
 		});
 		
@@ -337,25 +351,26 @@
  	
 	function getPointsAndPost() {		//저장하기
 	    // Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
-	    var data = manager.getData();
+	    /* var data = manager.getData();
 	    var polylinedata = data[kakao.maps.drawing.OverlayType.POLYLINE][0];
-	    var points = polylinedata.points;			//찍은 좌표들
-	    
+	    var points = polylinedata.points; */			//찍은 좌표들
+	    var points = clickLtnlng;
 	    //console.log(data);
-	    console.log(polylinedata);
+	    //console.log(polylinedata);
 	    
+	    console.log(points);
 		let xAndY = [];								//DB 좌표 담을 배열
 		
 	    for(var i=0; i<points.length; i++){
 	    	console.log(points[i]);
-		    console.log(points[i].x);				//경도
-		    console.log(points[i].y);				//위도
+		    console.log(points[i].Ma);				//경도
+		    console.log(points[i].La);				//위도
 		    
 		    
 		    //xAndY.push('(');
-		    xAndY.push(points[i].x.toString());		//문자열로 변환 후 저장
+		    xAndY.push(points[i].La);		//문자열로 변환 후 저장
 		    //xAndY.push(',');
-		    xAndY.push(points[i].y.toString());
+		    xAndY.push(points[i].Ma);
 		    //xAndY.push(')');
 		    
 		   /*  if(i<points.length-1){

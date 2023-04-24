@@ -1,6 +1,9 @@
 
 	
 	var link = document.location.href.split('keyfield=')[1];
+	if(link.length > 7) {
+		link = link.split('&')[0];
+	}
 	var curCity = sessionStorage.getItem('curCity');
 
 	console.log(decodeURI(link))
