@@ -40,4 +40,34 @@ function withCafeCity(){
 			
 		}
 	});
+	
+	function withWalkCityList(){
+		$.ajax({
+			url : "/walk/curCityAjax.do",
+			data : {curCity : sessionStorage.getItem('curCity')},
+			type : 'post',
+			dataType : 'json',
+			success : function(param){
+				location.href = '/walk/list.do?keyfield=' + param.result;
+			},
+			error : function(){
+				alert('ERROR');
+			}
+		});
+	}
+
+	function withWalkCityRegister(){
+		$.ajax({
+			url : "/walk/curCityAjax.do",
+			data : {curCity : sessionStorage.getItem('curCity')},
+			type : 'post',
+			dataType : 'json',
+			success : function(param){
+				location.href = '/walk/register.do?keyfield=' + param.result;
+			},
+			error : function(){
+				alert('ERROR');
+			}
+		});
+	}
 }

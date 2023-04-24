@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beust.jcommander.internal.Console;
 
+import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.util.PagingUtil;
 import kr.spring.walk.service.WalkService;
 import kr.spring.walk.vo.WalkVO;
 
@@ -35,7 +39,7 @@ public class WalkController {
 	
 	//모든 산책경로 리스트
 	@RequestMapping("/walk/list.do")
-	public String walkList(Model model) {
+	public String walkList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model) {
 		List<WalkVO> list = walkService.getWalkList();
 		/*
 		 * List<String> path = new ArrayList<String>(); int len = list.size();
@@ -56,14 +60,83 @@ public class WalkController {
 	
 	//산책경로 등록
 	@RequestMapping("/walk/register.do")
-	public String registerWalk() {
+	public String registerWalk(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield) {
+		return "registerWalk";
+	}
+	
+	@RequestMapping("/walk/curCityAjax.do")
+	@ResponseBody
+	public Map<String, String> curCityAjax(String curCity){
+		String keyfield;
+		System.out.println(curCity);
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		
+		if(curCity.equals("Seoul")) {
+			keyfield = "서울특별시";
+		}else if(curCity.equals("Busan")) {
+			keyfield = "부산광역시";
+		}else if(curCity.equals("Daegu")) {
+			keyfield = "대구광역시";
+		}else if(curCity.equals("Incheon")) {
+			keyfield = "인천광역시";
+		}else if(curCity.equals("Gwangju")) {
+			keyfield = "광주광역시";
+		}else if(curCity.equals("Daejeon")) {
+			keyfield = "대전광역시";
+		}else if(curCity.equals("Ulsan")) {
+			keyfield = "울산광역시";
+		}else if(curCity.equals("Sejong-si")) {
+			keyfield = "세종특별자치시";
+		}else if(curCity.equals("Gyeonggi-do")) {
+			keyfield = "경기도";
+		}else if(curCity.equals("Gangwon-do")) {
+			keyfield = "강원도";
+		}else if(curCity.equals("Chungcheongbuk-do")) {
+			keyfield = "충청북도";
+		}else if(curCity.equals("Chungcheongnam-do")) {
+			keyfield = "충청남도";
+		}else if(curCity.equals("Jeollabuk-do")) {
+			keyfield = "전라북도";
+		}else if(curCity.equals("Jeollanam-do")) {
+			keyfield = "전라남도";
+		}else if(curCity.equals("Gyeongsangbuk-do")) {
+			keyfield = "경상북도";
+		}else if(curCity.equals("Gyeongsangnam-do")) {
+			keyfield = "경상남도";
+		}else if(curCity.equals("Jeju City")) {
+			keyfield = "제주특별자치도";
+		}else {
+			keyfield = "--선택--";
+		}
+		
+		System.out.println(keyfield);
+		mapAjax.put("result", keyfield);
+		
+		return mapAjax;
+	}
+	
+	//지역 설정
+	@RequestMapping("/walk/selectRegionFromList.do")
+	public String selectRegionFromList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model) {
+			List<WalkVO> list = walkService.getWalkList();
+			System.out.println(list);
+			model.addAttribute("list", list);
+			
+			return "walkList";
+		}
+	
+	//지역 설정
+	@RequestMapping("/walk/selectRegionFromRegister.do")
+	public String selectRegionFromRegister(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield) {
 		return "registerWalk";
 	}
 	
 	//DB에 산책경로 좌표 저장
 	@RequestMapping("/walk/insertPoints.do")
 	@ResponseBody
-	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr){
+	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, @RequestParam(value="region") String region){
+		
+		logger.debug("region = " + region);
 		Map<String, String> map = new HashMap<String, String>();
 		
 		if(arr == null) {
@@ -77,6 +150,9 @@ public class WalkController {
 		for(int i=0; i<arr.length-1; i++) {
 			walkVO.setWalk_position(Arrays.toString(arr));
 		}
+		walkVO.setWalk_region(region);
+		walkVO.setMem_id("❤❤❤❤");
+		
 		logger.debug("<<제대로 들어갔는지 확인해볼까>> " + walkVO.getWalk_position().substring(1,walkVO.getWalk_position().length()-1));
 		logger.debug("<<WalkVO도 확인해볼까>> " + walkVO);
 		
