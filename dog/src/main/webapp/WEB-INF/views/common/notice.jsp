@@ -6,13 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>안내</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/setViewHeigh.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/notice.css">
 </head>
 <body>
-<div class="page-one">
-	<h2>안내</h2>
-	<div class="result-display">
-		<div class="align-center">
+<div id = "main">
+	<div id = "main_div">
+		<div class="wrap-cont">
+			<img id = "4orDog_title" src = "${pageContext.request.contextPath}/image_bundle/4orDog.png" style = "margin : 10px 0; width : 60vw">
+			<br>
 			<c:if test="${!empty accessMsg}">
 				${accessMsg}
 			</c:if>
@@ -21,12 +24,10 @@
 			</c:if>
 			<p>
 			<c:if test="${!empty accessUrl}">
-			<input type="button" value="${accessBtn}"
-			  onclick="location.href='${accessUrl}'">
+			<input type="button" value="${accessBtn}" onclick="location.href='${accessUrl}'">
 			</c:if>
 			<c:if test="${empty accessUrl}">
-			<input type="button" value="홈으로"
-			  onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+			<input type="button" value="홈으로" class = "login-btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 			</c:if>
 		</div>
 	</div>

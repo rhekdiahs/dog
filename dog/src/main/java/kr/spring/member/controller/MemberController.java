@@ -225,7 +225,7 @@ public class MemberController {
 	         model.addAttribute("url", "/member/findId.do");
 	         return "common/resultView";
 	      }else {
-	         model.addAttribute("accessMsg", mem_name+"님의 아이디는<br><br>" + Arrays.toString(all_id) + "<br><br>입니다");
+	         model.addAttribute("accessMsg","<strong>"+ mem_name+"</strong>님의 아이디는<br><br><strong>" + Arrays.toString(all_id) + "</strong><br><br>입니다");
 	         return "common/notice";
 	      }
 	   }
@@ -251,7 +251,7 @@ public class MemberController {
 	         model.addAttribute("url", "/member/findPw.do");
 	         return "common/resultView";
 	      }else {
-	         model.addAttribute("accessMsg", "비밀번호는 [" + mem_pw + "] 입니다");
+	         model.addAttribute("accessMsg", "비밀번호는 <br><br><strong>[" + mem_pw + "]</strong><br><br> 입니다");
 	         return "common/notice";
 	      }
 	      
