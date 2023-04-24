@@ -2,16 +2,77 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<div id="map" style="width:500px;height:400px;"></div>
-<c:forEach var="walk" items="${list}">
-	<p><a href="${pageContext.request.contextPath}/walk/viewWalk.do?walk_num=${walk.walk_num}">${walk.walk_num}번 경로</a></p>
-</c:forEach>
-<button onclick="location.href='${pageContext.request.contextPath}/walk/register.do'">🚩경로등록하기🚩</button>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
+<script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
+<script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
+<form:form action="selectRegionFromList.do" method="get">
+	<select name="keyfield" id="keyfield" style="width:100%;">
+		<option selected="selected">--선택--</option>
+		<option value="서울특별시"
+			<c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울</option>
+		<option value="부산광역시"
+			<c:if test="${param.keyfield == '부산광역시'}">selected</c:if>>부산</option>
+		<option value="대구광역시"
+			<c:if test="${param.keyfield == '대구광역시'}">selected</c:if>>대구</option>
+		<option value="인천광역시"
+			<c:if test="${param.keyfield == '인천광역시'}">selected</c:if>>인천</option>
+		<option value="광주광역시"
+			<c:if test="${param.keyfield == '광주광역시'}">selected</c:if>>광주</option>
+		<option value="대전광역시"
+			<c:if test="${param.keyfield == '대전광역시'}">selected</c:if>>대전</option>
+		<option value="울산광역시"
+			<c:if test="${param.keyfield == '울산광역시'}">selected</c:if>>울산</option>
+		<option value="세종특별자치시"
+			<c:if test="${param.keyfield == '세종특별자치시'}">selected</c:if>>세종</option>
+		<option value="경기도"
+			<c:if test="${param.keyfield == '경기도'}">selected</c:if>>경기</option>
+		<option value="강원도"
+			<c:if test="${param.keyfield == '강원도'}">selected</c:if>>강원</option>
+		<option value="충청북도"
+			<c:if test="${param.keyfield == '충청북도'}">selected</c:if>>충북</option>
+		<option value="충청남도"
+			<c:if test="${param.keyfield == '충청남도'}">selected</c:if>>충남</option>
+		<option value="전라북도"
+			<c:if test="${param.keyfield == '전라북도'}">selected</c:if>>전북</option>
+		<option value="전라남도"
+			<c:if test="${param.keyfield == '전라남도'}">selected</c:if>>전남</option>
+		<option value="경상북도"
+			<c:if test="${param.keyfield == '경상북도'}">selected</c:if>>경북</option>
+		<option value="경상남도"
+			<c:if test="${param.keyfield == '경상남도'}">selected</c:if>>경남</option>
+		<option value="제주특별자치도"
+			<c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주</option>
+	</select>
 <script type="text/javascript">
-	let path = [];
+	$('#keyfield').change(function(){
+		location.href = "/walk/selectRegionFromList.do?keyfield=" + $(this).val();
+	});
+</script>
+</form:form>
+<div id="map"></div>
+<c:forEach var="walk" items="${list}">
+	<p><a href="${pageContext.request.contextPath}/walk/viewWalk.do?walk_num=${walk.walk_num}">${walk.walk_num}번 경로</a></p>
+</c:forEach>
+<button onclick="withWalkCityRegister();">🚩경로등록하기🚩</button>
+
+<script type="text/javascript">
+		var mapContainer = document.getElementById('map'),
+	    mapOptions = {
+	        center: new kakao.maps.LatLng(coordX, coordY), // 지도의 중심좌표
+	        level: zoomLevel // 지도의 확대 레벨
+	    };
+		
+		mapContainer.style.width = visualViewport.width + 'px';
+		mapContainer.style.height = visualViewport.width + 'px';
+		
+		// 지도 div와 지도 옵션으로 지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOptions), overlays = []; // 지도에 그려진 도형을 담을 배열
+		    
+		let path = [];
+		
 		<c:forEach var="path" items="${list}">
 			path.push('${path.walk_position}');
 		</c:forEach>
@@ -21,16 +82,7 @@
 		console.log(Array.isArray(path));		//배열이다
 		console.log(path.length);				//8
 		console.log(path[0]);
-	
-		var mapContainer = document.getElementById('map'),
-	    mapOptions = {
-	        center: new kakao.maps.LatLng(37.48643684895834, 126.99568980312195), // 지도의 중심좌표
-	        level: 18 // 지도의 확대 레벨
-	    };
-	    
-		// 지도 div와 지도 옵션으로 지도를 생성합니다
-		var map = new kakao.maps.Map(mapContainer, mapOptions),
-		    overlays = []; // 지도에 그려진 도형을 담을 배열
+		
 		
 		//지도에 가져온 데이터로 도형들을 그립니다
 		//drawPolyline(data[kakao.maps.drawing.OverlayType.POLYLINE]); 

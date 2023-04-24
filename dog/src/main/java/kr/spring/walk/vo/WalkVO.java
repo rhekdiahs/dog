@@ -14,7 +14,14 @@ public class WalkVO {
 	private String walk_info;
 	private int walk_perm;
 	private int mem_num;
+	private String mem_id;
 	
+	public String getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
 	public String getWalk_img() {
 		return walk_img;
 	}
@@ -80,7 +87,7 @@ public class WalkVO {
 		return "WalkVO [walk_num=" + walk_num + ", walk_region=" + walk_region + ", walk_position=" + walk_position
 				+ ", walk_detail_num=" + walk_detail_num + ", walk_bookmark=" + walk_bookmark + ", walk_date="
 				+ walk_date + ", walk_img=" + walk_img + ", walk_info=" + walk_info + ", walk_perm=" + walk_perm
-				+ ", mem_num=" + mem_num + "]";
+				+ ", mem_num=" + mem_num + ", mem_id=" + mem_id + "]";
 	}
 
 	

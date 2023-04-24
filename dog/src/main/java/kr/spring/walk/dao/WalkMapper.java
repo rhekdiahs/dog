@@ -11,7 +11,7 @@ import kr.spring.walk.vo.WalkVO;
 @Mapper
 public interface WalkMapper {
 	//산책경로 등록
-	@Insert("INSERT INTO WALK (walk_num, walk_position) VALUES (walk_seq.nextval,#{walk_position})")
+	@Insert("INSERT INTO WALK (walk_num,walk_region,walk_position,mem_id) VALUES (walk_seq.nextval,#{walk_region},#{walk_position},#{mem_id})")
 	public void regsiterWalk(WalkVO walk);
 	
 	//산책경로 리스트 뽑기
