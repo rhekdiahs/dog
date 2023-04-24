@@ -61,7 +61,7 @@
 <script type="text/javascript">
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
-	        center: new kakao.maps.LatLng(coordX, coordY), // 지도의 중심좌표
+	        center: new kakao.maps.LatLng(coordY, coordX), // 지도의 중심좌표
 	        level: zoomLevel // 지도의 확대 레벨
 	    };
 		

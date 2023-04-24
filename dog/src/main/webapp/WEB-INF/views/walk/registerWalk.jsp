@@ -63,7 +63,7 @@
 
 	var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var mapOption = { //지도를 생성할 때 필요한 기본 옵션
-		center: new kakao.maps.LatLng(coordX,coordY), //지도의 중심좌표.
+		center: new kakao.maps.LatLng(coordY,coordX), //지도의 중심좌표.
 		level: 4 //지도의 레벨(확대, 축소 정도)
 	};
 	
