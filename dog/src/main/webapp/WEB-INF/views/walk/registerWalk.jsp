@@ -53,7 +53,7 @@
 </form:form>
 <div style="width:100%;">
 	<form style="min-width:300px;" onsubmit="searchPlaces(); return false;">
-		<input type="text" value="" placeholder="[지역 + 장소]로 검색 하세요. ex)서울 시장" id="keyword" size="15" style="width:85%;">
+		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword" size="15" style="width:85%;">
 		<button type="submit" style="width:13%;">검색</button>
 	</form>
 </div>
@@ -327,7 +327,6 @@
  */
 		    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 		    ps.keywordSearch(link + ' ' + keyword, placesSearchCB); 
-		    
 		}
 		
 		function placesSearchCB (data, status, pagination) {
@@ -355,7 +354,14 @@
 		}
 		
 		console.log(region);
- 	
+	
+	var geocoder = new kakao.maps.services.Geocoder();
+	//좌표로 주소 얻어오기
+	function searchDetailAddrFromCoords(coords, callback) {
+	    // 좌표로 법정동 상세 주소 정보를 요청합니다
+	    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+	}
+	
 	function getPointsAndPost() {		//저장하기
 	    // Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
 	    /* var data = manager.getData();
@@ -384,10 +390,16 @@
 		    	xAndY.push(',');
 		    } */		    
 	    }
-		console.log(xAndY);							//String[]
 		
+		console.log(xAndY);							//String[]	
+		console.log(points[Math.round(points.length /2)]);
 		
-  
+		searchDetailAddrFromCoords(points[Math.round(points.length /2)], function(result, status) {
+	        if (status === kakao.maps.services.Status.OK) {
+	        		region = result[0].region_1depth_name
+	        }
+		});
+
 		$.ajax({
 			url : 'insertPoints.do',
 			traditional : true,						//필수
@@ -409,7 +421,7 @@
 			error : function(){
 				alert('에러');
 			}
-		});
+		}); 
 	}
 		
 		
