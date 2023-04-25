@@ -149,6 +149,20 @@
             strokeColor: '#fb6f41',
             strokeOpacity: 1
 	    }); 
+		 
+		$('#moveOverlay').hide();
+		
+		if(clickDistance > 0){
+			 var distanceOverlay = new kakao.maps.CustomOverlay({
+		            map: map, // 커스텀오버레이를 표시할 지도입니다
+		            content: '<div id="clickOverlay" class="dotOverlay distanceInfo" style = "background : white;">총거리 <span class="number">' + clickDistance + '</span>m</div>',  // 커스텀오버레이에 표시할 내용입니다
+		            position: clickLtnlng[clickLtnlng.length-1], // 커스텀오버레이를 표시할 위치입니다.
+		            xAnchor: 0,
+		            yAnchor: 0,
+		            zIndex: 3  
+		        });   
+		}
+		
 		//clickLtnlng = [];
 	    drawingFlag=false;
 		drawable.disabled = true;
@@ -217,7 +231,8 @@
 				    }); 
 					
 					moveDistance = Math.round(clickPolyline.getLength() + moveLine.getLength());
-					content = '<div class="dotOverlay distanceInfo" style = "background : white; z-index : 1000; position : relative; top : 25px;">총거리 <span class="number">' + moveDistance + '</span>m</div>';
+					content = '<div id="moveOverlay" class="dotOverlay distanceInfo" style = "background : white; z-index : 1000; position : relative; top : 25px;">총거리 <span class="number">' + moveDistance + '</span>m</div>';
+					//console.log('끌어당긴 데까지 거리' + moveDistance);					
 					
 					showDistance(content, mousePos);
 			}
@@ -248,11 +263,11 @@
 			            strokeOpacity: 1
 				    }); 
 					
-					console.log('<<<<' + clickLtnlng);
+					//console.log('<<<<' + clickLtnlng);
 					clickDistance = Math.round(clickPolyline.getLength());
-					console.log(clickDistance);
+					console.log('클릭한 데까지 거리 = ' + clickDistance);
 					
-					console.log(clickPolyline.Sg);
+					//console.log(clickPolyline.Sg);
 				}
    			}
    		});
@@ -271,16 +286,12 @@
    		
   	function showDistance(content, position) {
 	    if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
-	        console.log('Exist');
 	    	
 		        // 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
 		        distanceOverlay.setPosition(position);
 		        distanceOverlay.setContent(content);
 	    	
-	    } else { // 커스텀 오버레이가 생성되지 않은 상태이면
-	        console.log('NO Exist');
-	    	
-	    	if(moveDistance < 1000){
+	    }else { // 커스텀 오버레이가 생성되지 않은 상태이면
 		        // 커스텀 오버레이를 생성하고 지도에 표시합니다
 		        distanceOverlay = new kakao.maps.CustomOverlay({
 		            map: map, // 커스텀오버레이를 표시할 지도입니다
@@ -289,10 +300,7 @@
 		            xAnchor: 0,
 		            yAnchor: 0,
 		            zIndex: 3  
-		        });      
-	    	}else if(moveDistance == 1000){
-	    		alert('1000M 이상 금지');    
-	    	}
+		        });
 	    }
  	}
   	
