@@ -108,7 +108,7 @@
 	        draggable: false, // 그린 후 드래그가 가능하도록 설정합니다
 	        removable: true, // 그린 후 삭제 할 수 있도록 x 버튼이 표시됩니다
 	        editable: false, // 그린 후 수정할 수 있도록 설정합니다 
-	        strokeColor: '#fb6f41', // 선 색
+	        strokeColor: '#8cdcfc', // 선 색
 	        hintStrokeStyle: 'dash', // 그리중 마우스를 따라다니는 보조선의 선 스타일
 	        hintStrokeOpacity: 0.5  // 그리중 마우스를 따라다니는 보조선의 투명도
 	    }	    
@@ -314,20 +314,19 @@
 		function searchPlaces() {
 			console.log(region);
 			
-			var link = document.location.href.split('keyfield=')[1];
 		    var keyword = $('#keyword').val();
-		    
-		    console.log(link);
-			console.log(keyword);
-			console.log(keyfield);
-		    
+			var link = decodeURI(document.location.href.split('keyfield=')[1]);
+			
+			//링크를 키워드 맨 앞에 넣어서 검색되게
+			//DB에 저장될 때는 범위 좌표 -> if(link != 좌표로 얻어낸 장소 맨앞 시) -> 주소값 -> 맨앞에 있는 거 저장
+			
 		   /*  if (!keyword.replace(/^\s+|\s+$/g, '')) {
 		        alert('검색어를 입력해주세요');
 		        return false;
 		    }
  */
 		    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-		    ps.keywordSearch(keyword, placesSearchCB); 
+		    ps.keywordSearch(link + ' ' + keyword, placesSearchCB); 
 		    
 		}
 		
