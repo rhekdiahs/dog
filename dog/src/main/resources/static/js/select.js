@@ -34,32 +34,28 @@ var mOverlay = new kakao.maps.CustomOverlay({
 	        content: ''
 	    });
 
-
-var isSelfCheck = false;
-function check(){
-	isSelfCheck = true;
-}
 var listEl = document.getElementById('placesList');
 var paginationEl = document.getElementById('pagination');
 var toggleBtn = document.getElementById('toggleBtn');
-toggleBtn.addEventListener('click', () => {
-  toggleBtn.classList.toggle('active');
-  //menu의 클래스리스트에 'active' 클래스가 있다면 없애주고, 없다면 'active' 클래스를 추가는 역활을 한다.
+	toggleBtn.addEventListener('click', () => {
+	  toggleBtn.classList.toggle('active');
 });
 var isClicked = true;
 $(function(){
 	toggleBtn.onclick = function(){
 		if(isClicked){
-			document.getElementById("searchBox").style.display="block";
 			removeMarker();
+			$('#toggleBtn').css("background", '#8cdcfc');
+			$('#toggleBtn').text("주소 검색");
 			isClicked = false;
 		}else{
-			document.getElementById("searchBox").style.display="none";
 			removeMarker();
 			removeAllChildNods(listEl);
 			paginationEl.replaceChildren();
 			$('#placesList').css("height", '');
 			$('#placesList').css("overflow", '');
+			$('#toggleBtn').css("background", '#feb69f');
+			$('#toggleBtn').text("좌표 찍기");
 			isClicked = true;
 		}
 	}
@@ -71,7 +67,6 @@ $(function(){
 });
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-	
 	if(isClicked){
 	    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 	        if (status === kakao.maps.services.Status.OK) {
@@ -84,7 +79,6 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	            var over_info = document.createElement('div');
 	            over_info.className = 'over-info';
 	            mContent.appendChild(over_info);
-	            
 	            
 	            var over_addr1 = document.createElement('div');
 	            over_addr1.className = 'over-addr1';
@@ -116,7 +110,6 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 					$('#cafe_region').val(detailAddr1.substring(0, detailAddr1.indexOf(' ')));
 				}
 			}	
-				
 	    }); 	
 	}
 });
@@ -124,16 +117,14 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
    function searchDetailAddrFromCoords(coords, callback) {
        // 좌표로 법정동 상세 주소 정보를 요청합니다
        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-
 		console.log(coords.getLng());
 		console.log(coords.getLat());
 
 		$('#cafe_y').val(coords.getLat());
 		$('#cafe_x').val(coords.getLng());
-		
-		
-		
+
    }
+
 
 
 //검색해서 찾기
@@ -155,7 +146,32 @@ var geocoder = new kakao.maps.services.Geocoder();
 
 // 키워드로 장소를 검색합니다
 searchPlaces();
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB2(data, status) {
+    if (status === kakao.maps.services.Status.OK) {
+	
+	//WGS84 좌표계에서 사각영역 정보를 표현하는 객체를 생성
+	var bounds2 = new kakao.maps.LatLngBounds();
 
+	for(i=0; i<data.length; i++){
+		//인수로 주어진 좌표를 포함하도록 영역 정보를 확장한다.
+		bounds2.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	}
+		//사각형의 영역을 지정한다.
+		map.setBounds(bounds2);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
@@ -168,6 +184,7 @@ function searchPlaces() {
     }
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+
     ps.keywordSearch(keyword, placesSearchCB); 
 }
 
@@ -175,13 +192,24 @@ function searchPlaces() {
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
 
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-        //console.log(data);
-
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+		if(isClicked){
+			var bounds2 = new kakao.maps.LatLngBounds();
+	
+			for(i=0; i<data.length; i++){
+				//인수로 주어진 좌표를 포함하도록 영역 정보를 확장한다.
+				bounds2.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+			}
+			//사각형의 영역을 지정한다.
+			map.setBounds(bounds2);
+		}else if(isClicked == false){
+			// 정상적으로 검색이 완료됐으면
+	        // 검색 목록과 마커를 표출합니다
+	        displayPlaces(data);
+	        //console.log(data);
+	
+	        // 페이지 번호를 표출합니다
+	        displayPagination(pagination);
+		}
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -198,12 +226,13 @@ function placesSearchCB(data, status, pagination) {
 	var clickedOverlay = null;
 	var clickedTr = null;
 
+
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
      
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
+    bounds = new kakao.maps.LatLngBounds(),
     listStr = '';
     
     // 검색 결과 목록에 추가된 항목들을 제거합니다

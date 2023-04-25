@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+#form_wrap{
+	text-align: center;
+}
+
+input[type=text]{
+	width: 190px;
+	height: 20px;
+	margin: 2px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+}
+label[for=cafe_cate]{
+	margin-right: 5px;
+}
+label[for=cafe_name]{
+	margin-left: -5px;
+	margin-right: 15px;
+}
+
+label[for=cafe_addr]{
+	margin-right: 15px;
+}
+
+label[for=cafe_phone]{
+	margin-left: -15px;
+}
+
+label[for=cafe_site]{
+	margin-left: -15px;
+}
+
+label[for=cafe_content]{
+	vertical-align: top;
+}
+label[for=upload]{
+	margin-left: 30px;
+}
+#cafe_addr1, #cafe_addr2{
+	margin-left: 10px;
+}
+#cafe_phone, #cafe_site{
+	margin-left: 15px;
+}
+#cafe_content{
+	margin-top: 5px;
+	margin-left: 27px;
+	border-radius: 7px;
+	border: 1px solid #ccc;
+	resize: none;
+}
+
+input[type=file]::file-selector-button {
+ 	background: #fff;
+  	border: 1px solid #A2A2A2;
+  	border-radius: 5px;
+  	cursor: pointer;
+  	margin-left: 17px;
+	}
+input[type=file]::file-selector-button:hover {
+    background: #A2A2A2;
+    color: #fff;
+}
+
+#regi_btn{
+	background: #feea3e;
+	width: 65px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+#back_btn{
+	background: #FFF;
+	width: 65px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+

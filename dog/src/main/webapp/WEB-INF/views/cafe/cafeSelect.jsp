@@ -9,11 +9,11 @@
     <div id="map" style="position:relative; overflow:hidden;"></div>
     <div id="menu_wrap" class="bg_white">
         <div class="option">
-		<button id="toggleBtn">주소 검색</button>
-            <div id="searchBox" style="display: none;">
+            <div id="searchBox">           
+                 <button id="toggleBtn">좌표 찍기</button>
                  <form onsubmit="searchPlaces(); return false;">
                     <input type="search" placeholder="내용입력" value="" id="keyword" size="15"> 
-                    <button type="submit" id="submit">검색하기</button> 
+                    <button type="submit" id="submit">검색</button> 
                 </form>
             </div>
         </div>

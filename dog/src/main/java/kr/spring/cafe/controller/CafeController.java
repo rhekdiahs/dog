@@ -1,6 +1,8 @@
 package kr.spring.cafe.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +121,7 @@ public class CafeController {
 		}else if(cafe_region.equals("제주")) {
 			cafe_region = "제주특별자치도";
 		}else {
-			cafe_region = " ";
+			return cafe_region;
 		}
 		
 		return cafe_region;
@@ -188,7 +190,7 @@ public class CafeController {
 	public String submit(@Valid CafeVO cafe,
 					     Model model, HttpSession session,
 					     BindingResult result) {
-
+		String encodedParam = "";
 		logger.debug("<<업로드 파일 용량>> : " + cafe.getCafe_image().length);
 		
 		
@@ -204,8 +206,16 @@ public class CafeController {
 		cafe.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
 
 		cafeService.insertCafeDetail(cafe);
+		System.out.println(cafe.getCafe_region());
+		String returnString = cafe.getCafe_region();
+		try {
+			encodedParam = URLEncoder.encode(returnString, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
-		return "redirect:/cafe/cafeList.do";
+		
+		return "redirect:/cafe/cafeList.do?keyfield="+encodedParam;
 	}
 	
 	

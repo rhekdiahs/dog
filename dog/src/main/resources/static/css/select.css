@@ -39,7 +39,7 @@
 }
 
 #menu_wrap .option button {
-	margin-left: 5px;
+	margin-left: -3px;
 }
 
 #placesList li {
@@ -172,9 +172,9 @@
 }
 
 #toggleBtn{
-	width: 85px;
+	float: left;
+	width: 75px;
 	height: 25px;
-	margin: 7px 0;
 	background: #feb69f;
 	border-radius: 15px;
 	border-style: none;
@@ -201,7 +201,7 @@
 	background: none;
 }
 #keyword{
-	width : 70%;
+	width : 65%;
 	height : 25px;
 	border : none;
 }
