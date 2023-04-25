@@ -37,7 +37,9 @@ public class CafeServiceImpl implements CafeService{
 
 	@Override
 	public void insertCafeDetail(CafeVO cafeVO) {
-		// TODO Auto-generated method stub
+		cafeVO.setCafe_num(cafeMapper.selectCafe_num());
+		cafeMapper.insertCafe(cafeVO);
+		cafeMapper.insertCafeDetail(cafeVO);
 		
 	}
 

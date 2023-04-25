@@ -5,20 +5,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.cafe.service.CafeService;
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -73,6 +81,49 @@ public class CafeController {
 	  return mav;
 	  
 	  }
+	
+	public String setCity(String cafe_region){
+		
+		if(cafe_region.equals("서울")) {
+			cafe_region = "서울특별시";
+		}else if(cafe_region.equals("부산")) {
+			cafe_region = "부산광역시";
+		}else if(cafe_region.equals("대구")) {
+			cafe_region = "대구광역시";
+		}else if(cafe_region.equals("인천")) {
+			cafe_region = "인천광역시";
+		}else if(cafe_region.equals("광주")) {
+			cafe_region = "광주광역시";
+		}else if(cafe_region.equals("대전")) {
+			cafe_region = "대전광역시";
+		}else if(cafe_region.equals("울산")) {
+			cafe_region = "울산광역시";
+		}else if(cafe_region.equals("세종")) {
+			cafe_region = "세종특별자치시";
+		}else if(cafe_region.equals("경기")) {
+			cafe_region = "경기도";
+		}else if(cafe_region.equals("강원")) {
+			cafe_region = "강원도";
+		}else if(cafe_region.equals("충북")) {
+			cafe_region = "충청북도";
+		}else if(cafe_region.equals("충남")) {
+			cafe_region = "충청남도";
+		}else if(cafe_region.equals("전북")) {
+			cafe_region = "전라북도";
+		}else if(cafe_region.equals("전남")) {
+			cafe_region = "전라남도";
+		}else if(cafe_region.equals("경북")) {
+			cafe_region = "경상북도";
+		}else if(cafe_region.equals("경남")) {
+			cafe_region = "경상남도";
+		}else if(cafe_region.equals("제주")) {
+			cafe_region = "제주특별자치도";
+		}else {
+			cafe_region = " ";
+		}
+		
+		return cafe_region;
+	}
 	 
 	/*
 	@RequestMapping("/cafe/cafeList.do")
@@ -110,9 +161,51 @@ public class CafeController {
 		return mav;
 	}
 	
+	@GetMapping("/cafe/cafeSelect.do")
+	public String send() {		
+
+		
+		return "cafeSelect";
+	}
+
+	//등록 폼 호출
 	@GetMapping("/cafe/cafeWrite.do")
-	public String form() {
+	public String form(CafeVO cafe,
+	  		   		   Model model) {
+		System.out.println(cafe);
+		model.addAttribute("cafe_name", cafe.getCafe_name());
+		model.addAttribute("cafe_addr1", cafe.getCafe_addr1());
+		model.addAttribute("cafe_addr2", cafe.getCafe_addr2());
+		model.addAttribute("cafe_y", cafe.getCafe_y());
+		model.addAttribute("cafe_x", cafe.getCafe_x());
+		model.addAttribute("cafe_region", setCity(cafe.getCafe_region()));
+		
 		return "cafeWrite";
+	}
+	
+	//폼 데이터 처리
+	@PostMapping("/cafe/cafeWrite.do")
+	public String submit(@Valid CafeVO cafe,
+					     Model model, HttpSession session,
+					     BindingResult result) {
+
+		logger.debug("<<업로드 파일 용량>> : " + cafe.getCafe_image().length);
+		
+		
+		if(cafe.getCafe_image().length >= 5*1024*1024) {
+			result.reject("limitUploadSize", new Object[] {"5MB"}, null);
+		}
+		
+		
+		if(result.hasErrors()) {
+			return form(cafe, model);
+		}
+		
+		cafe.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
+
+		cafeService.insertCafeDetail(cafe);
+		
+		return "redirect:/cafe/cafeList.do";
 	}
 	
 	

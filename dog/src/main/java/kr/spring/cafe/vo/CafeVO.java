@@ -1,13 +1,12 @@
 package kr.spring.cafe.vo;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 public class CafeVO {
-	@Value("${property.key.apikey}")
-	private String apikey;
-	
 	private int cafe_num;
 	private String cafe_name;
 	private String cafe_x;
@@ -20,20 +19,27 @@ public class CafeVO {
 	private String cafe_site;
 	
 	private int cafe_detail_num;
-	private String cafe_detail_name;
-	private int cafe_type;
 	private String cafe_content;
 	private String cafe_image_name;
 	private byte[] cafe_image;
 	private int cafe_status;
 	private Date cafe_reg_date;
 	private Date cafe_modify_date;
-	public String getApikey() {
-		return apikey;
-	}
-	public void setApikey(String apikey) {
-		this.apikey = apikey;
-	}
+	
+	private int mem_num;
+	
+	
+	//====이미지 BLOB 처리====//
+		//(주의)폼에서 파일업로드 파라미터네임은 반드시 upload로 지정해야 함(mem_photo로 하면 안 됨! upload로 받은 걸 photo로 바꿀 거라서)
+		public void setUpload(MultipartFile upload) throws IOException{
+
+			//MultipartFile -> byte[]
+			setCafe_image(upload.getBytes());
+			//파일 이름
+			setCafe_image_name(upload.getOriginalFilename());
+		}
+
+	
 	public int getCafe_num() {
 		return cafe_num;
 	}
@@ -100,18 +106,6 @@ public class CafeVO {
 	public void setCafe_detail_num(int cafe_detail_num) {
 		this.cafe_detail_num = cafe_detail_num;
 	}
-	public String getCafe_detail_name() {
-		return cafe_detail_name;
-	}
-	public void setCafe_detail_name(String cafe_detail_name) {
-		this.cafe_detail_name = cafe_detail_name;
-	}
-	public int getCafe_type() {
-		return cafe_type;
-	}
-	public void setCafe_type(int cafe_type) {
-		this.cafe_type = cafe_type;
-	}
 	public String getCafe_content() {
 		return cafe_content;
 	}
@@ -148,16 +142,25 @@ public class CafeVO {
 	public void setCafe_modify_date(Date cafe_modify_date) {
 		this.cafe_modify_date = cafe_modify_date;
 	}
-	@Override
-	public String toString() {
-		return "CafeVO [apikey=" + apikey + ", cafe_num=" + cafe_num + ", cafe_name=" + cafe_name + ", cafe_x=" + cafe_x
-				+ ", cafe_y=" + cafe_y + ", cafe_region=" + cafe_region + ", cafe_addr1=" + cafe_addr1 + ", cafe_addr2="
-				+ cafe_addr2 + ", cafe_cate=" + cafe_cate + ", cafe_phone=" + cafe_phone + ", cafe_site=" + cafe_site
-				+ ", cafe_detail_num=" + cafe_detail_num + ", cafe_detail_name=" + cafe_detail_name + ", cafe_type="
-				+ cafe_type + ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name
-				+ ", cafe_status=" + cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date="
-				+ cafe_modify_date + "]";
+	public int getMem_num() {
+		return mem_num;
+	}
+	public void setMem_num(int mem_num) {
+		this.mem_num = mem_num;
 	}
 
+
+	@Override
+	public String toString() {
+		return "CafeVO [cafe_num=" + cafe_num + ", cafe_name=" + cafe_name + ", cafe_x=" + cafe_x + ", cafe_y=" + cafe_y
+				+ ", cafe_region=" + cafe_region + ", cafe_addr1=" + cafe_addr1 + ", cafe_addr2=" + cafe_addr2
+				+ ", cafe_cate=" + cafe_cate + ", cafe_phone=" + cafe_phone + ", cafe_site=" + cafe_site
+				+ ", cafe_detail_num=" + cafe_detail_num + ", cafe_content=" + cafe_content + ", cafe_image_name=" + cafe_image_name
+				+ ", cafe_status=" + cafe_status + ", cafe_reg_date=" + cafe_reg_date + ", cafe_modify_date="
+				+ cafe_modify_date + ", mem_num=" + mem_num + "]";
+	}
+
+	
+	
 }
 

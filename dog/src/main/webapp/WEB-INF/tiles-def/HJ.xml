@@ -17,10 +17,25 @@
     	<put-attribute name="body" value="/WEB-INF/views/cafe/cafeDetail.jsp"/>
     	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
     </definition>
+    <definition name="cafeSelect" template="/WEB-INF/views/template/layout.jsp">
+    	<put-attribute name="title" value="위치 선택"/>
+    	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/cafe/cafeSelect.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
+    </definition>
     <definition name="cafeWrite" template="/WEB-INF/views/template/layout.jsp">
     	<put-attribute name="title" value="카페 등록"/>
     	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
     	<put-attribute name="body" value="/WEB-INF/views/cafe/cafeWrite.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
+    </definition>
+	
+	
+	<!-- 관리자 -->
+	<definition name="adminMain" template="/WEB-INF/views/template/layout.jsp">
+    	<put-attribute name="title" value="관리자 메인페이지"/>
+    	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/cafe/adminMain.jsp"/>
     	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
     </definition>
 	

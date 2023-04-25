@@ -29,12 +29,23 @@ public interface CafeMapper {
 		  + "ON c.cafe_num = d.cafe_num WHERE c.cafe_num = #{cafe_num}")
 	public CafeVO selectCafedetail(Integer cafe_num);
 	
+	
 	//카페 등록
-	@Insert("INSERT INTO cafe_detail (cafe_detail_num,cafe_detail_name,cafe_type, "
-		  + "cafe_content,cafe_image_name,cafe_image,cafe_status,cafe_num,mem_num) "
-		  + "VALUES (cafe_detail_seq.nextval,#{cafe_detail_name},#{cafe_type},#{cafe_content},"
-		  + "#{cafe_image_name},#{cafe_image},#{cafe_status},#{cafe_num},#{mem_num})")
-	public void insertCafeDetail(CafeVO cafeVO);
+	@Select("SELECT cafe_seq.nextval FROM dual")
+	public int selectCafe_num();
+	
+	@Insert("INSERT INTO cafe (cafe_num, cafe_region, cafe_addr1, cafe_cate,"
+			+ "cafe_x, cafe_y, cafe_name, cafe_phone, cafe_site, cafe_addr2) VALUES "
+			+ "(#{cafe_num}, #{cafe_region}, #{cafe_addr1}, #{cafe_cate}, #{cafe_x}, #{cafe_y}, "
+			+ "#{cafe_name}, #{cafe_phone}, #{cafe_site}, #{cafe_addr2})")
+	public void insertCafe(CafeVO cafe);
+	
+	@Insert("INSERT INTO cafe_detail (cafe_detail_num, cafe_num, mem_num, cafe_content, cafe_status,"
+		  + " cafe_image_name, cafe_image) VALUES (cafe_detail_seq.nextval, #{cafe_num}, #{mem_num}, "
+		  + "#{cafe_content}, #{cafe_status}, #{cafe_image_name}, #{cafe_image})")
+	public void insertCafeDetail(CafeVO cafe);
+	
+	
 	
 	@Update("UPDATE cafe SET cafe_x = ${coord_x}, cafe_y = ${coord_y} WHERE cafe_num = ${hospital_num}")
 	public void updateCoords(@Param(value="coord_x") String coord_x, 

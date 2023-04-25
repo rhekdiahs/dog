@@ -13,13 +13,47 @@ a{
 	top : 40px;
 	z-index: 1000;
 }
+
+input[type="search"], input[type="submit"]{
+  	vertical-align: middle;
+}
+select{
+  vertical-align: middle;
+}
 .main-body{
 	margin : 0 auto;
 }
+
+.inputWrap{
+	height : 100%;
+	padding : 5px 10px;
+	border : 1px solid;
+	border-radius : 5px;
+	margin : 10px 15px;
+}
 #keyfield {
+	float : left;
+	height : 25px;
 	border-radius : 5px;
 	font-size : 16px;
+	padding-top : 3px;
+	border : none;
+	background: none;
 }
+#keyword{
+	width : 70%;
+	height : 25px;
+	border : none;
+	padding-left: 10px;
+}
+#submitBtn{
+	float : right;
+	height : 25px;
+	border : none;
+	background : none;
+	padding-top: 1px;
+}
+
 .place-list{
 	overflow:auto;
 }

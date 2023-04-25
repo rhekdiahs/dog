@@ -1,52 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
-<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/write.css">
-<div class="map_wrap">
-    <div id="map" style="position:relative; overflow:hidden;"></div>
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-		<button id="selfCheck" onclick="check()">버튼1</button>
-		<button id="searchCheck" onclick="active()">버튼2</button>
-		<button id = "toggleBtn">토글버튼</button>
-            <div id="searchBox" style="display: none;">
-                 <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="search" placeholder="내용입력" value="" id="keyword" size="15"> 
-                    <button type="submit" id="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
-        <div id="clickLatlng"></div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
-    </div>
-    <div>
-    <Button>위치 등록하기</Button>
-	<form>
-		<div>
-			<input type="radio" id="cafe_cate1" value="0">
-			<label for="cafe_cate1">애견카페</label>
-			<input type="radio" id="cafe_cate2" value="1">
-			<label for="cafe_cate1">애견 동반 카페</label>
-		</div>
-		<div>
-			<span>카페명</span>
-			<input type="text" id = "aaa">
-		</div>
-		<div>
-			<span>주소</span>
-			<input type="text">
-		</div>
-		<div>
-			<span>설명</span>
-			<textarea rows="5" cols="20">내용</textarea>
-		</div>
-	</form>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<div>
+	<div  style="text-align:center;">
+	<form:form action="cafeWrite.do" method="post" 
+			   modelAttribute="cafeVO" enctype="multipart/form-data">
+		<ul>
+			<li>
+				<label>카페 종류</label>
+				<form:radiobutton path="cafe_cate"
+						value="0" id="cafe_cate0"/>애견카페
+				<form:radiobutton path="cafe_cate"
+					value="1" id="cafe_cate1" checked="checked"/>애견 동반 카페
+			</li>
+			<li>
+				<label>카페명</label>
+				<input type="text" id="cafe_name" name="cafe_name" value="${cafe_name}">
+			</li>
+			<li>
+				<label>주소</label>
+				<c:if test="${!empty cafe_addr1}">
+				<input type="text" id="cafe_addr1" name="cafe_addr1" value="${cafe_addr1}">
+				<input type="hidden" id="cafe_addr2" name="cafe_addr2" value ="${cafe_addr2}">
+				</c:if>
+				<c:if test="${empty cafe_addr1}">
+				<input type="hidden" id="cafe_addr1" name="cafe_addr1" value="">
+				<input type="text" id="cafe_addr2" name="cafe_addr2" value="${cafe_addr2}">
+				</c:if>
+			</li>
+			<li>
+				<input type="hidden" id="cafe_y" name="cafe_y" value="${cafe_y}">
+				<input type="hidden" id="cafe_x" name="cafe_x" value="${cafe_x}">
+			</li>
+			<li>
+				<input type="hidden" id="cafe_region" name="cafe_region" value="${cafe_region}">
+			</li>
+			<li>
+				<label>전화번호</label>
+				<input type="text" id="cafe_phone" name="cafe_phone">
+			</li>
+			<li>
+				<label>홈페이지</label>
+				<input type="text" id="cafe_site" name="cafe_site">
+			</li>
+			<li>
+				<label>내용</label>
+				<textarea rows="5" cols="20" id="cafe_content" name="cafe_content"></textarea>
+			</li>
+			<li>
+				<label>사진 업로드</label>
+				<input type="file" name="upload" id="upload">
+			</li>
+			<li>
+				<input type="submit" value="신청">
+				<input type="button" value="뒤로가기" onclick="location.href='cafe/cafeSelect.do'">
+			</li>
+		</ul>
+	</form:form>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/js/write.js"></script>
-

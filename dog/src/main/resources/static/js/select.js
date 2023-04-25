@@ -33,6 +33,8 @@ var mOverlay = new kakao.maps.CustomOverlay({
 	        position: '',
 	        content: ''
 	    });
+
+
 var isSelfCheck = false;
 function check(){
 	isSelfCheck = true;
@@ -74,7 +76,7 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 	        if (status === kakao.maps.services.Status.OK) {
 	            var detailAddr1 = !!result[0].road_address ?  result[0].road_address.address_name : '';
-	            var detailAddr2 = '(지번) ' + result[0].address.address_name ;
+	            var detailAddr2 = result[0].address.address_name;
 	           
 	            var mContent = document.createElement('div');
 	            mContent.className = 'over-wrap';
@@ -83,17 +85,6 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	            over_info.className = 'over-info';
 	            mContent.appendChild(over_info);
 	            
-	            var over_title = document.createElement('div');
-	            over_title.className = 'over-title';
-	            over_title.innerHTML = '선택한 곳의 주소';
-	            over_info.appendChild(over_title);
-	            
-	            var over_close = document.createElement('div');
-	            over_close.className = 'over-close';
-	            over_close.onclick = function(){
-	               mOverlay.setMap(null);
-	            }
-	            over_title.appendChild(over_close);
 	            
 	            var over_addr1 = document.createElement('div');
 	            over_addr1.className = 'over-addr1';
@@ -102,7 +93,7 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	            
 	            var over_addr2 = document.createElement('div');
 	            over_addr2.className = 'over-addr2';
-	            over_addr2.appendChild(document.createTextNode(detailAddr2));
+	            over_addr2.appendChild(document.createTextNode('(지번) ' + detailAddr2));
 	            over_info.appendChild(over_addr2);
 	            
 	            // 마커를 클릭한 위치에 표시합니다 
@@ -115,15 +106,33 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 	            //infowindow.setContent(content);
 	            //infowindow.open(map, mPick);
-				$('#aaa').val(detailAddr1);
-	        }   
-	    }); 		
+				if(detailAddr1 == ''){
+					$('#cafe_addr2').val(detailAddr2);
+					$('#cafe_region').val(detailAddr2.substring(0, detailAddr2.indexOf(' ')));
+					
+				}else{
+					$('#cafe_addr1').val(detailAddr1);
+					$('#cafe_addr2').val(detailAddr2);
+					$('#cafe_region').val(detailAddr1.substring(0, detailAddr1.indexOf(' ')));
+				}
+			}	
+				
+	    }); 	
 	}
 });
 
    function searchDetailAddrFromCoords(coords, callback) {
        // 좌표로 법정동 상세 주소 정보를 요청합니다
        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+
+		console.log(coords.getLng());
+		console.log(coords.getLat());
+
+		$('#cafe_y').val(coords.getLat());
+		$('#cafe_x').val(coords.getLng());
+		
+		
+		
    }
 
 
@@ -218,37 +227,65 @@ function displayPlaces(places) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, name, address, i) {
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayOverlay(marker, name, address);
-            });
-
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                oOverlay.setMap(null);
-            });
-
+        (function(marker, name, address1, address2, i) {
 			kakao.maps.event.addListener(marker, 'click', function() {
 				
                 //displayOverlay(marker, name, address);
 				if (clickedOverlay) {
 		        	clickedOverlay.setMap(null);
 		        	clickedTr.style.background = '';
+	
 		        }
 				clickedTr = document.getElementById('listNum'+ i);
 		        clickedTr.style.background = '#feea3e';
+				displayOverlay(marker, name, address1);
 		        oOverlay.setMap(map);
 		        clickedOverlay = oOverlay;
-				$('#aaa').val(name);
+
+				if(address1 == ''){
+					$('#cafe_addr2').val(address2);
+					$('#cafe_region').val(address2.substring(0, address2.indexOf(' ')));
+				}else{
+					$('#cafe_addr1').val(address1);
+					$('#cafe_addr2').val(address2);
+					$('#cafe_region').val(address1.substring(0, address1.indexOf(' ')));
+				}
+				
+				$('#cafe_name').val(name);
+				$('#cafe_y').val(places[i].y);
+				$('#cafe_x').val(places[i].x);
             });
 //여기
-            itemEl.onmoseover =  function () {
-                displayOverlay(marker, name, address);
+            itemEl.onclick =  function () {//displayOverlay(marker, name, address);
+				
+				
+				if (clickedOverlay) {
+		        	clickedOverlay.setMap(null);
+		        	clickedTr.style.background = '';
+
+		        }
+				clickedTr = document.getElementById('listNum'+ i);
+		        clickedTr.style.background = '#feea3e';
+				displayOverlay(marker, name, address1);
+		        oOverlay.setMap(map);
+		        clickedOverlay = oOverlay;
+
+				if(address1 == ''){
+					$('#cafe_addr2').val(address2);
+					$('#cafe_region').val(address2.substring(0, address2.indexOf(' ')));
+				}else{
+					$('#cafe_addr1').val(address1);
+					$('#cafe_addr2').val(address2);
+					$('#cafe_region').val(address1.substring(0, address1.indexOf(' ')));
+				}
+				$('#cafe_name').val(name);
+				$('#cafe_y').val(places[i].y);
+				$('#cafe_x').val(places[i].x);
+				
+				
             };
 
-            itemEl.onmouseout =  function () {
-                oOverlay.setMap(null);
-            };
-        })(marker, places[i].place_name, places[i].road_address_name, i);
+        })(marker, places[i].place_name, places[i].road_address_name, places[i].address_name,  i);
 
         fragment.appendChild(itemEl);
     }
@@ -288,8 +325,19 @@ function getListItem(index, places) {
     }
                  
       itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                '</div>';           
+                '</div>';
 
+	/*var el = document.createElement('li');
+	var itemStr;
+	var markerbg = document.createElement('<span>');           
+	markerbg.className = 'markerbg marker_';
+	markerbg.appendChild(document.createTextNode((index+1)));
+	el.appendChild(el);
+	
+	var info = document.createElement('div');
+	info*/
+	
+	
     el.innerHTML = itemStr;
     el.id = 'addr';
     el.className = 'item';
@@ -374,8 +422,11 @@ function displayOverlay(marker, name, address){
         
         var o_close = document.createElement('div');
         o_close.className = 'o-close';
-     
         o_title.appendChild(o_close);
+
+		o_close.onclick = function(){
+	         oOverlay.setMap(null);
+	    }
         
         var o_addr1 = document.createElement('div');
         o_addr1.className = 'o-addr1';
