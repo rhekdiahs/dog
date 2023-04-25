@@ -2,6 +2,15 @@
 
 .modes {
 	position: absolute;
-    top: 65px;
+    top: 95px;
     z-index: 10;
+    
 }
+    /* .dotOverlay:after {
+    	content:'';position:absolute;
+    	margin-left:-6px;
+    	left:50%;
+    	bottom:-8px;
+    	width:11px;height:8px;
+    	background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')
+    } */
