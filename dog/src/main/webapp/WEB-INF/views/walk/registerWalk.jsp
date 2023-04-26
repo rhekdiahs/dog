@@ -121,6 +121,7 @@
   	var drawable = document.getElementById('draw_btn');
   	var undrawable = document.getElementById('drawEnd_btn');
   	var reset = document.getElementById('reset_btn');
+  	var saveMap = document.getElementById('register_btn');
     var clickLtnlng = [];
     var clickPos = '';
     var clickDistance = 0;	
@@ -168,6 +169,7 @@
 		drawable.disabled = true;
 		undrawable.disabled = true;
 		reset.disabled = false;
+		saveMap.disabled = false;
 	}
 	
 		//그리기 시작하고 맨처음 누른 좌표를 좌표배열에 저장
@@ -175,6 +177,7 @@
 			undrawable.disabled = false;
 			reset.disabled = false;
 			drawingFlag = true;
+			saveMap.disabled = true;
 			
 			var coords = new kakao.maps.Coords(mouseEvent.coords.La,mouseEvent.coords.Ma);
    			coords = coords.toLatLng();	//WGS84로 변환
@@ -195,6 +198,7 @@
 			undrawable.disabled = true;
 			distanceOverlay = false;
 			drawingFlag = false;
+			saveMap.disabled = false;
 		});
 		
 		//그린 선 삭제 버튼 활성화
@@ -249,7 +253,6 @@
     		//mouseEvent.coords.Ma;
 
    			if(drawingFlag){
-   				
    				console.log('클릭할 때마다 나와야되는데' + mouseEvent.latLng);
 	   		    clickPos = mouseEvent.latLng;	// 마우스로 클릭한 위치 좌표(object type)
 	   		 	clickLtnlng.push(clickPos);		//배열에 넣어줌
@@ -267,8 +270,23 @@
 					clickDistance = Math.round(clickPolyline.getLength());
 					console.log('클릭한 데까지 거리 = ' + clickDistance);
 					
+					if(clickDistance >= 1500){
+						console.log('초과');
+		   				alert('1.5km까지만 등록할 수 있음');
+		   				manager.cancel();
+		   				distanceOverlay.setMap(null);
+		   				distanceOverlay = false;
+		   				clickLtnlng = [];
+		   				clickDistance = 0;
+		   				clickPolyline = '';
+		   				drawingFlag=false;
+		   				undrawable.disabled = true;
+		   				saveMap.disabled = true;
+		   				return;
+		   			}
 					//console.log(clickPolyline.Sg);
 				}
+					
    			}
    		});
    		
@@ -396,14 +414,14 @@
 		
 		searchDetailAddrFromCoords(points[Math.round(points.length /2)], function(result, status) {
 	        if (status === kakao.maps.services.Status.OK) {
-	        		region = result[0].region_1depth_name
+	        		region = result[0].region_1depth_name;
 	        }
 		});
 
 		$.ajax({
 			url : 'insertPoints.do',
 			traditional : true,						//필수
-			data : {pointsArr : xAndY, region : region},
+			data : {pointsArr : xAndY, region : region, distance : clickDistance},
 			type : 'post',
 			dataType : 'json',
 			//status :: null/success/fail
@@ -421,7 +439,7 @@
 			error : function(){
 				alert('에러');
 			}
-		}); 
+		});  
 	}
 		
 		

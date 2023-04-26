@@ -143,13 +143,20 @@ public class WalkController {
 	//DB에 산책경로 좌표 저장
 	@RequestMapping("/walk/insertPoints.do")
 	@ResponseBody
-	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, @RequestParam(value="region") String region, HttpSession session){
+	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, 
+												@RequestParam(value="region") String region, 
+												@RequestParam(value="distance") Integer distance,
+												HttpSession session){
 		logger.debug("region = " + region);
 		Map<String, String> map = new HashMap<String, String>();
+		
+		MemberVO member = (MemberVO)session.getAttribute("user");
 		
 		if(arr == null) {
 			logger.debug("NULL인데요");
 			map.put("status", "null");
+			
+			return map;
 		}
 		
 		logger.debug("<< 첫번째 좌표의 X >>::" + arr[0]);
@@ -159,7 +166,8 @@ public class WalkController {
 			walkVO.setWalk_position(Arrays.toString(arr));
 		}
 		walkVO.setWalk_region(region);
-		walkVO.setMem_id("❤❤❤❤");
+		walkVO.setWalk_distance(distance);
+		walkVO.setMem_id(member.getMem_id());
 		
 		logger.debug("<<제대로 들어갔는지 확인해볼까>> " + walkVO.getWalk_position().substring(1,walkVO.getWalk_position().length()-1));
 		logger.debug("<<WalkVO도 확인해볼까>> " + walkVO);
