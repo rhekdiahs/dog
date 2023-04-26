@@ -50,19 +50,6 @@ $(function(){
 			$('#toggleBtn').text("주소 검색");
 			input.value = null;
 			isClicked = false;
-			$('#submit').click(function(){
-				if (!keyword.replace(/^\s+|\s+$/g, '')) {
-					console.log(keyword);
-			        alert('키워드를 입력해주세요!');
-					$('#placesList').css("height", '');
-					$('#placesList').css("overflow", '');
-			        return false;
-    			}else{
-					$('#placesList').css("height", '200px');
-					$('#placesList').css("overflow", 'auto');	
-				}	
-				
-			});
 		}else{
 			removeMarker();
 			removeAllChildNods(listEl);
@@ -193,13 +180,13 @@ function searchPlaces() {
 
     var keyword = document.getElementById('keyword').value;
 
-	$('#submit').click(function(){
+	/*$('#submit').click(function(){
 		 if (!keyword.replace(/^\s+|\s+$/g, '')) {
 			console.log(keyword);
 	        alert('키워드를 입력해주세요!');
 	        return false;
     	}	
-	});
+	});*/
 
     
 
