@@ -188,8 +188,9 @@ public class CafeController {
 	//폼 데이터 처리
 	@PostMapping("/cafe/cafeWrite.do")
 	public String submit(@Valid CafeVO cafe,
-					     Model model, HttpSession session,
-					     BindingResult result) {
+						BindingResult result,
+					     Model model, HttpSession session
+					     ) {
 		String encodedParam = "";
 		logger.debug("<<업로드 파일 용량>> : " + cafe.getCafe_image().length);
 		

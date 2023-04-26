@@ -41,13 +41,28 @@ var toggleBtn = document.getElementById('toggleBtn');
 	  toggleBtn.classList.toggle('active');
 });
 var isClicked = true;
+var input = document.getElementById('keyword');
 $(function(){
 	toggleBtn.onclick = function(){
 		if(isClicked){
 			removeMarker();
 			$('#toggleBtn').css("background", '#8cdcfc');
 			$('#toggleBtn').text("주소 검색");
+			input.value = null;
 			isClicked = false;
+			$('#submit').click(function(){
+				if (!keyword.replace(/^\s+|\s+$/g, '')) {
+					console.log(keyword);
+			        alert('키워드를 입력해주세요!');
+					$('#placesList').css("height", '');
+					$('#placesList').css("overflow", '');
+			        return false;
+    			}else{
+					$('#placesList').css("height", '200px');
+					$('#placesList').css("overflow", 'auto');	
+				}	
+				
+			});
 		}else{
 			removeMarker();
 			removeAllChildNods(listEl);
@@ -56,13 +71,14 @@ $(function(){
 			$('#placesList').css("overflow", '');
 			$('#toggleBtn').css("background", '#feb69f');
 			$('#toggleBtn').text("좌표 찍기");
+			input.value = null;
 			isClicked = true;
+			$('#submit').click(function(){
+				$('#placesList').css("height", '');
+				$('#placesList').css("overflow", '');
+			});
 		}
 	}
-	$('#submit').click(function(){
-		$('#placesList').css("height", '200px');
-		$('#placesList').css("overflow", 'auto');
-	});
 	
 });
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
@@ -177,11 +193,15 @@ function searchPlaces() {
 
     var keyword = document.getElementById('keyword').value;
 
-    if (!keyword.replace(/^\s+|\s+$/g, '') && submit.click()) {
-		console.log(keyword);
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
+	$('#submit').click(function(){
+		 if (!keyword.replace(/^\s+|\s+$/g, '')) {
+			console.log(keyword);
+	        alert('키워드를 입력해주세요!');
+	        return false;
+    	}	
+	});
+
+    
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 

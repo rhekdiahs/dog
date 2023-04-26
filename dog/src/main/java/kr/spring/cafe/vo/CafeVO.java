@@ -3,11 +3,14 @@ package kr.spring.cafe.vo;
 import java.io.IOException;
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 public class CafeVO {
 	private int cafe_num;
+	@NotEmpty
 	private String cafe_name;
 	private String cafe_x;
 	private String cafe_y;
@@ -19,6 +22,7 @@ public class CafeVO {
 	private String cafe_site;
 	
 	private int cafe_detail_num;
+	@NotEmpty
 	private String cafe_content;
 	private String cafe_image_name;
 	private byte[] cafe_image;

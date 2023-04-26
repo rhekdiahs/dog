@@ -220,8 +220,13 @@
 	margin-right: 10px;
 	border-radius: 5px;
 	border-style: none;
+	background: #494949;
+	color: #FFF;
 }
 
+#searchBox{
+	margin-top: 5px;
+}
 
 /*============= 마커 ==============*/
 

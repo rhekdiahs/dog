@@ -8,50 +8,53 @@
 	<div id="form_wrap">
 	<form:form action="cafeWrite.do" method="post" 
 			   modelAttribute="cafeVO" enctype="multipart/form-data">
+		<form:errors element="div" cssClass="error-color"/>
 		<ul>
 			<li>
-				<label for="cafe_cate">카페 종류</label>
+				<p><label for="cafe_cate">카페 종류</label></p>
 				<form:radiobutton path="cafe_cate"
 						value="0" id="cafe_cate0" checked="checked"/>애견카페
 				<form:radiobutton path="cafe_cate"
 					value="1" id="cafe_cate1"/>애견 동반 카페
 			</li>
 			<li>
-				<label for="cafe_name">카페명</label>
-				<input type="text" id="cafe_name" name="cafe_name" value="${cafe_name}">
+				<p><label for="cafe_name">카페명</label><p>
+				<form:input path="cafe_name" id="cafe_name" name="cafe_name" value="${cafe_name}"/>			
+				<p><form:errors path="cafe_name" cssClass="error-color"/></p>
 			</li>
 			<li>
-				<label for="cafe_addr">주소</label>
+				<p><label for="cafe_addr">주소</label></p>
 				<c:if test="${!empty cafe_addr1}">
-				<input type="text" id="cafe_addr1" name="cafe_addr1" value="${cafe_addr1}">
-				<input type="hidden" id="cafe_addr2" name="cafe_addr2" value ="${cafe_addr2}">
+				<input type="text" id="cafe_addr1"  name="cafe_addr1" value="${cafe_addr1}">
+				<input type="hidden" id="cafe_addr2"  name="cafe_addr2" value ="${cafe_addr2}">		
 				</c:if>
 				<c:if test="${empty cafe_addr1}">
-				<input type="hidden" id="cafe_addr1" name="cafe_addr1" value="">
-				<input type="text" id="cafe_addr2" name="cafe_addr2" value="${cafe_addr2}">
+				<input type="hidden" id="cafe_addr1"  name="cafe_addr1" value=""/>
+				<input type="text" id="cafe_addr2"  name="cafe_addr2" value="${cafe_addr2}">
 				</c:if>
 			</li>
 			<li>
-				<input type="hidden" id="cafe_y" name="cafe_y" value="${cafe_y}">
-				<input type="hidden" id="cafe_x" name="cafe_x" value="${cafe_x}">
+				<input type="hidden" id="cafe_y" name="cafe_y" value="${cafe_y}"/>
+				<input type="hidden" id="cafe_x" name="cafe_x" value="${cafe_x}"/>
 			</li>
 			<li>
-				<input type="hidden" id="cafe_region" name="cafe_region" value="${cafe_region}">
+				<input type="hidden" id="cafe_region" name="cafe_region" value="${cafe_region}"/>
 			</li>
 			<li>
-				<label for="cafe_phone">전화번호</label>
-				<input type="text" id="cafe_phone" name="cafe_phone">
+				<p><label for="cafe_phone">전화번호</label></p>
+				<input type="text" id="cafe_phone" name="cafe_phone"/>
 			</li>
 			<li>
-				<label for="cafe_site">홈페이지</label>
-				<input type="text" id="cafe_site" name="cafe_site">
+				<p><label for="cafe_site">홈페이지</label></p>
+				<input type="text" id="cafe_site" name="cafe_site"/>
 			</li>
 			<li>
-				<label for="cafe_content">내용</label>
-				<textarea rows="5" cols="24" id="cafe_content" name="cafe_content"></textarea>
+				<p><label for="cafe_content">내용</label></p>
+				<form:textarea rows="5" cols="24" path="cafe_content" id="cafe_content" name="cafe_content"/>
+				<p><form:errors path="cafe_content" cssClass="error-color"/></p>
 			</li>
 			<li>
-				<label for="upload">사진 등록</label>
+				<p><label for="upload">사진 등록</label></p>
 				<input type="file" name="upload" id="upload">
 				
 			</li>
