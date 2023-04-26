@@ -16,7 +16,7 @@
 	<div class = "menu-login">
 		<c:if test="${!empty user}">
 		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
-		<a href = "#">마이페이지</a>
+		<a href = "${pageContext.request.contextPath}/mypage/main.do">마이페이지</a>
 		</c:if>
 		<c:if test="${empty user}">
 		<a href="${pageContext.request.contextPath}/member/login.do">로그인</a>

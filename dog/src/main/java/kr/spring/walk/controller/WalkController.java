@@ -39,9 +39,16 @@ public class WalkController {
 	}
 	
 	//모든 산책경로 리스트
-	@RequestMapping("/walk/list.do")
-	public String walkList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model) {
+	@RequestMapping("/walk/walkList.do")
+	public String walkList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model,HttpSession session) {
 		List<WalkVO> list = walkService.getWalkList();
+		
+		MemberVO member = (MemberVO)session.getAttribute("user");
+
+		if(member == null) {
+			logger.debug("어랏 도둑인가");
+		}
+		
 		/*
 		 * List<String> path = new ArrayList<String>(); int len = list.size();
 		 * 
@@ -55,6 +62,7 @@ public class WalkController {
 		 * model.addAttribute("path",path);
 		 */
 		model.addAttribute("list", list);
+		model.addAttribute("user", member);
 		
 		return "walkList";
 	}

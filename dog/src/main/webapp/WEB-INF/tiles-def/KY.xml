@@ -5,6 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+	<!-- walk page -->
 	<definition name="walkList" extends="main">
     	<put-attribute name="title" value="산책 경로 리스트"/>
     	<put-attribute name="body" value="/WEB-INF/views/walk/walkList.jsp"/>
@@ -17,4 +18,15 @@
     	<put-attribute name="title" value="산책 경로"/>
     	<put-attribute name="body" value="/WEB-INF/views/walk/viewWalk.jsp"/>
     </definition>
+    
+    <!-- my page -->
+	<definition name="mypageMain" extends="main">
+    	<put-attribute name="title" value="마이페이지 메인"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/mypageMain.jsp"/>
+    </definition>
+	<definition name="editMain" extends="main">
+    	<put-attribute name="title" value="프로필 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/editProfileMain.jsp"/>
+    </definition>
+    
 </tiles-definitions>
