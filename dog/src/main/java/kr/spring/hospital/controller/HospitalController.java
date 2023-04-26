@@ -1,28 +1,37 @@
 package kr.spring.hospital.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.cafe.vo.CafeVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
+import kr.spring.cafe.controller.CafeController;
 
 @Controller
 public class HospitalController {
@@ -195,8 +204,55 @@ public class HospitalController {
 
 		return new ModelAndView("hospitalDetail", "hospital", hospital);
 	}
+	@GetMapping("/hospital/hospitalSelect.do")
+	public String send() {		
+
+		
+		return "hospitalSelect";
+	}
+
+	@GetMapping("/hospital/hospitalWrite.do")
+	public String form(HospitalVO hospital,
+	  		   		   Model model) {
+		CafeController cafectrl = new CafeController();
+		System.out.println(hospital.getRoad());
+		System.out.println(hospital.getH_address());
+		model.addAttribute("h_name", hospital.getH_name());
+		model.addAttribute("road", hospital.getRoad());
+		model.addAttribute("h_address", hospital.getH_address());
+		model.addAttribute("coord_y", hospital.getCoord_y());
+		model.addAttribute("coord_x", hospital.getCoord_x());
+		model.addAttribute("hospital_region", cafectrl.setCity(hospital.getHospital_region()));
+
+		return "hospitalWrite";
+	}
 	
-	
+
+	 @PostMapping("/hospital/hospitalWrite.do") 
+	 public String submit(@Valid HospitalVO hospital, BindingResult result, Model model, HttpSession session ) {
+		 
+		 String encodedParam = ""; 
+		 
+		 if(hospital.getH_info_image().length >= 5*1024*1024) {
+		 result.reject("limitUploadSize", new Object[] {"5MB"}, null); }
+		 
+		 
+		 if(result.hasErrors()) { return form(hospital, model); }
+		 
+		 hospital.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
+		 
+		 hospitalService.insertHospitalDetail(hospital);
+		 String returnString = hospital.getHospital_region(); 
+		 try { 
+			 encodedParam = URLEncoder.encode(returnString, "UTF-8"); 
+		 } catch (UnsupportedEncodingException e) { 
+			 e.printStackTrace(); 
+		 }
+		 
+		 
+		 return "redirect:/cafe/cafeList.do?keyfield="+encodedParam; 
+	 }
+
 	/* 사용 끝
 	 * @RequestMapping("/hospital/insertCoords.do")
 	@ResponseBody

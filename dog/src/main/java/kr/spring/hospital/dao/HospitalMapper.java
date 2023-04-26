@@ -3,6 +3,7 @@ package kr.spring.hospital.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -38,6 +39,14 @@ public interface HospitalMapper {
 	/*=================================
 	   		 	회원이 데이터 등록
 	==================================*/
+	@Select("SELECT hospital_seq.nextval FROM dual")
+	public int selectHospital_num();
+	
+	@Insert("INSERT INTO hospital (hospital_num, hospital_type, hospital_region, coord_x, coord_y, road, h_name, h_phone, h_address, h_link) VALUES (#{hospital_num}, #{hospital_type}, #{hospital_region}, #{coord_x}, #{coord_y}, #{road}, #{h_name}, #{h_phone}, #{h_address}, #{h_link})")
+	public void insertHospital(HospitalVO hospital);
+	
+	@Insert("INSERT INTO hospital_detail (h_info_num, h_info_detail, h_info_auth, hospital_num, mem_num, h_info_image) VALUES(hospital_detail_seq.nextval, #{h_info_detail}, #{h_info_auth}, #{hospital_num}, #{mem_num}, #{h_info_image})")
+	public void insertHospitalDetail(HospitalVO hospital);
 	
 	
 

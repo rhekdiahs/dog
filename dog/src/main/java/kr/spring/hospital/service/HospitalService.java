@@ -17,4 +17,6 @@ public interface HospitalService {
 	public int selectRegionListCount(Map<String, Object> map);
 	
 	public HospitalVO selectHospital(Integer hospital_num);
+	
+	public void insertHospitalDetail(HospitalVO hospital);
 }

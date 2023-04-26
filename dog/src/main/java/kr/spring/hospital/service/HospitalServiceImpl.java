@@ -43,5 +43,12 @@ public class HospitalServiceImpl implements HospitalService{
 	public HospitalVO selectHospital(Integer hospital_num) {
 		return hospitalMapper.selectHospital(hospital_num);
 	}
+
+	@Override
+	public void insertHospitalDetail(HospitalVO hospital) {
+		hospital.setHospital_num(hospitalMapper.selectHospital_num());
+		hospitalMapper.insertHospital(hospital);
+		hospitalMapper.insertHospitalDetail(hospital);
+	}
 	
 }
