@@ -12,7 +12,7 @@ $(function(){
 		//aTag.attr('href', '/cafe/cafeSelect.do');
 	}else if(link3 == 'hospitalList.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
-		aTag.attr('href', '/cafe/hospitalSelect.do');
+		aTag.attr('href', '/hospital/hospitalSelect.do');
 	}else if(link3 == 'cafeList.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
 		aTag.attr('href', '/cafe/cafeSelect.do');
