@@ -19,7 +19,7 @@ function withCurCity(){
 		type : 'post',
 		dataType : 'json',
 		success : function(param){
-			location.href = '/hospital/main.do?keyfield=' + param.result;
+			location.href = '/hospital/hospitalList.do?keyfield=' + param.result;
 		},
 		error : function(){
 			

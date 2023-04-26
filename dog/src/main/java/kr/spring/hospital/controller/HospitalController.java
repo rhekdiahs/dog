@@ -116,7 +116,7 @@ public class HospitalController {
 		return mapAjax;
 	}
 	
-	@RequestMapping("/hospital/main.do")
+	@RequestMapping("/hospital/hospitalList.do")
 	public String hospital_main(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, 
 								Model model, HttpServletRequest request, 
 								@RequestParam(value = "keyfield", defaultValue = "--선택") String keyfield) {
