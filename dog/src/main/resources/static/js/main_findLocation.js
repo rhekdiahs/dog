@@ -64,7 +64,7 @@ function withWalkCityRegister(){
 		type : 'post',
 		dataType : 'json',
 		success : function(param){
-			location.href = '/walk/register.do?keyfield=' + param.result;
+			location.href = '/walk/registerMap.do?keyfield=' + param.result;
 		},
 		error : function(){
 			alert('ERROR');

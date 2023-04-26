@@ -68,7 +68,7 @@ public class WalkController {
 	}
 	
 	//산책경로 등록
-	@RequestMapping("/walk/register.do")
+	@RequestMapping("/walk/registerMap.do")
 	public String registerWalk(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield) {
 		return "registerWalk";
 	}
@@ -146,7 +146,7 @@ public class WalkController {
 	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, 
 												@RequestParam(value="region") String region, 
 												@RequestParam(value="distance") Integer distance,
-												HttpSession session){
+												HttpSession session, Model model){
 		logger.debug("region = " + region);
 		Map<String, String> map = new HashMap<String, String>();
 		
@@ -206,5 +206,10 @@ public class WalkController {
 		model.addAttribute("center",center);
 		
 		return "viewWalk";
+	}
+	
+	@RequestMapping("/walk/registerForm.do")
+	public String registerForm(@RequestParam(value="walkVO") WalkVO walkVO, Model model, HttpSession session) {
+		return "registerForm";
 	}
 }
