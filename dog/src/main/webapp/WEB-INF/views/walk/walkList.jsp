@@ -56,7 +56,45 @@
 <c:forEach var="walk" items="${list}">
 	<p><a href="${pageContext.request.contextPath}/walk/viewWalk.do?walk_num=${walk.walk_num}">${walk.walk_num}번 경로</a></p>
 </c:forEach>
+<c:if test="${user != null}"></c:if>
 <button onclick="withWalkCityRegister();">🚩경로등록하기🚩</button>
+<script>
+	$(function(){
+		console.log('a');
+		for(var i = 0; i < 8; i++){
+			var bookmarkImage = $('#bookmark_img'+i);
+	 		var walk_num = bookmarkImage.attr('data-img');
+			// var bookmarkIndex = bookmarkImage.attr('data-index');
+			
+			//console.log(walk_num);
+	 		 		console.log(bookmarkImage.attr('id'));
+		 		$.ajax({
+	 			url : '${pageContext.request.contextPath}/bookmark/presentBookmark.do',
+	 			data : {walk_num : walk_num},
+	 			type : 'post',
+	 			dataType : 'json',
+	 			//status :: null/success/fail
+	 			success : function(result){
+	 				if(result.status == 'full'){
+	 					console.log(bookmarkImage.attr('id'));
+	 					bookmarkImage.attr('src','${pageContext.request.contextPath}/image_bundle/bookmark1.png');
+	 				}else if(result.status == 'null'){
+	 					console.log('logout');
+	 				}else if(result.status == 'empty'){
+	 					console.log('empty');
+	 					bookmarkImage.attr('src','${pageContext.request.contextPath}/image_bundle/bookmark0.png');
+	 				}else{
+	 					alert('NETWORK ERROR');
+	 				}
+	 			},
+	 			error : function(){
+	 				alert('에러');
+	 			}
+	 		});	//end of ajax 
+		}
+		
+	});
+</script>
 <!-- list scroll -->
 <div>
 	<ul id="place-list" class="place-list">
@@ -65,18 +103,51 @@
 				<div class="place-bookmark">
 				<!-- BookmarkController 북마크 로직 -->
 				<c:if test=""></c:if><!-- 북마크 되어있는 경우 까만색 이미지 -->
-				<c:if test=""></c:if><!-- 안되어이 잇는 경우 하얀색 이미지 -->
-						<img onclick="bookmark(this)" style="position:relative; top:50px; right:-175px;" src="${pageContext.request.contextPath}/image_bundle/bookmark0.png" width="50">
+				<c:if test="${user != null}"></c:if><!-- 안되어이 잇는 경우 하얀색 이미지 -->
+				<img id="bookmark_img${status.index}" data-img="${list.walk_num}"
+					 onclick="bookmark(this)"
+					 style="position:relative; top:50px; right:-175px;" 
+					 width="50">
 				</div>
 				<div class="list-title">
-					<a href="/walk/walkDetail.do?walk__num=${list.walk_num}"
+					<a href="/walk/viewWalk.do?walk_num=${list.walk_num}"
 						class="title-index"><strong>${status.count}</strong></a> 
-					<a href="/walk/walkDetail.do?walk__num=${list.walk_num}"
+					<a href="/walk/viewWalk.do?walk_num=${list.walk_num}"
 						class="title-index">
 					<c:if test="${list.mem_id != null}"><strong>${list.mem_id}</strong></c:if>
 					<c:if test="${list.mem_id == null}"><strong>🐶🐶</strong></c:if>님의 산책로</a>
 				</div>
 			</li>
+			<script type="text/javascript">
+		 		/* var bookmarkImage = $('#bookmark_img${status.index}');
+		 		var walk_num = bookmarkImage.attr('data-img');
+				// var bookmarkIndex = bookmarkImage.attr('data-index');
+				
+				console.log(walk_num);
+		 		 		
+ 		 		$.ajax({
+		 			url : '${pageContext.request.contextPath}/bookmark/presentBookmark.do',
+		 			data : {walk_num : walk_num},
+		 			type : 'post',
+		 			dataType : 'json',
+		 			//status :: null/success/fail
+		 			success : function(result){
+		 				if(result.status == 'full'){
+		 					bookmarkImage.attr('src','../image_bundle/bookmark1.png');
+		 				}else if(result.status == 'null'){
+		 					console.log('logout');
+		 				}else if(result.status == 'empty'){
+		 					bookmarkImage.attr('src','../image_bundle/bookmark0.png');
+		 				}else{
+		 					alert('NETWORK ERROR');
+		 				}
+		 			},
+		 			error : function(){
+		 				alert('에러');
+		 			}
+		 		});	//end of ajax  */
+		 		
+			</script>
 		</c:forEach>
 	</ul>
 </div>
@@ -160,7 +231,7 @@
 	$(function() {
 		drawPolyline();
 	}); 
-
+ 		
  	//북마크
  	function bookmark(e){
  		var walk_num = e.closest('li').getAttribute('id');

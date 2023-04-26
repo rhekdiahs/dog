@@ -100,4 +100,54 @@ public class BookmarkController {
 		
 		return map;
 	}
+	@RequestMapping("/bookmark/presentBookmark.do")
+	@ResponseBody
+	public Map<String, String> presentBookmark(@RequestParam(value="walk_num", required = false)Integer walk_num, 
+			@RequestParam(value="hospital_num", required = false)Integer hospital_num, 
+			@RequestParam(value="cafe_num", required = false)Integer cafe_num, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if(member == null) {
+			logger.debug("어랏 도둑인가");
+			map.put("status", "null");
+			
+			return map;
+		}
+		
+		BookmarkVO bookmark = initBookmarkCommand();
+		
+		Integer mem_num = member.getMem_num();
+		
+		bookmark.setMem_num(mem_num);
+		
+		int categories = 0;
+		//산책로 =1 병원=2 카페=3
+		
+		if(walk_num != null) {
+			bookmark.setWalk_num(walk_num);
+			categories = 1;
+		} else if(hospital_num != null) {
+			bookmark.setHospital_num(hospital_num);
+			categories = 2;
+		} else if(cafe_num != null) {
+			bookmark.setCafe_num(cafe_num);
+			categories = 3;
+		}
+		
+		bookmark.setCategories(categories);
+		
+		logger.debug(">>>VO 확인 >>>" + bookmark);
+		
+		Integer checkCount = bookmarkService.checkBookmark(bookmark);
+		
+		if(checkCount == 1) {			//이미 북마크 되어있음
+			map.put("status", "full");
+		}else if(checkCount == 0) {
+			map.put("status", "empty");
+		}
+		
+		return map;
+	}
 }
