@@ -13,6 +13,12 @@ $(function(){
 			return false;
 		}
 	});
+	$('#map_search').on('submit', function(){
+		if($('#keyword').val() == ''){
+			alert('키워드를 입력해주세요!');
+			return false;
+		}
+	});
 });
 </script>
 <div class="map_wrap">
@@ -21,7 +27,7 @@ $(function(){
         <div class="option">
             <div id="searchBox">           
                  <button id="toggleBtn">좌표 찍기</button>
-                 <form onsubmit="searchPlaces(); return false;">
+                 <form id="map_search" onsubmit="searchPlaces(); return false;">
                     <input type="search" placeholder="내용입력" value="" id="keyword" size="15"> 
                     <button type="submit" id="submit">검색</button> 
                 </form>
