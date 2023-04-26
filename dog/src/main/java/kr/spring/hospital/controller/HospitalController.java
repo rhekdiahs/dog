@@ -81,7 +81,6 @@ public class HospitalController {
 		
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		String hostURL = request.getHeader("referer").split("/")[3];
-		System.out.println(hostURL);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user == null) {
@@ -119,7 +118,6 @@ public class HospitalController {
 		
 		Map<String, String> mapAjax = new HashMap<String, String>();
 		String hostURL = request.getHeader("referer").split("/")[3];
-		System.out.println(hostURL);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user == null) {

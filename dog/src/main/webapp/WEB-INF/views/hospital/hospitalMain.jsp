@@ -52,7 +52,7 @@
 				<c:forEach var="list" items="${list}" varStatus="status">
 					<li id = "${list.hospital_num}">
 						<div class = "place-bookmark">
-							<div id="bookmark_div${status.index}" onclick = "bookmark(this)" data-num = "${list.hospital_num}">
+							<div onclick = "bookmark(this)" data-num = "${list.hospital_num}">
 								<img src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png">
 							</div>
 						</div>
@@ -124,13 +124,20 @@
 	/*========================= 
 		   마커, 오버레이 그리기
 	===========================*/
-	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	
 	var clickedOverlay = null;
 	var clickedTr = null;
 	hospital_arrays.forEach(function (pos, index) {
 	    // 마커 이미지의 이미지 크기 입니다
-	    var imageSize = new kakao.maps.Size(24, 35);
+	    var imageSize = new kakao.maps.Size(30, 30);
 	    // 마커 이미지를 생성합니다    
+	    if(pos.type == 0){
+	    	var imageSrc = "${pageContext.request.contextPath}/image_bundle/h_marker.png"; 
+	    }else if(pos.type == 1){
+	    	var imageSrc = "${pageContext.request.contextPath}/image_bundle/h_24_marker.png";
+	    }
+	    
+	    
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    // 마커를 생성합니다
 	    var marker = new kakao.maps.Marker({
