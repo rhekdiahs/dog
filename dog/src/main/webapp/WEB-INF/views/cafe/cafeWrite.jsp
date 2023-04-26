@@ -11,11 +11,13 @@
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
 			<li>
-				<p><label for="cafe_cate">카페 종류</label></p>
-				<form:radiobutton path="cafe_cate"
-						value="0" id="cafe_cate0" checked="checked"/>애견카페
-				<form:radiobutton path="cafe_cate"
-					value="1" id="cafe_cate1"/>애견 동반 카페
+				<div class="cafe_cate">
+				<p>카페 종류</p>
+			     <input type="radio" id="cafe_cate0" name="cafe_cate" checked="checked">
+			     <label for="cafe_cate0">애견카페</label>
+			     <input type="radio" id="cafe_cate1" name="cafe_cate">
+			     <label for="cafe_cate1">애견 동반 카페</label>
+				</div>
 			</li>
 			<li>
 				<p><label for="cafe_name">카페명</label><p>
@@ -50,7 +52,7 @@
 			</li>
 			<li>
 				<p><label for="cafe_content">내용</label></p>
-				<form:textarea rows="5" cols="24" path="cafe_content" id="cafe_content" name="cafe_content"/>
+				<form:textarea rows="8" cols="33" path="cafe_content" id="cafe_content" name="cafe_content"/>
 				<p><form:errors path="cafe_content" cssClass="error-color"/></p>
 			</li>
 			<li>
