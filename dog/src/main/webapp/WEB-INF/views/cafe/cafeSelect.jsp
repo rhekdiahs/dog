@@ -5,6 +5,16 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/select.css">
+<script type="text/javascript">
+$(function(){
+	$('#cafe_regi').on('submit', function(){
+		if($('#cafe_addr2').val().trim() == ''){
+			alert('지역을 선택해주세요!');
+			return false;
+		}
+	});
+});
+</script>
 <div class="map_wrap">
     <div id="map" style="position:relative; overflow:hidden;"></div>
     <div id="menu_wrap" class="bg_white">
