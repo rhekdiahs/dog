@@ -57,7 +57,29 @@
 	<p><a href="${pageContext.request.contextPath}/walk/viewWalk.do?walk_num=${walk.walk_num}">${walk.walk_num}번 경로</a></p>
 </c:forEach>
 <button onclick="withWalkCityRegister();">🚩경로등록하기🚩</button>
-
+<!-- list scroll -->
+<div>
+	<ul id="place-list" class="place-list">
+		<c:forEach var="list" items="${list}" varStatus="status">
+			<li id="${list.walk_num}">
+				<div class="place-bookmark">
+				<!-- BookmarkController 북마크 로직 -->
+				<c:if test=""></c:if><!-- 북마크 되어있는 경우 까만색 이미지 -->
+				<c:if test=""></c:if><!-- 안되어이 잇는 경우 하얀색 이미지 -->
+						<img onclick="bookmark(this)" style="position:relative; top:50px; right:-175px;" src="${pageContext.request.contextPath}/image_bundle/bookmark0.png" width="50">
+				</div>
+				<div class="list-title">
+					<a href="/walk/walkDetail.do?walk__num=${list.walk_num}"
+						class="title-index"><strong>${status.count}</strong></a> 
+					<a href="/walk/walkDetail.do?walk__num=${list.walk_num}"
+						class="title-index">
+					<c:if test="${list.mem_id != null}"><strong>${list.mem_id}</strong></c:if>
+					<c:if test="${list.mem_id == null}"><strong>🐶🐶</strong></c:if>님의 산책로</a>
+				</div>
+			</li>
+		</c:forEach>
+	</ul>
+</div>
 <script type="text/javascript">
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
@@ -113,10 +135,17 @@
 		        
 		        var center = Math.floor(coord.length / 2);					//중간좌표
 		        
+		     	var imageSrc = "https://cdn-icons-png.flaticon.com/512/8845/8845799.png"; 
+		        
+			    var imageSize = new kakao.maps.Size(42,42); 
+			    
+			    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+			    
 				//마커 표시
 				var marker = new kakao.maps.Marker({
 					map : map,
-					position : new kakao.maps.LatLng(coord[center].Ma,coord[center].La)
+					position : new kakao.maps.LatLng(coord[center].Ma,coord[center].La),
+					image : markerImage 
 				});
 		        
 				coord =[];
@@ -132,6 +161,34 @@
 		drawPolyline();
 	}); 
 
+ 	//북마크
+ 	function bookmark(e){
+ 		var walk_num = e.closest('li').getAttribute('id');
+ 		console.log(walk_num);
+ 		
+$.ajax({
+	url : '${pageContext.request.contextPath}/bookmark/insert.do',
+	data : {walk_num : walk_num},
+	type : 'post',
+	dataType : 'json',
+	//status :: null/success/fail
+	success : function(result){
+		if(result.status == 'insertOK'){
+			e.setAttribute('src','/image_bundle/bookmark1.png');
+		}else if(result.status == 'null'){
+			alert('null');
+		}else if(result.status == 'deleteOK'){
+			e.setAttribute('src','/image_bundle/bookmark0.png');
+		}else{
+			alert('NETWORK ERROR');
+		}
+	},
+	error : function(){
+		alert('에러');
+	}
+});
+ 	}
+ 	
 /* 	//데이터 경로 저장
 	function pointsToPath(points) {
 	    var len = points.length, 

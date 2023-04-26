@@ -17,4 +17,14 @@ public class BookmarkServiceImpl implements BookmarkService{
 	public void insertBookmark(BookmarkVO bookmark) {
 		bookmarkMapper.insertBookmark(bookmark);
 	}
+
+	@Override
+	public Integer checkBookmark(BookmarkVO bookmark) {
+		return bookmarkMapper.checkBookmark(bookmark);
+	}
+
+	@Override
+	public void deleteBookmark(BookmarkVO bookmark) {
+		bookmarkMapper.deleteBookmark(bookmark);		
+	}
 }

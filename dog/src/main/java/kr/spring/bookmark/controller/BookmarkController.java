@@ -1,5 +1,8 @@
 package kr.spring.bookmark.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.bookmark.service.BookmarkService;
 import kr.spring.bookmark.vo.BookmarkVO;
@@ -45,10 +49,19 @@ public class BookmarkController {
 	}
 	
 	@RequestMapping("/bookmark/insert.do")
-	public String insertBookmark(@RequestParam(value="walk_num", required = false)Integer walk_num, 
+	@ResponseBody
+	public Map<String, String> insertBookmark(@RequestParam(value="walk_num", required = false)Integer walk_num, 
 								@RequestParam(value="hospital_num", required = false)Integer hospital_num, 
 								@RequestParam(value="cafe_num", required = false)Integer cafe_num, HttpSession session) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		Map<String, String> map = new HashMap<String, String>();
+
+		if(member == null) {
+			logger.debug("어랏 도둑인가");
+			map.put("status", "null");
+		}
+		
 		BookmarkVO bookmark = initBookmarkCommand();
 		
 		Integer mem_num = member.getMem_num();
@@ -70,9 +83,21 @@ public class BookmarkController {
 		}
 		
 		bookmark.setCategories(categories);
-		logger.debug(">>>VO 확인 >>>" + bookmark);
-		bookmarkService.insertBookmark(bookmark);
 		
-		return "";
+		logger.debug(">>>VO 확인 >>>" + bookmark);
+
+		Integer checkCount = bookmarkService.checkBookmark(bookmark);
+		
+		if(checkCount == 1) {			//이미 북마크 되어있음
+			//DB에 삭제
+			bookmarkService.deleteBookmark(bookmark);
+			map.put("status", "deleteOK");
+		}else if(checkCount == 0) {
+			//DB에 추가
+			bookmarkService.insertBookmark(bookmark);
+			map.put("status", "insertOK");
+		}
+		
+		return map;
 	}
 }
