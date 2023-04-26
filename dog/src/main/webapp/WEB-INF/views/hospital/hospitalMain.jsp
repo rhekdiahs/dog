@@ -6,6 +6,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab928e5929563772b2932e6182f6b7d9&libraries=services"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
+<script src="${pageContext.request.contextPath}/js/setBookmark.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hospital.css">
 	<div class = "wrap">
@@ -51,10 +52,13 @@
 				<c:forEach var="list" items="${list}" varStatus="status">
 					<li id = "${list.hospital_num}">
 						<div class = "place-bookmark">
-							<a href = "#">
+							<div id="bookmark_div${status.index}" onclick = "bookmark(this)" data-num = "${list.hospital_num}">
 								<img src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png">
-							</a>
+							</div>
 						</div>
+						<script>
+							getBookmark("${list.hospital_num}");
+						</script>
 						<div class = "list-title">
 							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${status.count}</strong></a>
 							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${list.h_name}</strong></a>
@@ -79,6 +83,7 @@
 		</div>
 	</div>
 <script>
+
 	/*========================= 
 			지도 옵션 세팅
 	===========================*/
@@ -194,11 +199,20 @@
 	    }
 	    info.appendChild(contentPhone);
 	    
-	    var contentBookmark = document.createElement("img");
+	    /* var contentBookmark = document.createElement("img");
 	    contentBookmark.className = "bookmark";
+	    contentBookmark.onclick = function(){
+	    	$('#bookmark_div'+index).trigger("click");
+	    	if($(this).attr('src') == "${pageContext.request.contextPath}/image_bundle/bookmark0.png"){
+	    		$(this).attr('src', "${pageContext.request.contextPath}/image_bundle/bookmark1.png");
+	    	}else{
+	    		$(this).attr('src', "${pageContext.request.contextPath}/image_bundle/bookmark0.png");
+	    	} 
+	    	
+	    };
 	    contentBookmark.src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png";
 	    contentBookmark.setAttribute("style", "position : absolute; bottom : 60px; left : 260px; width : 25px; height : 25px; cursor : pointer;");
-	    info.appendChild(contentBookmark);
+	    info.appendChild(contentBookmark); */
 	    
 	    var contentDetail = document.createElement("a");
 	    contentDetail.className = "detail";

@@ -3,6 +3,28 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.hospital.dao.HospitalMapper">
+	<sql id="whichCategories">
+  		<if test="walk_num != null">
+  			AND walk_num = ${walk_num}
+  		</if>
+  		<if test="hospital_num != null">
+  			AND hospital_num = ${hospital_num}
+  		</if>
+  		<if test="cafe_num != null">
+  			AND cafe_num = ${cafe_num}
+  		</if>
+  	</sql>
+  	
+  	<select id="selectBookmark" parameterType="BookmarkVO" resultType="Integer">
+  		SELECT COUNT(*) FROM BOOKMARK_MAP WHERE mem_num =${mem_num} 
+  		<include refid="whichCategories"></include>
+  	</select>
+  	
+  	<delete id="deleteBookmark" parameterType="BookmarkVO">
+  		DELETE FROM BOOKMARK_MAP WHERE mem_num=${mem_num}
+  		<include refid="whichCategories"></include>
+  	</delete>
+  	
 	<sql id = "searchKeyword">
 		AND (h_name LIKE '%' || #{keyword} || '%' OR
 		road LIKE '%' || #{keyword} || '%' OR

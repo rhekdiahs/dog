@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.bookmark.vo.BookmarkVO;
 import kr.spring.hospital.vo.HospitalVO;
 
 @Mapper
@@ -49,5 +50,12 @@ public interface HospitalMapper {
 	public void insertHospitalDetail(HospitalVO hospital);
 	
 	
+	//북마크
+	public Integer selectBookmark(BookmarkVO bookmark);
+	
+	public void deleteBookmark(BookmarkVO bookmark);
+	
+	@Insert("INSERT INTO BOOKMARK_MAP VALUES(bookmark_map_seq.nextval,#{walk_num},#{hospital_num},#{cafe_num},#{mem_num},#{categories})")
+	public void insertBookmark(BookmarkVO bookmark);
 
 }

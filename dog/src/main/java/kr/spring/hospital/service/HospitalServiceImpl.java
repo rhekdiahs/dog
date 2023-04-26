@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.bookmark.vo.BookmarkVO;
 import kr.spring.hospital.dao.HospitalMapper;
 import kr.spring.hospital.vo.HospitalVO;
 
@@ -49,6 +50,21 @@ public class HospitalServiceImpl implements HospitalService{
 		hospital.setHospital_num(hospitalMapper.selectHospital_num());
 		hospitalMapper.insertHospital(hospital);
 		hospitalMapper.insertHospitalDetail(hospital);
+	}
+
+	@Override
+	public Integer selectBookmark(BookmarkVO bookmark) {
+		return hospitalMapper.selectBookmark(bookmark);
+	}
+
+	@Override
+	public void deleteBookmark(BookmarkVO bookmark) {
+		hospitalMapper.deleteBookmark(bookmark);
+	}
+
+	@Override
+	public void insertBookmark(BookmarkVO bookmark) {
+		hospitalMapper.insertBookmark(bookmark);
 	}
 	
 }

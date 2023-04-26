@@ -6,13 +6,13 @@
 
 <ul style = "display : flex; justify-content: space-between;">
 	<li>
-		<a class = "menu-icon" href = "/main/main.do">
+		<a class = "menu-icon" href = "${pageContext.request.contextPath}/main/main.do">
 			<img id = "menu_homeBtn" src = "${pageContext.request.contextPath}/image_bundle/home_btn.png">
 		</a>
 	</li>
 	<c:if test="${!empty user}">
 	<li>
-		<a class = "menu-icon">
+		<a id = "menu-iconA">
 			<img id = "menu_notiBtn">
 		</a>
 	</li>
