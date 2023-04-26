@@ -102,17 +102,18 @@
 		}
 		
 		// 마커 이미지 주소
-		var imageSrc = "https://cdn-icons-png.flaticon.com/512/9922/9922172.png"; 	//빨강색
+		var imageSrc = "https://cdn-icons-png.flaticon.com/512/8998/8998262.png"; 	//빨강색
 		//https://cdn-icons-png.flaticon.com/512/10472/10472640.png					//검정색
 		//https://cdn-icons-png.flaticon.com/512/7803/7803789.png					//테두리있는 간판
 		//https://cdn-icons-png.flaticon.com/512/7803/7803886.png					//테두리없는 간판
 		//https://cdn-icons-png.flaticon.com/512/4970/4970477.png		빨강노랑
 		//https://cdn-icons-png.flaticon.com/512/4880/4880846.png      	검정
+		//https://cdn-icons-png.flaticon.com/512/1130/1130909.png   간판
 		
 		for (var i = 0; i < startEnd.length; i ++) {
 		    
 		    // 이미지 크기
-		    var imageSize = new kakao.maps.Size(25,25); 
+		    var imageSize = new kakao.maps.Size(32,32); 
 		    
 		    // 이미지 생성 
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 

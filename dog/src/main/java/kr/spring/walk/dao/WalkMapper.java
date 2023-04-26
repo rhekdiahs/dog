@@ -15,7 +15,7 @@ public interface WalkMapper {
 	public void regsiterWalk(WalkVO walk);
 	
 	//산책경로 리스트 뽑기
-	@Select("SELECT walk_num,walk_position FROM WALK")
+	@Select("SELECT * FROM WALK")
 	public List<WalkVO> getWalkList();
 	
 	//좌표 불러오기

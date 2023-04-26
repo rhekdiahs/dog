@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.beust.jcommander.internal.Console;
 
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.walk.service.WalkService;
 import kr.spring.walk.vo.WalkVO;
@@ -134,8 +135,7 @@ public class WalkController {
 	//DB에 산책경로 좌표 저장
 	@RequestMapping("/walk/insertPoints.do")
 	@ResponseBody
-	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, @RequestParam(value="region") String region){
-		
+	public Map<String, String> insertPointsArr(@RequestParam(value="pointsArr") String[] arr, @RequestParam(value="region") String region, HttpSession session){
 		logger.debug("region = " + region);
 		Map<String, String> map = new HashMap<String, String>();
 		
