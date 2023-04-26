@@ -13,9 +13,9 @@
 			<li>
 				<div class="cafe_cate">
 				<p>카페 종류</p>
-			     <input type="radio" id="cafe_cate0" name="cafe_cate" checked="checked">
+			     <input type="radio" id="cafe_cate0" name="cafe_cate" checked="checked" value="0">
 			     <label for="cafe_cate0">애견카페</label>
-			     <input type="radio" id="cafe_cate1" name="cafe_cate">
+			     <input type="radio" id="cafe_cate1" name="cafe_cate" value="1">
 			     <label for="cafe_cate1">애견 동반 카페</label>
 				</div>
 			</li>
