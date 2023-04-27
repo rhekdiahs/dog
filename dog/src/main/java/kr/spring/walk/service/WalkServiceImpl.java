@@ -1,6 +1,7 @@
 package kr.spring.walk.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,10 @@ public class WalkServiceImpl implements WalkService{
 	private WalkMapper walkMapper;
 
 	@Override
-	public void insertPoints(WalkVO walk) {
+	public void insertWalkInfoAll(WalkVO walk) {
+		walk.setWalk_num(walkMapper.selectWalkNum());
 		walkMapper.regsiterWalk(walk);
+		walkMapper.registerWalkDetail(walk);
 	}
 
 	@Override
@@ -28,6 +31,16 @@ public class WalkServiceImpl implements WalkService{
 	@Override
 	public String getWalkPosition(Integer walk_num) {
 		return walkMapper.getWalkPosition(walk_num);
+	}
+
+	@Override
+	public Integer getListCount(Map<String, Object> map) {
+		return walkMapper.getListCount(map);
+	}
+
+	@Override
+	public List<WalkVO> getListByRegion(Map<String, Object> map) {
+		return walkMapper.getListByRegion(map);
 	}
 	
 	

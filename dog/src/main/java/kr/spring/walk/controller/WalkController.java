@@ -1,5 +1,7 @@
 package kr.spring.walk.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,18 +9,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.beust.jcommander.internal.Console;
 
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
@@ -40,8 +43,18 @@ public class WalkController {
 	
 	//모든 산책경로 리스트
 	@RequestMapping("/walk/walkList.do")
-	public String walkList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model,HttpSession session) {
-		List<WalkVO> list = walkService.getWalkList();
+	public String walkList(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage,
+						@RequestParam(value = "keyfield", defaultValue = "--선택--") String keyfield, 
+						Model model, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyfield", keyfield);
+		
+		int count = walkService.getListCount(map);
+				
+		PagingUtil page	= new PagingUtil(keyfield, null, currentPage, count, 10, 5, "selectOption.do");
+		
+		List<WalkVO> list = null;
 		
 		MemberVO member = (MemberVO)session.getAttribute("user");
 
@@ -49,6 +62,12 @@ public class WalkController {
 			logger.debug("어랏 도둑인가");
 		}
 		
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = walkService.getListByRegion(map);
+		}
 		/*
 		 * List<String> path = new ArrayList<String>(); int len = list.size();
 		 * 
@@ -62,7 +81,40 @@ public class WalkController {
 		 * model.addAttribute("path",path);
 		 */
 		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
 		model.addAttribute("user", member);
+		
+		return "walkList";
+	}
+	
+	@RequestMapping("/walk/selectOption.do")
+	public String selectedOption(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, @RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, String keyword, HttpSession session, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		
+		int count = walkService.getListCount(map);
+		
+		PagingUtil page	= new PagingUtil(keyfield, null, currentPage, count, 10, 5, "selectOption.do");
+		
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		if(member == null) {
+			logger.debug("어랏 도둑인가");
+		}
+		
+		List<WalkVO> list = null;
+		
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = walkService.getListByRegion(map);
+		}
+		
+		model.addAttribute("list",list);
+		model.addAttribute("user",member);
+		model.addAttribute("page", page.getPage());
 		
 		return "walkList";
 	}
@@ -173,7 +225,7 @@ public class WalkController {
 		logger.debug("<<WalkVO도 확인해볼까>> " + walkVO);
 		
 		walkVO.setWalk_position(walkVO.getWalk_position().substring(1,walkVO.getWalk_position().length()-1));
-		walkService.insertPoints(walkVO);
+		walkService.insertWalkInfoAll(walkVO);
 		
 		map.put("status", "success");
 		
@@ -209,7 +261,54 @@ public class WalkController {
 	}
 	
 	@RequestMapping("/walk/registerForm.do")
-	public String registerForm(@RequestParam(value="walkVO") WalkVO walkVO, Model model, HttpSession session) {
+	public String registerForm(@ModelAttribute("walkVO") WalkVO walkVO, Model model, HttpSession session) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		
+		String mem_id = member.getMem_id();
+		Integer mem_num = member.getMem_num();
+		logger.debug("mem_num" + mem_num);
+		
+		if(walkVO == null) {
+			logger.debug(">>>>>>>>NULL VO>>>>> ");
+		}
+		
+		walkVO.setMem_id(mem_id);
+		//walkVO.setMem_num(mem_num);
+		
+		logger.debug("VO" + walkVO);
+		model.addAttribute("walk", walkVO);
+
 		return "registerForm";
 	}
+	
+	 @PostMapping("/walk/register.do") 
+	 public String register(@ModelAttribute("walkVO") WalkVO walkVO, BindingResult result, Model model, HttpSession session ) {
+		 
+		 String encodedParam = ""; 
+		 logger.debug("sdhfsdjfl" + walkVO);
+		 /*
+		 if(walkVO.getWalk_img().length >= 5*1024*1024) {
+		 result.reject("limitUploadSize", new Object[] {"5MB"}, null); }
+		 
+		 //if(result.hasErrors()) { return form(walkVO, model); }
+		 
+		 walkVO.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
+		 
+		 logger.debug(">>>>빠뜨린 거 없나>>>> : " + walkVO);
+		 
+		 //walkService.insertWalkInfoAll(walkVO);
+		 
+		 String returnString = walkVO.getWalk_region(); 
+		 
+		 try { 
+			 encodedParam = URLEncoder.encode(returnString, "UTF-8"); 
+		 } catch (UnsupportedEncodingException e) { 
+			 e.printStackTrace(); 
+		 }
+		 
+		 */
+		 return "redirect:/walk/walkList.do?keyfield="+encodedParam; 
+	 }
+	 
+	 
 }

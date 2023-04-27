@@ -8,7 +8,11 @@
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
-<form:form action="selectRegionFromList.do" method="get">
+<script src="${pageContext.request.contextPath}/js/setBookmark.js"></script>
+<script src="${pageContext.request.contextPath}/js/setMenuBtn.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
+<form:form action="selectOption.do" method="get">
 	<select name="keyfield" id="keyfield" style="width:100%;">
 		<option selected="selected">--선택--</option>
 		<option value="서울특별시"
@@ -48,66 +52,25 @@
 	</select>
 <script type="text/javascript">
 	$('#keyfield').change(function(){
-		location.href = "/walk/selectRegionFromList.do?keyfield=" + $(this).val();
+		location.href = "/walk/selectOption.do?keyfield=" + $(this).val();
 	});
 </script>
 </form:form>
 <div id="map"></div>
-<c:forEach var="walk" items="${list}">
-	<p><a href="${pageContext.request.contextPath}/walk/viewWalk.do?walk_num=${walk.walk_num}">${walk.walk_num}번 경로</a></p>
-</c:forEach>
-<c:if test="${user != null}"></c:if>
-<button onclick="withWalkCityRegister();">🚩경로등록하기🚩</button>
-<script>
-	$(function(){
-		console.log('a');
-		for(var i = 0; i < 8; i++){
-			var bookmarkImage = $('#bookmark_img'+i);
-	 		var walk_num = bookmarkImage.attr('data-img');
-			// var bookmarkIndex = bookmarkImage.attr('data-index');
-			
-			//console.log(walk_num);
-	 		 		console.log(bookmarkImage.attr('id'));
-		 		$.ajax({
-	 			url : '${pageContext.request.contextPath}/bookmark/presentBookmark.do',
-	 			data : {walk_num : walk_num},
-	 			type : 'post',
-	 			dataType : 'json',
-	 			//status :: null/success/fail
-	 			success : function(result){
-	 				if(result.status == 'full'){
-	 					console.log(bookmarkImage.attr('id'));
-	 					bookmarkImage.attr('src','${pageContext.request.contextPath}/image_bundle/bookmark1.png');
-	 				}else if(result.status == 'null'){
-	 					console.log('logout');
-	 				}else if(result.status == 'empty'){
-	 					console.log('empty');
-	 					bookmarkImage.attr('src','${pageContext.request.contextPath}/image_bundle/bookmark0.png');
-	 				}else{
-	 					alert('NETWORK ERROR');
-	 				}
-	 			},
-	 			error : function(){
-	 				alert('에러');
-	 			}
-	 		});	//end of ajax 
-		}
-		
-	});
-</script>
 <!-- list scroll -->
+<c:if test="${list == null}">리스트가 없습니다</c:if>
+<c:if test="${list != null}">
 <div>
 	<ul id="place-list" class="place-list">
 		<c:forEach var="list" items="${list}" varStatus="status">
 			<li id="${list.walk_num}">
-				<div class="place-bookmark">
-				<!-- BookmarkController 북마크 로직 -->
-				<c:if test=""></c:if><!-- 북마크 되어있는 경우 까만색 이미지 -->
-				<c:if test="${user != null}"></c:if><!-- 안되어이 잇는 경우 하얀색 이미지 -->
-				<img id="bookmark_img${status.index}" data-img="${list.walk_num}"
-					 onclick="bookmark(this)"
-					 style="position:relative; top:50px; right:-175px;" 
-					 width="50">
+				<div class = "place-bookmark">
+					<div onclick = "bookmark(this)" data-num = "${list.walk_num}">
+						<img src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png">
+					</div>
+					<script>
+							getBookmark("${list.walk_num}");
+					</script>
 				</div>
 				<div class="list-title">
 					<a href="/walk/viewWalk.do?walk_num=${list.walk_num}"
@@ -116,6 +79,10 @@
 						class="title-index">
 					<c:if test="${list.mem_id != null}"><strong>${list.mem_id}</strong></c:if>
 					<c:if test="${list.mem_id == null}"><strong>🐶🐶</strong></c:if>님의 산책로</a>
+				</div>
+				<div class="list-content">
+					<p>${list.walk_region}</p>
+					<p>${list.walk_distance}m</p>
 				</div>
 			</li>
 			<script type="text/javascript">
@@ -150,7 +117,11 @@
 			</script>
 		</c:forEach>
 	</ul>
+	<div id = "pageDiv" style = "text-align : center;">
+		${page}
+	</div>
 </div>
+</c:if>
 <script type="text/javascript">
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
@@ -164,31 +135,167 @@
 		// 지도 div와 지도 옵션으로 지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOptions), overlays = []; // 지도에 그려진 도형을 담을 배열
 		    
-		let path = [];
+		var pageDiv = document.getElementById('pageDiv');
+		var rectPage = pageDiv.getBoundingClientRect();
+		var rect = mapContainer.getBoundingClientRect();
+		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height) + 'px');
+		
+		
+		let walk_array = [];
+		
+		let walk_dict = {};
 		
 		<c:forEach var="path" items="${list}">
-			path.push('${path.walk_position}');
+			walk_dict['walk_num'] = '${path.walk_num}';
+			walk_dict['path'] = '${path.walk_position}';
+			walk_dict['city'] = '${path.walk_region}';
+			walk_dict['mem_id'] = '${path.mem_id}';
+			walk_dict['walk_distance'] = '${path.walk_distance}';
+			walk_array.push(walk_dict);
+			walk_dict = {};
 		</c:forEach>
 		
-		console.log(path);
-		console.log(typeof(path));				//object
-		console.log(Array.isArray(path));		//배열이다
-		console.log(path.length);				//8
-		console.log(path[0]);
 		
-		
-		//지도에 가져온 데이터로 도형들을 그립니다
-		//drawPolyline(data[kakao.maps.drawing.OverlayType.POLYLINE]); 
-	    //var pathsOfList = [];
 	    var coord = [];
-	    let len = path.length;
-	    
+	    var clickedOverlay = null;
+		var clickedTr = null;
 	 // Drawing Manager에서 가져온 데이터 중 선을 아래 지도에 표시하는 함수입니다
 		function drawPolyline() {
 			//var len = lines.length, i = 0;
+			walk_array.forEach(function(pos, index){
+				var pathsOfList = pos.path.split(/ |, /);		//구분자
+				console.log(pathsOfList);
+				for(var j=0; j<pathsOfList.length; j+=2){
+		    	  	var latlng = new kakao.maps.LatLng(pathsOfList[j+1],pathsOfList[j]);
+		    	  	coord.push(latlng);
+		    	}
+				
+				var polyline = new kakao.maps.Polyline({
+		            map: map,
+		            path: coord,
+		            strokeColor: '#39f',
+		            strokeOpacity: 1
+		        });
+				var center = Math.floor(coord.length / 2);					//중간좌표
+		        
+		     	var imageSrc = "https://cdn-icons-png.flaticon.com/512/8845/8845799.png"; 
+		        
+			    var imageSize = new kakao.maps.Size(42,42); 
+			    
+			    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+			    
+				//마커 표시
+				var marker = new kakao.maps.Marker({
+					map : map,
+					position : new kakao.maps.LatLng(coord[center].Ma,coord[center].La),
+					image : markerImage 
+				});
+				
+				var content = document.createElement('div');
+				content.className = 'cont-wrap';
+				
+			    var info = document.createElement('div');
+			    info.className = 'info';
+			    content.appendChild(info);
+			    
+			    var contentName = document.createElement("div");
+			    contentName.className = "title";
+			    
+			    var contentLink = document.createElement("a");
+				contentLink.className = "link";
+				contentLink.appendChild(document.createTextNode(pos.mem_id + ' 님의 산책로'));
+			    //contentLink.href = "hospitalDetail.do?hospital_num=" + pos.walk_num;
+			    contentName.appendChild(contentLink);
+				info.appendChild(contentName);
 
-		    for (var i=0; i < path.length; i++) {	//x좌표,y좌표
-		    	var pathsOfList = path[i].split(", ");
+			    var closeBtn = document.createElement('div');
+			    closeBtn.className = "close";
+			    // 닫기 이벤트 추가
+			    closeBtn.onclick = function() {
+			        overlay.setMap(null);
+			    };
+			    contentName.appendChild(closeBtn);
+				
+			    var contentImg = document.createElement("img");
+			    contentImg.className = "image";
+			    contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
+			    contentImg.setAttribute("width", "55");
+			    contentImg.setAttribute("height", "55");
+			    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 5px;");
+				info.appendChild(contentImg);
+				
+			    var contentRoad = document.createElement("div");
+			    contentRoad.className = "addr1";
+			    contentRoad.appendChild(document.createTextNode(pos.city));
+			    info.appendChild(contentRoad);
+			    
+/* 			    var contentAddr = document.createElement("div");
+			    contentAddr.className = "addr2";
+			    contentAddr.appendChild(document.createTextNode("(지번) " + pos.h_address));
+			    info.appendChild(contentAddr);
+			    
+			    var contentPhone = document.createElement("div");
+
+			    if(pos.h_phone != ""){
+				    contentPhone.className = "phone";
+				    var contentPhoneImg = document.createElement('img');
+				    contentPhoneImg.className = "phoneImg";
+				    contentPhoneImg.src = "${pageContext.request.contextPath}/image_bundle/phone_img.png";
+				    contentPhoneImg.setAttribute("style", "margin-top: 2px;");
+				    contentPhone.appendChild(contentPhoneImg)
+				    contentPhone.appendChild(document.createTextNode(" " + pos.h_phone));
+			    }
+			    info.appendChild(contentPhone); */
+			    
+			    var contentDetail = document.createElement("a");
+			    contentDetail.className = "detail";
+			    contentDetail.innerHTML = "상세보기";
+			    contentDetail.href = "hospitalDetail.do?hospital_num=" + pos.hospital_num;
+			    info.appendChild(contentDetail);
+			    
+				var overlay = new daum.maps.CustomOverlay({
+			        position: new kakao.maps.LatLng(coord[center].Ma,coord[center].La),
+			        content: content
+			    });
+				
+				kakao.maps.event.addListener(marker, 'click', function() {
+			    	var elem = document.getElementById(pos.walk_num);
+			    	let rect = elem.getBoundingClientRect();
+			    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
+			        if (clickedOverlay) {
+			        	clickedOverlay.setMap(null);
+			        	clickedTr.style.background = '';
+			        }
+			        clickedTr = document.getElementById(pos.walk_num);
+			        clickedTr.style.background = '#feea3e';
+			        overlay.setMap(map);
+			        clickedOverlay = overlay;
+			        map.setLevel(map.getLevel());
+			        map.panTo(marker.getPosition());
+			    });
+				var clicked = document.getElementById(pos.walk_num);
+			    
+			    clicked.addEventListener('click', function(){
+			    	var elem = document.getElementById(pos.walk_num);
+			    	let rect = elem.getBoundingClientRect();
+			    	//$(".place-list").scrollTop(rect.top);
+			    	//$('.place-list').scrollTop(index * rect.height);
+			    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
+			    	if (clickedOverlay) {
+			        	clickedOverlay.setMap(null);
+			        	clickedTr.style.background = '';
+			        }
+			        clickedTr = document.getElementById(pos.walk_num);
+			        clickedTr.style.background = '#feea3e';
+			        overlay.setMap(map);
+			        clickedOverlay = overlay;
+			        map.setLevel(5);
+			        map.panTo(marker.getPosition());
+			    });
+				coord =[];
+			});
+/* 		    for (var i=0; i < walk_array.length; i++) {	//x좌표,y좌표
+		    	var pathsOfList = walk_array[i].path.split(", ");
 		    	
 		    	for(var j=0; j<pathsOfList.length; j+=2){
 		    	  	var latlng = new kakao.maps.LatLng(pathsOfList[j+1],pathsOfList[j]);
@@ -197,11 +304,9 @@
 		        //var style = lines.options;
 		        var polyline = new kakao.maps.Polyline({
 		            map: map,
-		            path: coord,//pathsOfList,
-		            strokeColor: '#39f',//style.strokeColor,
+		            path: coord,
+		            strokeColor: '#39f',
 		            strokeOpacity: 1
-		            //strokeStyle: style.strokeStyle,
-		            //strokeWeight: style.strokeWeight
 		        });
 		        
 		        var center = Math.floor(coord.length / 2);					//중간좌표
@@ -218,82 +323,36 @@
 					position : new kakao.maps.LatLng(coord[center].Ma,coord[center].La),
 					image : markerImage 
 				});
-		        
+				var overlay = new daum.maps.CustomOverlay({
+			        position: new kakao.maps.LatLng(coord[center].Ma,coord[center].La),
+			        content: '가나다라마ㅏ바'
+			    });
+				
+				kakao.maps.event.addListener(marker, 'click', function() {
+			    	var elem = document.getElementById('183');
+			    	let rect = elem.getBoundingClientRect();
+			    	 $('.place-list').animate({scrollTop:index * rect.height}, 680);
+			        if (clickedOverlay) {
+			        	clickedOverlay.setMap(null);
+			        	clickedTr.style.background = '';
+			        }
+			        clickedTr = document.getElementById('183');
+			        clickedTr.style.background = '#feea3e';
+			        overlay.setMap(map);
+			        clickedOverlay = overlay;
+			        map.setLevel(map.getLevel());
+			        map.panTo(marker.getPosition());
+			    });
 				coord =[];
 				
-				overlays.push(marker); 
-		        overlays.push(polyline);
-		    }
+		    } */
 		    
 		}	
-	 
+		walk_array.forEach(function(pos, index){
+			var imageSize = new kakao.maps.Size
+		});
  	//선그리기 
 	$(function() {
 		drawPolyline();
 	}); 
- 		
- 	//북마크
- 	function bookmark(e){
- 		var walk_num = e.closest('li').getAttribute('id');
- 		console.log(walk_num);
- 		
-$.ajax({
-	url : '${pageContext.request.contextPath}/bookmark/insert.do',
-	data : {walk_num : walk_num},
-	type : 'post',
-	dataType : 'json',
-	//status :: null/success/fail
-	success : function(result){
-		if(result.status == 'insertOK'){
-			e.setAttribute('src','/image_bundle/bookmark1.png');
-		}else if(result.status == 'null'){
-			alert('null');
-		}else if(result.status == 'deleteOK'){
-			e.setAttribute('src','/image_bundle/bookmark0.png');
-		}else{
-			alert('NETWORK ERROR');
-		}
-	},
-	error : function(){
-		alert('에러');
-	}
-});
- 	}
- 	
-/* 	//데이터 경로 저장
-	function pointsToPath(points) {
-	    var len = points.length, 
-	        path = [],
-	        i = 0;
-
-	    for (; i < len; i++) { 
-	        var latlng = new kakao.maps.LatLng(points[i].y, points[i].x);
-	        path.push(latlng)
-	    }
-
-	    return path;
-	} */
-	
-/*     // 마커 클러스터러를 생성합니다 
-    var clusterer = new kakao.maps.MarkerClusterer({
-        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-        minLevel: 10 // 클러스터 할 최소 지도 레벨 
-    });
-	
-    // 데이터를 가져오기 위해 jQuery를 사용합니다
-    // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
-    $.get("/download/web/data/chicken.json", function(data) {
-        // 데이터에서 좌표 값을 가지고 마커를 표시합니다
-        // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
-        var markers = $(data.positions).map(function(i, position) {
-            return new kakao.maps.Marker({
-                position : new kakao.maps.LatLng(position.lng, position.lat)
-            });
-        });
-
-        // 클러스터러에 마커들을 추가합니다
-        clusterer.addMarkers(markers);
-    }); */
-    
 </script>

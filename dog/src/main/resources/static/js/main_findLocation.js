@@ -49,7 +49,7 @@ function withWalkCityList(){
 		type : 'post',
 		dataType : 'json',
 		success : function(param){
-			location.href = '/walk/walkList.do?keyfield=' + param.result;
+			location.href = '/walk/walkList.do?keyfield=--선택--';
 		},
 		error : function(){
 			alert('ERROR');
