@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cafeList.css">
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
+<script src="${pageContext.request.contextPath}/js/setBookmark.js"></script>
 <!-- 중앙컨텐츠 시작 -->
 <div id="main-body">
 	<form action="cafeList.do" id="search_region" method="get">
@@ -51,10 +52,13 @@
 				<c:forEach var="cafe" items="${cafe}" varStatus="status">
 					<li id="${cafe.cafe_num}">
 						<div class="place-bookmark">
-							<a href="#">
+							<div onclick = "bookmark(this)" data-num = "${cafe.cafe_num}">
 							<img src="${pageContext.request.contextPath}/image_bundle/bookmark0.png">
-							</a>
+							</div>
 						</div>
+						<script>
+							getBookmark("${cafe.cafe_num}");
+						</script>
 						<div class="list-title">
 							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${status.count}</strong></a>
 							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${cafe.cafe_name}</strong></a>
