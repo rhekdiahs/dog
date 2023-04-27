@@ -9,7 +9,7 @@ $(function(){
 	
 	if(link3 == 'walkList.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
-		aTag.attr('href', '/walk/register.do?keyfield=서울특별시');
+		aTag.attr('href', '/walk/registerMap.do?keyfield=서울특별시');
 	}else if(link3 == 'hospitalList.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
 		aTag.attr('href', '/hospital/hospitalSelect.do');
