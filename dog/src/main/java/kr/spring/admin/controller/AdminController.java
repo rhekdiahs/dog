@@ -18,7 +18,10 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
-	
+	@RequestMapping("/admin/adminMain.do")
+	public String main(Model model) {
+		return "adminMain";//타일스 설정값
+	}
 	
 	
 	/*

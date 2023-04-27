@@ -47,6 +47,22 @@
 			</div>
 		</div>
 		</c:if>
+		<c:if test="${!empty cafe_detail.cafe_content}">
+		<div class="content-phone margin-bot">
+			<img class="detail-icon" src="${pageContext.request.contextPath}/image_bundle/info.png">
+			<div class="padding-text">
+				<div style="font-size: 14px;">${cafe_detail.cafe_content}</div>
+			</div>
+		</div>
+		</c:if>
+		<c:if test="${empty cafe_detail.cafe_content}">
+		<div class="content-phone margin-bot">
+			<img class="detail-icon" src="${pageContext.request.contextPath}/image_bundle/info.png">
+			<div class="padding-text">
+				<div style="font-size: 14px;">등록된 상세설명이 없습니다.</div>
+			</div>
+		</div>
+		</c:if>		
 	</div>
 	<hr>
 	<div id = "forScrollReview" class = "margin-detail">
@@ -84,7 +100,9 @@
 			<c:if test="${!empty cafe_detail.cafe_image_name}">
 			<img src = "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=${cafe.cafe_num}">		
 			</c:if>
+			<c:if test="${empty cafe_detail.cafe_image_name}">
 			<img src = "${pageContext.request.contextPath}/image_bundle/logo.jpg" style = "width : 100%;">
+			</c:if>
 			<%-- <c:if test="${empty hospital.h_info_image_name}">
 				<div style = "text-align : center; margin-bottom : 10px;">
 					등록된 이미지가 없습니다.

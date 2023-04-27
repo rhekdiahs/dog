@@ -12,6 +12,9 @@
 		</tr>
 		<tr>
 			<td>${user.mem_num}</td>
+			<td>${user.mem_name}</td>
+			<td>${user.mem_id}</td>
+			<td>${user.mem_regdate}</td>
 		</tr>
 	</table>
 	</c:if>
