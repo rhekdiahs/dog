@@ -66,10 +66,13 @@ public class BookmarkController {
 			
 			if(hostURL.equals("walk")) {
 				bookmark.setWalk_num(pk_num);
+				bookmark.setCategories(1);
 			}else if(hostURL.equals("hospital")) {
 				bookmark.setHospital_num(pk_num);
+				bookmark.setCategories(2);
 			}else if(hostURL.equals("cafe")) {
 				bookmark.setCafe_num(pk_num);
+				bookmark.setCategories(3);
 			}
 			Integer cnt = bookmarkService.checkBookmark(bookmark);
 			
