@@ -1,6 +1,7 @@
 package kr.spring.walk.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class WalkVO {
 	private int walk_num;
@@ -11,11 +12,40 @@ public class WalkVO {
 	private int walk_detail_num;
 	private int walk_bookmark;
 	private Date walk_date;
-	private String walk_img;
+	private byte[] walk_img;
+	private String walk_img_name;
+	
 	private String walk_info;
 	private int walk_perm;
 	private int mem_num;
 	private int walk_distance;
+	private String walk_address;				//지번주소
+	private String walk_road;					//도로명주소
+	
+	public String getWalk_address() {
+		return walk_address;
+	}
+	public void setWalk_address(String walk_address) {
+		this.walk_address = walk_address;
+	}
+	public String getWalk_road() {
+		return walk_road;
+	}
+	public void setWalk_road(String walk_road) {
+		this.walk_road = walk_road;
+	}
+	public byte[] getWalk_img() {
+		return walk_img;
+	}
+	public void setWalk_img(byte[] walk_img) {
+		this.walk_img = walk_img;
+	}
+	public String getWalk_img_name() {
+		return walk_img_name;
+	}
+	public void setWalk_img_name(String walk_img_name) {
+		this.walk_img_name = walk_img_name;
+	}
 	
 	public int getWalk_distance() {
 		return walk_distance;
@@ -28,12 +58,6 @@ public class WalkVO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
-	}
-	public String getWalk_img() {
-		return walk_img;
-	}
-	public void setWalk_img(String walk_img) {
-		this.walk_img = walk_img;
 	}
 	public String getWalk_info() {
 		return walk_info;
@@ -93,8 +117,10 @@ public class WalkVO {
 	public String toString() {
 		return "WalkVO [walk_num=" + walk_num + ", walk_region=" + walk_region + ", walk_position=" + walk_position
 				+ ", mem_id=" + mem_id + ", walk_detail_num=" + walk_detail_num + ", walk_bookmark=" + walk_bookmark
-				+ ", walk_date=" + walk_date + ", walk_img=" + walk_img + ", walk_info=" + walk_info + ", walk_perm="
-				+ walk_perm + ", mem_num=" + mem_num + ", walk_distance=" + walk_distance + "]";
+				+ ", walk_date=" + walk_date + ", walk_img=" + Arrays.toString(walk_img) + ", walk_img_name="
+				+ walk_img_name + ", walk_info=" + walk_info + ", walk_perm=" + walk_perm + ", mem_num=" + mem_num
+				+ ", walk_distance=" + walk_distance + ", walk_address=" + walk_address + ", walk_road=" + walk_road
+				+ "]";
 	}
-	
+
 }

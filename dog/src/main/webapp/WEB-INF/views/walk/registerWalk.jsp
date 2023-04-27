@@ -7,7 +7,10 @@
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
+<div id="main_body">
+<div id="form_wrap">
 <form:form action="selectRegionFromRegister.do" method="get">
+	<div class="inputWrap">
 	<select name="keyfield" id="keyfield" style="width:100%;">
 		<option selected="selected">--선택--</option>
 		<option value="서울특별시"
@@ -51,19 +54,28 @@
 	});
 </script>
 </form:form>
-<div style="width:100%;">
-	<form style="min-width:300px;" onsubmit="searchPlaces(); return false;">
-		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword" size="15" style="width:85%;">
-		<button type="submit" style="width:13%;">검색</button>
+	<form id="map_search_bar" onsubmit="searchPlaces(); return false;">
+		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword">
+		<button type="submit" id="keyword_search">검색</button>
 	</form>
+</div>
 </div>
 <p class="modes">
 	    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
 	    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
 	    <button id="reset_btn" disabled="disabled" onclick="resetMap();" >초기화</button>
-	    <button id="register_btn" onclick="getPointsAndPost();">저장</button>
-	</p>
+	    <button id="register_btn" disabled="disabled" onclick="next();">완료</button>
+</p>
 <div id="map" style="width:100%;height:400px;"></div>
+<form:form action="registerForm.do" modelAttribute="walkVO" id="registerForm" name="registerForm" method="post">
+	<form:input path="walk_position" type="hidden" value=""/>
+	<form:input path="walk_region" type="hidden" value=""/>
+	<form:input path="walk_address" type="hidden" value=""/>
+	<form:input path="walk_road" type="hidden" value=""/>
+	<form:input path="walk_distance" type="hidden" value=""/>
+	<form:button type="submit"></form:button>
+</form:form>
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing,services"></script>
 <script type="text/javascript">
 
@@ -131,7 +143,7 @@
     }); 
 	function resetMap(){
 		var mapCen = map.getCenter();
-		location.href = '/walk/register.do?keyfield='+keyfield + '&mapCen=' + mapCen.Ma + ','+mapCen.La;
+		location.href = '/walk/registerMap.do?keyfield='+keyfield + '&mapCen=' + mapCen.Ma + ','+mapCen.La;
 	}
 	
 	// 버튼 클릭 시 호출되는 핸들러 입니다
@@ -174,6 +186,7 @@
 	
 		//그리기 시작하고 맨처음 누른 좌표를 좌표배열에 저장
 		manager.addListener('drawstart', function(mouseEvent) {
+			drawable.disabled = true;
 			undrawable.disabled = false;
 			reset.disabled = false;
 			drawingFlag = true;
@@ -184,13 +197,7 @@
    			clickLtnlng.push(coords);
    			console.log(coords); 
 		});
-		
-		//그리기 끝나면 더 클릭 못함
-		manager.addListener('state_changed', function(e) {
-		    clickLtnlng = [];
-		    drawingFlag=false;
-		});
-		
+
 		//그리기 끝나면 그리기버튼 비활성화
 		manager.addListener('drawend', function(e){
 			console.log(e);
@@ -270,9 +277,9 @@
 					clickDistance = Math.round(clickPolyline.getLength());
 					console.log('클릭한 데까지 거리 = ' + clickDistance);
 					
-					if(clickDistance >= 1500){
+					if(clickDistance > 3000){
 						console.log('초과');
-		   				alert('1.5km까지만 등록할 수 있음');
+		   				alert('3km까지만 등록할 수 있음');
 		   				manager.cancel();
 		   				distanceOverlay.setMap(null);
 		   				distanceOverlay = false;
@@ -325,24 +332,15 @@
 		//장소검색하기
 		var ps = new kakao.maps.services.Places(); 
 		var region = $('#keyfield').val();
-		if(region == ''){
-			console.log('지역 없음');
-		}
 		
 		function searchPlaces() {
-			console.log(region);
-			
 		    var keyword = $('#keyword').val();
 			var link = decodeURI(document.location.href.split('keyfield=')[1]);
 			
-			//링크를 키워드 맨 앞에 넣어서 검색되게
-			//DB에 저장될 때는 범위 좌표 -> if(link != 좌표로 얻어낸 장소 맨앞 시) -> 주소값 -> 맨앞에 있는 거 저장
-			
-		   /*  if (!keyword.replace(/^\s+|\s+$/g, '')) {
-		        alert('검색어를 입력해주세요');
-		        return false;
+			 if (!keyword.replace(/^\s+|\s+$/g, '')) {
+		        keyword = '';
 		    }
- */
+			
 		    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 		    ps.keywordSearch(link + ' ' + keyword, placesSearchCB); 
 		}
@@ -374,13 +372,17 @@
 		console.log(region);
 	
 	var geocoder = new kakao.maps.services.Geocoder();
-	//좌표로 주소 얻어오기
-	function searchDetailAddrFromCoords(coords, callback) {
-	    // 좌표로 법정동 상세 주소 정보를 요청합니다
-	    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
-	}
+	var address ='';
+
+ 	//DB에 보낼 데이터
+ 	var regForm = document.getElementById('registerForm');
+	var walkPos = document.getElementById('walk_position');
+	var walkReg = document.getElementById('walk_region');
+	var walkDis = document.getElementById('walk_distance');
+	var walkAdd = document.getElementById('walk_address');
+	var walkRoad = document.getElementById('walk_road');
 	
-	function getPointsAndPost() {		//저장하기
+	function next() {		//저장하기
 	    // Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
 	    /* var data = manager.getData();
 	    var polylinedata = data[kakao.maps.drawing.OverlayType.POLYLINE][0];
@@ -410,37 +412,65 @@
 	    }
 		
 		console.log(xAndY);							//String[]	
-		console.log(points[Math.round(points.length /2)]);
 		
-		searchDetailAddrFromCoords(points[Math.round(points.length /2)], function(result, status) {
-	        if (status === kakao.maps.services.Status.OK) {
-	        		region = result[0].region_1depth_name;
-	        }
-		});
-
-		$.ajax({
-			url : 'insertPoints.do',
-			traditional : true,						//필수
-			data : {pointsArr : xAndY, region : region, distance : clickDistance},
-			type : 'post',
-			dataType : 'json',
-			//status :: null/success/fail
-			success : function(result){
-				if(result.status == 'success'){
-					alert('dB 저장 성공');
-				}else if(result.status == 'null'){
-					alert('null');
-				}else if(result.status == 'fail'){
-					alert('DB 저장 실패');
-				}else{
-					alert('NETWORK ERROR');
-				}
-			},
-			error : function(){
-				alert('에러');
+		var centerPoint = points[Math.floor(points.length/2)];
+		
+		searchDetailAddrFromCoords(centerPoint, function(result, status) {
+			if (status === kakao.maps.services.Status.OK) {
+				var roadAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+				walkRoad.setAttribute('value', roadAddr);
 			}
-		});  
+		});
+		
+		searchAddrFromCoords(centerPoint, function(result, status) {
+	        if (status === kakao.maps.services.Status.OK) {
+	        	console.log(result);
+	                 // 행정동의 region_type 값은 'H' 이므로
+                 if (result[0].region_type === 'B') { 
+					walkAdd.setAttribute('value', result[0].address_name);
+       			}else if(result[0].region_type === 'H'){
+					walkAdd.setAttribute('value', result[0].address_name);
+       			}
+	                 
+	            walkReg.setAttribute('value',result[0].region_1depth_name);
+				walkPos.setAttribute('value', xAndY);
+				walkDis.setAttribute('value', clickDistance);
+				
+				regForm.submit();
+		}
+	});
+}		
+	
+	//좌표로 주소 얻어오기
+	function searchAddrFromCoords(coords, callback) {
+	    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
 	}
-		
-		
+ 	//오버레이에 띄울 주소
+	function searchDetailAddrFromCoords(coords, callback){
+		geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+	}
+ 	
+/*  	
+	$.ajax({
+		url : 'insertPoints.do',
+		traditional : true,						//필수
+		data : {pointsArr : xAndY, region : region, distance : clickDistance},
+		type : 'post',
+		dataType : 'json',
+		//status :: null/success/fail
+		success : function(result){
+			if(result.status == 'success'){
+				alert('dB 저장 성공');
+			}else if(result.status == 'null'){
+				alert('null');
+			}else if(result.status == 'fail'){
+				alert('DB 저장 실패');
+			}else{
+				alert('NETWORK ERROR');
+			}
+		},
+		error : function(){
+			alert('에러');
+		}
+	});   */
 </script>

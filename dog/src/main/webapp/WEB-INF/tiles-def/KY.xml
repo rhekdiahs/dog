@@ -18,6 +18,10 @@
     	<put-attribute name="title" value="산책 경로"/>
     	<put-attribute name="body" value="/WEB-INF/views/walk/viewWalk.jsp"/>
     </definition>
+	<definition name="registerForm" extends="main">
+    	<put-attribute name="title" value="경로 상세 등록"/>
+    	<put-attribute name="body" value="/WEB-INF/views/walk/registerForm.jsp"/>
+    </definition>
     
     <!-- my page -->
 	<definition name="mypageMain" extends="main">
