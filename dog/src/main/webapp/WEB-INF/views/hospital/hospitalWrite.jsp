@@ -12,7 +12,7 @@
 		<ul>
 			<li>
 				<div class="cafe_cate">
-				<p>카페 종류</p>
+				<p>병원 종류</p>
 			     <input type="radio" id="cafe_cate0" name="hospital_type" checked="checked" value="0">
 			     <label for="cafe_cate0">일반병원</label>
 			     <input type="radio" id="cafe_cate1" name="hospital_type" value="1">
@@ -31,7 +31,7 @@
 				<input type="hidden" id="cafe_addr2"  name="h_address" value ="${h_address}">		
 				</c:if>
 				<c:if test="${empty road}">
-				<input type="hidden" id="cafe_addr1"  name="road" value=""/>
+				<input type="hidden" id="cafe_addr1"  name="road" value="도로명 주소 없음"/>
 				<input type="text" id="cafe_addr2"  name="h_address" value="${h_address}">
 				</c:if>
 			</li>

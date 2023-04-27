@@ -25,15 +25,7 @@
   		<include refid="whichCategories"></include>
   	</delete>
   	
-	<sql id = "searchKeyword">
-		AND (h_name LIKE '%' || #{keyword} || '%' OR
-		road LIKE '%' || #{keyword} || '%' OR
-		h_address LIKE '%' || #{keyword} || '%'
-		<if test = "keyword == '24시' or keyword == '24시병원' or keyword == '24시 병원'">
-		 OR hospital_type = 1
-		</if>
-		)
-	</sql>
+	
 	<sql id="selectOption">
 		<where>
 		<if test="keyfield != null">
@@ -94,7 +86,17 @@
 		</if>
 		</where>
 	</sql>
-
+	
+	<sql id = "searchKeyword">
+		AND (h_name LIKE '%' || #{keyword} || '%' OR
+		road LIKE '%' || #{keyword} || '%' OR
+		h_address LIKE '%' || #{keyword} || '%'
+		<if test = "keyword == '24시' or keyword == '24시병원' or keyword == '24시 병원'">
+		 OR hospital_type = 1
+		</if>
+		)
+	</sql>
+	
 	<select id="selectRegionListCount" parameterType="map" resultType="integer">
 		SELECT
 			COUNT(*)
@@ -112,7 +114,7 @@
   		              *
   		            FROM hospital h LEFT OUTER JOIN hospital_detail d 
   		            ON h.hospital_num = d.hospital_num
-  		            <include refid="selectOption"></include>
+  		            <include refid="selectOption"></include> AND (d.h_info_auth = 1 OR d.h_info_auth is null)
   		            )a)                         
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}

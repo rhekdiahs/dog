@@ -313,6 +313,8 @@ public class HospitalController {
 		 
 		 hospital.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
 		 
+		 hospital.setH_info_auth(0);
+		 
 		 hospitalService.insertHospitalDetail(hospital);
 		 String returnString = hospital.getHospital_region(); 
 		 try { 
