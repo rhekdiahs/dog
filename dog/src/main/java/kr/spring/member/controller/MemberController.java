@@ -138,7 +138,7 @@ public class MemberController {
 				
 				if(member.getMem_auth() == 9) {
 					//관리자 메인 화면으로 이동
-					return "redirect:/admin/adminMain.do";
+					return "redirect:/main/admin.do";
 				}
 				else {
 					return "redirect:/main/main.do";

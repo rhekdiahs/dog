@@ -116,13 +116,13 @@
 	    </c:forEach>
 	
 		// 마커 이미지의 이미지 주소입니다
-		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		var imageSrc = "${pageContext.request.contextPath}/image_bundle/cafe_marker.png"; 
 		var clickedOverlay = null;
 		var clickedTr = null;
 		
 		cafe_arrays.forEach(function (pos, index) {
 		    // 마커 이미지의 이미지 크기 입니다
-		    var imageSize = new kakao.maps.Size(24, 35); 
+		    var imageSize = new kakao.maps.Size(30, 30); 
 		    
 		    // 마커 이미지를 생성합니다    
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
