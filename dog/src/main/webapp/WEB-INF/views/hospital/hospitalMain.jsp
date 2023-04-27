@@ -173,11 +173,12 @@
 		
 	    var contentImg = document.createElement("img");
 	    contentImg.className = "image";
-	    if(pos.h_info_image_name == ''){
+	    contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
+	    /* if(pos.h_info_image_name == ''){
 	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
 	    }else{
 	    	contentImg.setAttribute("src", "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=" + pos.hospital_num)
-	    }
+	    } */
 	    contentImg.setAttribute("width", "55");
 	    contentImg.setAttribute("height", "55");
 	    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 5px;");

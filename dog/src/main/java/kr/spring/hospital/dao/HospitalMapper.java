@@ -46,7 +46,7 @@ public interface HospitalMapper {
 	@Insert("INSERT INTO hospital (hospital_num, hospital_type, hospital_region, coord_x, coord_y, road, h_name, h_phone, h_address, h_link) VALUES (#{hospital_num}, #{hospital_type}, #{hospital_region}, #{coord_x}, #{coord_y}, #{road}, #{h_name}, #{h_phone}, #{h_address}, #{h_link})")
 	public void insertHospital(HospitalVO hospital);
 	
-	@Insert("INSERT INTO hospital_detail (h_info_num, h_info_detail, h_info_auth, hospital_num, mem_num, h_info_image) VALUES(hospital_detail_seq.nextval, #{h_info_detail}, #{h_info_auth}, #{hospital_num}, #{mem_num}, #{h_info_image})")
+	@Insert("INSERT INTO hospital_detail (h_info_num, h_info_detail, h_info_auth, hospital_num, mem_num, h_info_image, h_info_image_name) VALUES(hospital_detail_seq.nextval, #{h_info_detail}, #{h_info_auth}, #{hospital_num}, #{mem_num}, #{h_info_image}, #{h_info_image_name})")
 	public void insertHospitalDetail(HospitalVO hospital);
 	
 	

@@ -307,7 +307,7 @@ public class HospitalController {
 		 }
 		 
 		 
-		 return "redirect:/cafe/cafeList.do?keyfield="+encodedParam; 
+		 return "redirect:/hospital/hospitalList.do?keyfield="+encodedParam; 
 	 }
 
 	/* 사용 끝
@@ -330,11 +330,11 @@ public class HospitalController {
 			model.addAttribute("filename", hospital.getH_info_image_name());
 		}
 	}
-	@RequestMapping("/mypage/photoView.do")
+	@RequestMapping("/hospital/photoView.do")
 	public String getProfile(@RequestParam int hospital_num,HttpServletRequest request, Model model) {
 		
 		HospitalVO hospital = hospitalService.selectHospital(hospital_num);
-
+		logger.debug("<hospital>:" + hospital);
 		viewProfile(hospital,request,model);
 		
 		return "imageView";

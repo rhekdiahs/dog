@@ -153,6 +153,16 @@ public class HospitalVO {
 	public void setH_phone(String h_phone) {
 		this.h_phone = h_phone;
 	}
+
+	@Override
+	public String toString() {
+		return "HospitalVO [hospital_num=" + hospital_num + ", hospital_type=" + hospital_type + ", hospital_region="
+				+ hospital_region + ", coord_x=" + coord_x + ", coord_y=" + coord_y + ", road=" + road + ", h_name="
+				+ h_name + ", h_address=" + h_address + ", h_phone=" + h_phone + ", h_link=" + h_link + ", h_info_num="
+				+ h_info_num + ", h_info_name=" + h_info_name + ", h_info_detail=" + h_info_detail + ", h_info_date="
+				+ h_info_date + ", h_info_auth=" + h_info_auth + ", mem_num=" + mem_num + ", h_info_image_name="
+				+ h_info_image_name + "]";
+	}
 	
 	
 	

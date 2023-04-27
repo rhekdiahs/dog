@@ -49,6 +49,22 @@
 			</div>
 		</div>
 		</c:if>
+		<c:if test="${!empty hospital.h_info_detail}">
+		<div class = "content-phone margin-bot">
+			<img class = "detail-icon" src = "${pageContext.request.contextPath}/image_bundle/info.png">
+			<div class = "padding-text">
+				<div style = "font-size : 14px;">${hospital.h_info_detail}</div>
+			</div>
+		</div>
+		</c:if>
+		<c:if test="${empty hospital.h_info_detail}">
+		<div class = "content-detail margin-bot">
+		<img class = "detail-icon" src = "${pageContext.request.contextPath}/image_bundle/info.png">
+		<div class = "padding-text">
+			<div style = "font-size : 14px;">등록된 상세설명이 없습니다.</div>
+		</div>
+		</div>
+		</c:if>
 	</div>
 	<hr>
 	<div id = "forScrollReview" class = "margin-detail">
@@ -84,9 +100,11 @@
 		<h3 class = "detail-cat">사진</h3>
 		<div>
 			<c:if test="${!empty hospital.h_info_image_name}">
-			<img src = "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=${hospital.hospital_num}">		
+			<img src = "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=${hospital.hospital_num}"  style = "width : 100%;">		
 			</c:if>
+			<c:if test="${empty hospital.h_info_image_name}">
 			<img src = "${pageContext.request.contextPath}/image_bundle/logo.jpg" style = "width : 100%;">
+			</c:if>
 			<%-- <c:if test="${empty hospital.h_info_image_name}">
 				<div style = "text-align : center; margin-bottom : 10px;">
 					등록된 이미지가 없습니다.
