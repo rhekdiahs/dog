@@ -9,6 +9,7 @@
 		<div class="sub_tit">
 			<h3>임시보호소</h3>
 		</div><br>
+		<div class="loading"></div>
 		<div class="footer-map" id="map" style="width:70%;height:400px;"></div>
 		<div>
 			<table class="ex" style="margin-left:auto;margin-right:auto;"></table>
@@ -30,7 +31,14 @@
 		</div>
 	</div>
 </div>
-
+<script>
+$(window).on('load', function(){
+	// 3초 후에 로딩 화면 숨김
+    setTimeout(function() {
+        $(".loading").fadeOut();
+    }, 3500);
+});  
+</script>
 
 <script>
 	//도로명주소
@@ -39,7 +47,7 @@
 	var ntitle = [];
 	//url
 	var surl = [];
-
+	
 	//주소값 가지고 오기
 	$.ajax({
 		url:'../shelter/shelterAddress.do',
@@ -172,7 +180,7 @@
 			      
 		      }
 	      }, 2000);
-		}, 5000);
+		}, 4000);	
 </script>
 
 <script>
@@ -192,26 +200,34 @@ $(document).on('click','.shelter_url',function(event){
 				$(param.list).each(function(index,item){
 					let output = '';
 					output += '<tr>';
-					output += '<td style="width:50px;">' + "이름 :" + '</td>';
+					output += '<td class="extd">' + "이름 " + '</td>';
 					output += '<td>' + item.subject + '</td>';
 					output += '</tr>';
 					output += '<tr>';
-					output += '<td>' + "주소 :" + '</td>';
+					output += '<td class="extd">' + "주소 " + '</td>';
 					output += '<td>' + item.address + '</td>';
 					output += '</tr>';
 					output += '<tr>';
-					output += '<td>' + "전화번호 :" + '</td>';
+					output += '<td class="extd">' + "전화번호 " + '</td>';
 					output += '<td>' + item.phone + '</td>';
 					output += '</tr>';
 					output += '<tr>';
-					output += '<td>' + "영업시간 :" + '</td>';
+					output += '<td class="extd">' + "영업시간 " + '</td>';
 					output += '<td>' + item.time + '</td>';
 					output += '</tr>';
 					output += '<tr>';
-					output += '<td>' + "설명 :" + '</td>';
+					output += '<td class="extd">' + "설명 " + '</td>';
 					output += '<td>' + item.explanation + '</td>';
 					output += '</tr>';
-					
+					output += '<tr>';
+					output += '<td class="extd">' + "홈페이지 " + '</td>';
+					if(item.blog == "홈페이지가 없습니다."){
+					output += '<td>' + item.blog + '</td>';
+					}else{
+						output += '<td><a href="'+item.blog+'">' + item.blog + '</a></td>';
+					}
+					output += '</tr>';
+				
 					$('.ex').append(output);
 				});
 			}else{
