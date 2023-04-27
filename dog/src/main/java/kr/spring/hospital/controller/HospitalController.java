@@ -75,76 +75,59 @@ public class HospitalController {
 	    return ip;
 	}
 	
-	@RequestMapping("/bookmark/insertBookmark.do")
-	@ResponseBody
-	public Map<String, String> bookAjax(int pk_num, HttpSession session, HttpServletRequest request) {
-		
-		Map<String, String> mapAjax = new HashMap<String, String>();
-		String hostURL = request.getHeader("referer").split("/")[3];
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user == null) {
-			mapAjax.put("status", "null");
-			
-		}else { 
-			BookmarkVO bookmark = new BookmarkVO();
-			
-			bookmark.setMem_num(user.getMem_num());
-			
-			if(hostURL.equals("walk")) {
-				bookmark.setWalk_num(pk_num);
-			}else if(hostURL.equals("hospital")) {
-				bookmark.setHospital_num(pk_num);
-			}else if(hostURL.equals("cafe")) {
-				bookmark.setCafe_num(pk_num);
-			}
-			Integer cnt = hospitalService.selectBookmark(bookmark);
-			
-			if(cnt == 1) {
-				hospitalService.deleteBookmark(bookmark);
-				System.out.println('a');
-				mapAjax.put("status", "deleteOK");
-			}else if(cnt == 0) {
-				hospitalService.insertBookmark(bookmark);
-				mapAjax.put("status", "insertOK");
-			}
-		}
-
-		return mapAjax;
-	}
-	@RequestMapping("/bookmark/getBookmark.do")
-	@ResponseBody
-	public Map<String, String> getBookAjax(int pk_num, HttpSession session, HttpServletRequest request) {
-		
-		Map<String, String> mapAjax = new HashMap<String, String>();
-		String hostURL = request.getHeader("referer").split("/")[3];
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user == null) {
-			mapAjax.put("status", "null");
-			
-		}else { 
-			BookmarkVO bookmark = new BookmarkVO();
-			
-			bookmark.setMem_num(user.getMem_num());
-			
-			if(hostURL.equals("walk")) {
-				bookmark.setWalk_num(pk_num);
-			}else if(hostURL.equals("hospital")) {
-				bookmark.setHospital_num(pk_num);
-			}else if(hostURL.equals("cafe")) {
-				bookmark.setCafe_num(pk_num);
-			}
-			Integer cnt = hospitalService.selectBookmark(bookmark);
-			
-			if(cnt == 1) {
-				mapAjax.put("status", "full");
-				mapAjax.put("pk_num", Integer.toString(pk_num));
-			}
-		}
-
-		return mapAjax;
-	}
+	/*
+	 * @RequestMapping("/bookmark/insertBookmark.do")
+	 * 
+	 * @ResponseBody public Map<String, String> bookAjax(int pk_num, HttpSession
+	 * session, HttpServletRequest request) {
+	 * 
+	 * Map<String, String> mapAjax = new HashMap<String, String>(); String hostURL =
+	 * request.getHeader("referer").split("/")[3];
+	 * 
+	 * MemberVO user = (MemberVO)session.getAttribute("user"); if(user == null) {
+	 * mapAjax.put("status", "null");
+	 * 
+	 * }else { BookmarkVO bookmark = new BookmarkVO();
+	 * 
+	 * bookmark.setMem_num(user.getMem_num());
+	 * 
+	 * if(hostURL.equals("walk")) { bookmark.setWalk_num(pk_num); }else
+	 * if(hostURL.equals("hospital")) { bookmark.setHospital_num(pk_num); }else
+	 * if(hostURL.equals("cafe")) { bookmark.setCafe_num(pk_num); } Integer cnt =
+	 * hospitalService.selectBookmark(bookmark);
+	 * 
+	 * if(cnt == 1) { hospitalService.deleteBookmark(bookmark);
+	 * System.out.println('a'); mapAjax.put("status", "deleteOK"); }else if(cnt ==
+	 * 0) { hospitalService.insertBookmark(bookmark); mapAjax.put("status",
+	 * "insertOK"); } }
+	 * 
+	 * return mapAjax; }
+	 * 
+	 * @RequestMapping("/bookmark/getBookmark.do")
+	 * 
+	 * @ResponseBody public Map<String, String> getBookAjax(int pk_num, HttpSession
+	 * session, HttpServletRequest request) {
+	 * 
+	 * Map<String, String> mapAjax = new HashMap<String, String>(); String hostURL =
+	 * request.getHeader("referer").split("/")[3];
+	 * 
+	 * MemberVO user = (MemberVO)session.getAttribute("user"); if(user == null) {
+	 * mapAjax.put("status", "null");
+	 * 
+	 * }else { BookmarkVO bookmark = new BookmarkVO();
+	 * 
+	 * bookmark.setMem_num(user.getMem_num());
+	 * 
+	 * if(hostURL.equals("walk")) { bookmark.setWalk_num(pk_num); }else
+	 * if(hostURL.equals("hospital")) { bookmark.setHospital_num(pk_num); }else
+	 * if(hostURL.equals("cafe")) { bookmark.setCafe_num(pk_num); } Integer cnt =
+	 * hospitalService.selectBookmark(bookmark);
+	 * 
+	 * if(cnt == 1) { mapAjax.put("status", "full"); mapAjax.put("pk_num",
+	 * Integer.toString(pk_num)); } }
+	 * 
+	 * return mapAjax; }
+	 */
 	
 	@RequestMapping("/hospital/curCityAjax.do")
 	@ResponseBody
