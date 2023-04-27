@@ -47,15 +47,15 @@
 			</div>
 		</div>
 		</c:if>
-		<c:if test="${!empty cafe_detail.cafe_content}">
+		<c:if test="${!empty cafe.cafe_content}">
 		<div class="content-phone margin-bot">
 			<img class="detail-icon" src="${pageContext.request.contextPath}/image_bundle/info.png">
 			<div class="padding-text">
-				<div style="font-size: 14px;">${cafe_detail.cafe_content}</div>
+				<div style="font-size: 14px;">${cafe.cafe_content}</div>
 			</div>
 		</div>
 		</c:if>
-		<c:if test="${empty cafe_detail.cafe_content}">
+		<c:if test="${empty cafe.cafe_content}">
 		<div class="content-phone margin-bot">
 			<img class="detail-icon" src="${pageContext.request.contextPath}/image_bundle/info.png">
 			<div class="padding-text">
@@ -97,10 +97,10 @@
 	<div id = "forScrollPhoto" class = "margin-detail">
 		<h3 class = "detail-cat">사진</h3>
 		<div>
-			<c:if test="${!empty cafe_detail.cafe_image_name}">
+			<c:if test="${!empty cafe.cafe_image_name}">
 			<img src = "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=${cafe.cafe_num}">		
 			</c:if>
-			<c:if test="${empty cafe_detail.cafe_image_name}">
+			<c:if test="${empty cafe.cafe_image_name}">
 			<img src = "${pageContext.request.contextPath}/image_bundle/logo.jpg" style = "width : 100%;">
 			</c:if>
 			<%-- <c:if test="${empty hospital.h_info_image_name}">
