@@ -202,12 +202,6 @@
 		    contentDetail.href = "cafeDetail.do?cafe_num="+pos.cafe_num;
 		    info.appendChild(contentDetail);
 		    
-		    var contentBookmark = document.createElement("img");
-		    contentBookmark.className = "bookmark";
-		    contentBookmark.src = "${pageContext.request.contextPath}/image_bundle/bookmark0.png";
-		    contentBookmark.setAttribute("style", "position : absolute; bottom : 60px; left : 260px; width : 25px; height : 25px; cursor : pointer;");
-		    info.appendChild(contentBookmark);
-		    
 		    // customoverlay 생성, 이때 map을 선언하지 않으면 지도위에 올라가지 않습니다.
 		    var overlay = new daum.maps.CustomOverlay({
 		        position: pos.latlng,

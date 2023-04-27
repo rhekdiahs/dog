@@ -76,7 +76,7 @@ a:hover, a:active{
 	overflow : hidden;
    	white-space:nowrap;
    	text-overflow : ellipsis;
-   	width : 191px;
+   	width : 215px;
 	position: relative;
 	margin: 7px 0 0 70px;
 }
