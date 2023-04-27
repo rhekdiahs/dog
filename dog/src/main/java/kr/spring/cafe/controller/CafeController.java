@@ -30,6 +30,7 @@ import kr.spring.cafe.service.CafeService;
 import kr.spring.cafe.vo.CafeVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
+import kr.spring.util.StringUtil;
 
 @Controller
 public class CafeController {
@@ -60,7 +61,7 @@ public class CafeController {
 	  
 	  logger.debug("개수" + count);
 	  
-	  PagingUtil page = new PagingUtil(keyfield, null, currentPage, count, 10, 5, "cafeList.do");
+	  PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 10, 5, "cafeList.do");
 	  
 	  List<CafeVO> cafe = null;
 	  
@@ -152,15 +153,11 @@ public class CafeController {
 	public ModelAndView detail(@RequestParam int cafe_num) {
 		
 		CafeVO cafe = cafeService.selectCafedetail(cafe_num);
-		
-		logger.debug("카페 번호 : " + cafe_num);
-		
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("cafeDetail");
-		mav.addObject("cafe", cafe);
-		
-		return mav;
+		cafe.setCafe_name(StringUtil.useNoHtml(cafe.getCafe_name()));
+		if(cafe.getCafe_content() != null) {
+			cafe.setCafe_content(StringUtil.useBrNoHtml(cafe.getCafe_content()));
+		}
+		return new ModelAndView("cafeDetail","cafe", cafe);
 	}
 	
 	@GetMapping("/cafe/cafeSelect.do")

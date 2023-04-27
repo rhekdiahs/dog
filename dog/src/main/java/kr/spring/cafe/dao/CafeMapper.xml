@@ -3,7 +3,19 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.cafe.dao.CafeMapper">
-
+	
+	<sql id="cafeSearch">
+		AND 
+		<if test="keyword != '애견 동반' and keyword != '동반' and keyword != '애견동반'">
+				(cafe_name LIKE '%' || #{keyword} || '%' OR
+				cafe_addr1 LIKE '%' || #{keyword} || '%' OR
+				cafe_addr2 LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="keyword == '애견 동반' or keyword == '동반' or keyword == '애견동반'">
+			cafe_cate = 1
+		</if>	
+	</sql>
+	
 	<sql id="selectOption">
 		<where>
 		<if test="keyfield != null">
@@ -58,6 +70,9 @@
 			<if test="keyfield == '제주특별자치도'">
 				cafe_region = #{keyfield}
 			</if>
+			<if test="keyword != null and keyword != ''">
+				<include refid="cafeSearch"></include>
+			</if>
 		</if>
 		</where>
 	</sql>
@@ -77,7 +92,8 @@
 			rownum rnum
 		  FROM (SELECT
 		  		  *
-		  		FROM cafe
+		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
+		  		ON c.cafe_num = d.cafe_num
 		  		<include refid="selectOption"></include>
 		  		)a)
 	<![CDATA[

@@ -42,7 +42,7 @@ public interface CafeMapper {
 	
 	@Insert("INSERT INTO cafe_detail (cafe_detail_num, cafe_num, mem_num, cafe_content, cafe_status,"
 		  + " cafe_image_name, cafe_image) VALUES (cafe_detail_seq.nextval, #{cafe_num}, #{mem_num}, "
-		  + "#{cafe_content}, #{cafe_status}, #{cafe_image_name}, #{cafe_image})")
+		  + "#{cafe_content}, 0, #{cafe_image_name}, #{cafe_image})")
 	public void insertCafeDetail(CafeVO cafe);
 	
 	

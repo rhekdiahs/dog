@@ -51,8 +51,8 @@
 				<c:forEach var="cafe" items="${cafe}" varStatus="status">
 					<li id="${cafe.cafe_num}">
 						<div class="place-bookmark">
-							<a href="#"> <img
-								src="${pageContext.request.contextPath}/image_bundle/bookmark0.png">
+							<a href="#">
+							<img src="${pageContext.request.contextPath}/image_bundle/bookmark0.png">
 							</a>
 						</div>
 						<div class="list-title">

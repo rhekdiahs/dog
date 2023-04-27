@@ -136,7 +136,13 @@ public class MemberController {
 				
 				logger.debug("<<인증 성공>> : " + member.getMem_id());
 				
-				return "redirect:/main/main.do";
+				if(member.getMem_auth() == 9) {
+					//관리자 메인 화면으로 이동
+					return "redirect:/admin/adminMain.do";
+				}
+				else {
+					return "redirect:/main/main.do";
+				}
 			}
 			
 			//인증 실패
