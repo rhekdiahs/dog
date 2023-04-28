@@ -36,7 +36,7 @@ $(window).on('load', function(){
 	// 3초 후에 로딩 화면 숨김
     setTimeout(function() {
         $(".loading").fadeOut();
-    }, 3500);
+    }, 2400);
 });  
 </script>
 
@@ -145,6 +145,10 @@ $(window).on('load', function(){
 			    						output += '<td>' + item.address + '</td>';
 			    						output += '</tr>';
 			    						output += '<tr>';
+			    						output += '<td class="extd">' + "이미지 " + '</td>';
+			    						output += '<td>' + item.img + '</td>';
+			    						output += '</tr>';
+			    						output += '<tr>';
 			    						output += '<td class="extd">' + "전화번호 " + '</td>';
 			    						output += '<td>' + item.phone + '</td>';
 			    						output += '</tr>';
@@ -179,8 +183,8 @@ $(window).on('load', function(){
 			      });
 			      
 		      }
-	      }, 2000);
-		}, 4000);	
+	      }, 200);
+		}, 2700);	
 </script>
 
 <script>
@@ -206,6 +210,10 @@ $(document).on('click','.shelter_url',function(event){
 					output += '<tr>';
 					output += '<td class="extd">' + "주소 " + '</td>';
 					output += '<td>' + item.address + '</td>';
+					output += '</tr>';
+					output += '<tr>';
+					output += '<td class="extd">' + "이미지 " + '</td>';
+					output += '<td>' + item.img + '</td>';
 					output += '</tr>';
 					output += '<tr>';
 					output += '<td class="extd">' + "전화번호 " + '</td>';

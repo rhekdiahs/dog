@@ -1,10 +1,22 @@
 package kr.spring.shelter.service;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,6 +36,7 @@ import kr.spring.shelter.vo.shelterVO;
 @Service
 public class shelterService {
 	private WebDriver driver;
+	private WebDriver driver2;
 	@Value("${driver.path}")
 	private String driverPath;
     private static final String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8F%99%EB%AC%BC+%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C&oquery=%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C&tqi=iv%2BQRsprvN8ssSdWX7Nssssstsw-025886";
@@ -37,7 +50,7 @@ public class shelterService {
         //크롬 드라이버 셋팅 (드라이버 설치한 경로 입력)
     	//logger.debug("<<driver_path>> : " + driverPath); 
     	System.setProperty("webdriver.chrome.driver", driverPath);
-        
+    	Map<String, Object> prefs = new HashMap<String, Object>();
     	
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");   // 브라우저 안띄움
@@ -45,7 +58,12 @@ public class shelterService {
         options.addArguments("disable-infobars"); //브라우저에서 다운로드나 알림 등의 메시지를 표시하는 기능 비활성화
         options.addArguments("--disable-extensions"); //확장 프로그램(Extensions)을 비활성화
         options.addArguments("--remote-allow-origins=*");//모든 도메인 요청 허용
+        options.addArguments("--disable-application-cache");//캐시 사용하지 않기
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받음
+        
+        prefs.put("profile.managed_default_content_settings.images", 2);
+        options.setExperimentalOption("prefs", prefs);
+        
         driver = new ChromeDriver(options);
         
         //브라우저 선택
@@ -101,6 +119,7 @@ public class shelterService {
 	        String value = url2.split("/")[7].split("\\?")[0];
 	        
 	        url2 = "https://pcmap.place.naver.com/place/"+value+"/home?";
+	        logger.debug("<<url 값>> : " + url2);
 	        Document doc = null;
 			try {
 				doc = Jsoup.connect(url2).get();
@@ -138,17 +157,17 @@ public class shelterService {
 	    	}else {
 	    	    home = "홈페이지가 없습니다.";
 	   		}
-	    	
-	    	
+	    		
 	    	String ad = doc.select("#app-root > div > div > div > div:nth-child(6) > div > div.place_section.no_margin.vKA6F > div > div > div.O8qbU.tQY7D > div > a > span.LDgIH").text();
-	    		        	
+	        
 	    	shelterVO shelter = shelterVO.builder()
 	    			.subject(su)		// 제목
 					.phone(ph) 	// 전화번호
 	                .address(ad.replaceAll("도로명", "").replaceAll("복사", "").replaceAll("지번", "").trim()) // 주소
 	                .time(ti) //영업시간
 	                .explanation(ex) //설명
-	                .blog(home) //홈페이지
+	                .blog(home) //홈페이지	
+	                //.img(src)
 	                .build();
 	        list.add(shelter);
 	        
