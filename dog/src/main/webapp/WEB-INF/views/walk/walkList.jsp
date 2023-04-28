@@ -178,7 +178,7 @@
 		function drawPolyline() {
 			//var len = lines.length, i = 0;
 			walk_array.forEach(function(pos, index){
-				var pathsOfList = pos.path.split(/ |, /);		//구분자
+				var pathsOfList = pos.path.split(",");		//구분자
 				console.log(pathsOfList);
 				for(var j=0; j<pathsOfList.length; j+=2){
 		    	  	var latlng = new kakao.maps.LatLng(pathsOfList[j+1],pathsOfList[j]);
@@ -241,7 +241,7 @@
 				
 			    var contentRoad = document.createElement("div");
 			    contentRoad.className = "addr1";
-			    contentRoad.appendChild(document.createTextNode(pos.walk_address));
+			    contentRoad.appendChild(document.createTextNode(pos.addr));
 			    info.appendChild(contentRoad);
 			    
 /* 			    var contentAddr = document.createElement("div");
