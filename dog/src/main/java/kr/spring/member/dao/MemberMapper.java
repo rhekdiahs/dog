@@ -1,9 +1,13 @@
 package kr.spring.member.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 
@@ -43,4 +47,23 @@ public interface MemberMapper {
 	@Select("SELECT mem_pw FROM member JOIN member_detail USING(mem_num) "
 		  + "WHERE mem_id=#{mem_id} AND mem_email=#{mem_email}")
 	public String find_pw(@Param("mem_id") String mem_id, @Param("mem_email") String mem_email);
+
+
+	/*=================================
+				 회원 관리
+	==================================*/
+	public List<MemberVO> selectList(Map<String, Object> map);
+	public int selectRowCount(Map<String, Object> map);
+	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
+	public void updateByAdmin(MemberVO memberVO);
+
+
+
 }
+
+
+
+	
+	
+	
+	

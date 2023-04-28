@@ -1,5 +1,8 @@
 package kr.spring.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +43,21 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String find_pw(String mem_id, String mem_email) {
 		return memberMapper.find_pw(mem_id, mem_email);
+	}
+
+	@Override
+	public List<MemberVO> selectList(Map<String, Object> map) {
+		return memberMapper.selectList(map);
+	}
+
+	@Override
+	public int selectRowCount(Map<String, Object> map) {
+		return memberMapper.selectRowCount(map);
+	}
+
+	@Override
+	public void updateByAdmin(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		
 	}
 }
