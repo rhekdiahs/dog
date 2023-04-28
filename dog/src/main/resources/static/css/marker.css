@@ -95,6 +95,7 @@ a:hover, a:active{
 .info .phone {
 	position: relative;
 	margin-left: 70px;
+	font-size: 11px;
 }
 
 .info .phoneImg{
@@ -107,6 +108,7 @@ a:hover, a:active{
 	position: relative;
 	margin: 7px 0 0 70px;
 	color: #5085BB;
+	font-size: 11px;
 }
 
 .info:after {
