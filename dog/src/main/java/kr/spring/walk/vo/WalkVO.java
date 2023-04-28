@@ -1,13 +1,17 @@
 package kr.spring.walk.vo;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class WalkVO {
 	private int walk_num;
 	private String walk_region;
 	private String walk_position;
 	private String mem_id;
+	private String mem_name;
 	
 	private int walk_detail_num;
 	private int walk_bookmark;
@@ -22,6 +26,22 @@ public class WalkVO {
 	private String walk_address;				//지번주소
 	private String walk_road;					//도로명주소
 	
+	
+	public void setUpload(MultipartFile upload) throws IOException{
+
+		//MultipartFile -> byte[]
+		setWalk_img(upload.getBytes());
+		//파일 이름
+		setWalk_img_name(upload.getOriginalFilename());
+	}
+	
+	public String getMem_name() {
+		return mem_name;
+	}
+	
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
 	public String getWalk_address() {
 		return walk_address;
 	}
@@ -113,14 +133,15 @@ public class WalkVO {
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
+
 	@Override
 	public String toString() {
 		return "WalkVO [walk_num=" + walk_num + ", walk_region=" + walk_region + ", walk_position=" + walk_position
-				+ ", mem_id=" + mem_id + ", walk_detail_num=" + walk_detail_num + ", walk_bookmark=" + walk_bookmark
-				+ ", walk_date=" + walk_date + ", walk_img=" + Arrays.toString(walk_img) + ", walk_img_name="
-				+ walk_img_name + ", walk_info=" + walk_info + ", walk_perm=" + walk_perm + ", mem_num=" + mem_num
-				+ ", walk_distance=" + walk_distance + ", walk_address=" + walk_address + ", walk_road=" + walk_road
-				+ "]";
+				+ ", mem_id=" + mem_id + ", mem_name=" + mem_name + ", walk_detail_num=" + walk_detail_num
+				+ ", walk_bookmark=" + walk_bookmark + ", walk_date=" + walk_date + ", walk_img="
+				+ Arrays.toString(walk_img) + ", walk_img_name=" + walk_img_name + ", walk_info=" + walk_info
+				+ ", walk_perm=" + walk_perm + ", mem_num=" + mem_num + ", walk_distance=" + walk_distance
+				+ ", walk_address=" + walk_address + ", walk_road=" + walk_road + "]";
 	}
 
 }

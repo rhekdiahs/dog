@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
 <div id="main_body">
 <div id="form_wrap">
-<form:form action="selectRegionFromRegister.do" method="get">
 	<div class="inputWrap">
+<form:form action="selectRegionFromRegister.do" method="get">
 	<select name="keyfield" id="keyfield" style="width:100%;">
 		<option selected="selected">--선택--</option>
 		<option value="서울특별시"
@@ -58,23 +58,23 @@
 		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword">
 		<button type="submit" id="keyword_search">검색</button>
 	</form>
-</div>
-</div>
-<p class="modes">
-	    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
-	    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
-	    <button id="reset_btn" disabled="disabled" onclick="resetMap();" >초기화</button>
-	    <button id="register_btn" disabled="disabled" onclick="next();">완료</button>
-</p>
-<div id="map" style="width:100%;height:400px;"></div>
-<form:form action="registerForm.do" modelAttribute="walkVO" id="registerForm" name="registerForm" method="post">
-	<form:input path="walk_position" type="hidden" value=""/>
-	<form:input path="walk_region" type="hidden" value=""/>
-	<form:input path="walk_address" type="hidden" value=""/>
-	<form:input path="walk_road" type="hidden" value=""/>
-	<form:input path="walk_distance" type="hidden" value=""/>
-	<form:button type="submit"></form:button>
-</form:form>
+		</div>
+	</div>
+	<p class="modes">
+		    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
+		    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
+		    <button id="reset_btn" disabled="disabled" onclick="resetMap();" >초기화</button>
+		    <button id="register_btn" disabled="disabled" onclick="next();">완료</button>
+	</p>
+	<div id="map" style="width:100%;height:400px;"></div>
+	<form:form action="registerForm.do" modelAttribute="walkVO" id="registerForm" name="registerForm" method="post">
+		<form:input path="walk_position" type="hidden" value=""/>
+		<form:input path="walk_region" type="hidden" value=""/>
+		<form:input path="walk_address" type="hidden" value=""/>
+		<form:input path="walk_road" type="hidden" value=""/>
+		<form:input path="walk_distance" type="hidden" value=""/>
+		<form:button type="submit"></form:button>
+	</form:form>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing,services"></script>
 <script type="text/javascript">

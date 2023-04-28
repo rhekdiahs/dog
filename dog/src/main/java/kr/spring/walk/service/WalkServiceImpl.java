@@ -42,6 +42,11 @@ public class WalkServiceImpl implements WalkService{
 	public List<WalkVO> getListByRegion(Map<String, Object> map) {
 		return walkMapper.getListByRegion(map);
 	}
+
+	@Override
+	public String getName(int mem_num) {
+		return walkMapper.getName(mem_num);
+	}
 	
 	
 }

@@ -20,4 +20,7 @@ public interface WalkService {
 	
 	//해당 지역의 리스트 뽑기
 	public List<WalkVO> getListByRegion(Map<String, Object> map);
+	
+	//회원이름 가져와
+	public String getName(int mem_num);
 }

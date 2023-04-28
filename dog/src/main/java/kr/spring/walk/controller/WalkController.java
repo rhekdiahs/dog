@@ -272,8 +272,11 @@ public class WalkController {
 			logger.debug(">>>>>>>>NULL VO>>>>> ");
 		}
 		
+		String mem_name = walkService.getName(mem_num);
+		
+		walkVO.setMem_num(mem_num);
+		walkVO.setMem_name(mem_name);
 		walkVO.setMem_id(mem_id);
-		//walkVO.setMem_num(mem_num);
 		
 		logger.debug("VO" + walkVO);
 		model.addAttribute("walk", walkVO);
@@ -282,11 +285,10 @@ public class WalkController {
 	}
 	
 	 @PostMapping("/walk/register.do") 
-	 public String register(@ModelAttribute("walkVO") WalkVO walkVO, BindingResult result, Model model, HttpSession session ) {
+	 public String register(@Valid WalkVO walkVO, BindingResult result, Model model, HttpSession session ) {
 		 
 		 String encodedParam = ""; 
-		 logger.debug("sdhfsdjfl" + walkVO);
-		 /*
+		 
 		 if(walkVO.getWalk_img().length >= 5*1024*1024) {
 		 result.reject("limitUploadSize", new Object[] {"5MB"}, null); }
 		 
@@ -294,9 +296,7 @@ public class WalkController {
 		 
 		 walkVO.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
 		 
-		 logger.debug(">>>>빠뜨린 거 없나>>>> : " + walkVO);
-		 
-		 //walkService.insertWalkInfoAll(walkVO);
+		 walkService.insertWalkInfoAll(walkVO);
 		 
 		 String returnString = walkVO.getWalk_region(); 
 		 
@@ -306,7 +306,7 @@ public class WalkController {
 			 e.printStackTrace(); 
 		 }
 		 
-		 */
+		 
 		 return "redirect:/walk/walkList.do?keyfield="+encodedParam; 
 	 }
 	 

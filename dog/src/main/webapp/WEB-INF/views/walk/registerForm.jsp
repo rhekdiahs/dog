@@ -7,8 +7,9 @@
 	<div id="form_wrap">
 		<form:form action="register.do" method="post" 
 				   modelAttribute="walkVO" enctype="multipart/form-data">
+		<form:errors element="div" cssClass="error-color"/>
 				<form:input path="walk_position" type="hidden" value="${walk.walk_position}"/>
-				<form:input path="mem_id" type="hidden" value="${walk.mem_id}"/>
+				<form:input path="mem_name" type="hidden" value="${walk.mem_name}"/>
 				<form:input path="walk_distance" type="hidden" value="${walk.walk_distance}"/>
 				<form:input path="walk_region" type="hidden" value="${walk.walk_region}"/>		
 			<ul>
@@ -17,9 +18,7 @@
 					<p>🐶<span>${walk.mem_id}</span> 님의 산책로🐶</p>
 					</div>
 				</li>
-				<li>
-				</li>
-				<c:if test="${walk.walk_road != null}">
+				<c:if test="${walk.walk_road != ''}">
 				<li>
 					<label>(도로명) ${walk.walk_road}</label>			
 					<form:input path="walk_road" type="hidden" value="${walk.walk_road}"/>		

@@ -19,11 +19,11 @@ public interface WalkMapper {
 	public int selectWalkNum();
 	
 	//산책경로 대표정보 등록
-	@Insert("INSERT INTO WALK (walk_num,walk_region,walk_position,mem_id,walk_distance) VALUES (walk_seq.nextval,#{walk_region},#{walk_position},#{mem_id},#{walk_distance})")
+	@Insert("INSERT INTO WALK (walk_num,walk_region,walk_position,mem_name,walk_distance) VALUES (#{walk_num},#{walk_region},#{walk_position},#{mem_name},#{walk_distance})")
 	public void regsiterWalk(WalkVO walk);
 	
 	//산책경로 상세정보 등록
-	@Insert("INSERT INTO WALK_DETAIL")
+	@Insert("INSERT INTO WALK_DETAIL (walk_detail_num, walk_num, mem_num, walk_img, walk_img_name, walk_info, walk_address) VALUES (walk_detail_seq.nextval, #{walk_num},#{mem_num},#{walk_img},#{walk_img_name},#{walk_info},#{walk_address})")
 	public void registerWalkDetail(WalkVO walk);
 	
 /*===========================================
@@ -42,4 +42,8 @@ public interface WalkMapper {
 	
 	//지역별 리스트 가져오기
 	public List<WalkVO> getListByRegion(Map<String, Object> map);
+	
+	//회원 이름 가져오기
+	@Select("SELECT mem_name FROM MEMBER_DETAIL WHERE mem_num=${mem_num}")
+	public String getName(int mem_num);
 }
