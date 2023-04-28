@@ -57,6 +57,10 @@
 </script>
 </form:form>
 <div id="map"></div>
+	<div class="custom_zoomcontrol radius_border"> 
+       		<span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
+        	<span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
+    </div>
 <!-- list scroll -->
 <c:if test="${list == null}">리스트가 없습니다</c:if>
 <c:if test="${list != null}">
@@ -117,12 +121,22 @@
 			</script>
 		</c:forEach>
 	</ul>
+</div>
+</c:if>
 	<div id = "pageDiv" style = "text-align : center;">
 		${page}
 	</div>
-</div>
-</c:if>
 <script type="text/javascript">
+		//지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomIn() {
+		    map.setLevel(map.getLevel() - 1);
+		}
+		
+		// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomOut() {
+		    map.setLevel(map.getLevel() + 1);
+		}
+		
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
 	        center: new kakao.maps.LatLng(coordY, coordX), // 지도의 중심좌표
@@ -150,6 +164,7 @@
 			walk_dict['path'] = '${path.walk_position}';
 			walk_dict['city'] = '${path.walk_region}';
 			walk_dict['mem_id'] = '${path.mem_id}';
+			walk_dict['addr'] = '${path.walk_address}';
 			walk_dict['walk_distance'] = '${path.walk_distance}';
 			walk_array.push(walk_dict);
 			walk_dict = {};
@@ -204,7 +219,7 @@
 			    var contentLink = document.createElement("a");
 				contentLink.className = "link";
 				contentLink.appendChild(document.createTextNode(pos.mem_id + ' 님의 산책로'));
-			    //contentLink.href = "hospitalDetail.do?hospital_num=" + pos.walk_num;
+			    contentLink.href = "viewWalk.do?walk_num=" + pos.walk_num;
 			    contentName.appendChild(contentLink);
 				info.appendChild(contentName);
 
@@ -226,7 +241,7 @@
 				
 			    var contentRoad = document.createElement("div");
 			    contentRoad.className = "addr1";
-			    contentRoad.appendChild(document.createTextNode(pos.city));
+			    contentRoad.appendChild(document.createTextNode(pos.walk_address));
 			    info.appendChild(contentRoad);
 			    
 /* 			    var contentAddr = document.createElement("div");
@@ -250,7 +265,7 @@
 			    var contentDetail = document.createElement("a");
 			    contentDetail.className = "detail";
 			    contentDetail.innerHTML = "상세보기";
-			    contentDetail.href = "hospitalDetail.do?hospital_num=" + pos.hospital_num;
+			    contentDetail.href = "viewWalk.do?walk_num" + pos.walk_num;
 			    info.appendChild(contentDetail);
 			    
 				var overlay = new daum.maps.CustomOverlay({

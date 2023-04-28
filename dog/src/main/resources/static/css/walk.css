@@ -1,17 +1,17 @@
 @charset "UTF-8";
 
-.modes {
-	position: absolute;
-    top: 95px;
-    z-index: 10;
-    
-}
-
+/*=======================
+		SETTINGS
+  =======================*/
 #main_body{
 	margin:0 auto;
 	box-sizing:border-box;
 }
 
+
+/*=======================
+	   FORM SETTINGS
+  =======================*/
 #form_wrap{
 	text-align: center;
 	margin-top: 5px;
@@ -47,15 +47,36 @@ select#keyfield{
 	float:right;
 }
 
-.place-list{
-	overflow:auto;
+/*=======================
+		MAP REGISTER
+  =======================*/
+.modes {
+	position: absolute;
+    top: 95px;
+    z-index: 10;
+    
 }
 
-.place-bookmark img{
-	width : 30px;
-	height : 30px;
+/*=======================
+	SCROLL & BOOKMARK
+  =======================*/
+.place-list{
+	overflow:auto;
 }
 .place-bookmark{
 	float : right;
 	
 }
+.place-bookmark img{
+	width : 30px;
+	height : 30px;
+}
+
+/*=======================
+		MAP ZOOM
+  =======================*/
+.radius_border{border:1px solid #919191;border-radius:5px;}  
+.custom_zoomcontrol {position:absolute;top:350px;right:15px;width:36px;height:80px;overflow:hidden;z-index:1001;background-color:#f5f5f5;} 
+.custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
+.custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none;}             
+.custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}     
