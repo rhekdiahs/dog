@@ -46,9 +46,20 @@ public interface CafeMapper {
 	public void insertCafeDetail(CafeVO cafe);
 	
 	
-	
 	@Update("UPDATE cafe SET cafe_x = ${coord_x}, cafe_y = ${coord_y} WHERE cafe_num = ${hospital_num}")
 	public void updateCoords(@Param(value="coord_x") String coord_x, 
 			                @Param(value="coord_y") String coord_y,
 			                @Param(value="hospital_num") Integer hospital_num);
+	
+	
+	//관리자
+	//카페 관리
+	//승인 요청 개수
+	public List<CafeVO> selectCafeAdminList(Map<String, Object> map);
+		
+		
+	//승인 요청 리스트
+	public int selectCafeAdminCount(Map<String, Object> map);
+	
+	
 }

@@ -46,7 +46,7 @@ public class AdminController {
 		return "adminMain";//타일스 설정값
 	}
 	
-
+	//회원 관리
 	@RequestMapping("/admin/adminMember.do")
 	public ModelAndView memberList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
 								  String keyfield, String keyword){
@@ -83,6 +83,7 @@ public class AdminController {
 		return mav;
 	}
 	
+	//카페 관리
 	@RequestMapping("/admin/adminCafe.do")
 	public ModelAndView cafeList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
 								  String keyfield, String keyword){
@@ -93,12 +94,15 @@ public class AdminController {
 		map.put("keyword", keyword);
 		
 		int count = cafeService.selectCafeCount(map);
+		//int count2 = cafeService.selectCafeAdminCount(map);
 		
 		logger.debug("count>>" + count);
 		
 		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 5, 5 ,"adminCafe.do");
+		//PagingUtil page2 = new PagingUtil(keyfield, keyword, currentPage, count2, 5, 5 ,"adminCafe.do");
 		
 		List<CafeVO> cafe = null;
+		//List<CafeVO> cafe2 = null;
 		
 		if(count > 0) {
 			map.put("start", page.getStartRow());
@@ -116,7 +120,19 @@ public class AdminController {
 		mav.addObject("cafe", cafe);
 		mav.addObject("page", page.getPage());
 		
+		/*
+		mav.addObject("count2", count2);
+		mav.addObject("cafe2", cafe2);
+		mav.addObject("page2", page2);
+		*/
+		
 		return mav;
 	}
+	
+	
+	
+	
+	
+	
 	
 }

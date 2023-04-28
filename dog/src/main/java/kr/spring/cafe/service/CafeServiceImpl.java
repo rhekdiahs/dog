@@ -48,10 +48,17 @@ public class CafeServiceImpl implements CafeService{
 		cafeMapper.updateCoords(coord_x, coord_y, hospital_num);
 	}
 
-	/*
-		@Override
-		public List<CafeVO> selectCafeList() {
-			return cafeMapper.selectCafeList();
-		}
-	*/
+
+
+	@Override
+	public List<CafeVO> selectCafeAdminList(Map<String, Object> map) {
+		return cafeMapper.selectCafeAdminList(map);
+	}
+
+
+
+	@Override
+	public int selectCafeAdminCount(Map<String, Object> map) {
+		return cafeMapper.selectCafeAdminCount(map);
+	}
 }

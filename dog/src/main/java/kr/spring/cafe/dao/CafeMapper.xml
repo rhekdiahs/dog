@@ -95,11 +95,72 @@
 		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
 		  		ON c.cafe_num = d.cafe_num
 		  		<include refid="selectOption"></include>
-		  		)a)
+		  		ORDER BY c.cafe_name ASC)a)
 	<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 	]]>
 	</select>
+	
+	<!-- 관리자 -->
+	
+	<sql id="cafeAdminSearch">
+		AND
+		<if test="keyword != null and keyword != ''">
+			<if test="keyfield == 1">
+				c.cafe_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 2 and keyword == '애견 동반' or keyword == '동반' or keyword == '애견동반'">
+				c.cafe_cate = 1
+			</if>
+			<if test="keyfield == 3">
+				c.cafe_addr1 LIKE '%' || #{keyword} || '%' OR
+				c.cafe_addr2 LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</sql>
+	
+	
+	
+	
+	<select id="selectCafeAdminCount" parameterType="map" resultType="integer">
+		SELECT
+		COUNT(*)
+		FROM cafe_detail
+		<include refid="selectOption"></include>
+		WHERE cafe_status = 0
+	</select>	
+
+	<select id="selectCafeAdminList" parameterType="map" resultType="cafeVO">
+	SELECT
+	  *
+	FROM (SELECT 
+			a.*,
+			rownum rnum
+		  FROM (SELECT
+		  		  *
+		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
+		  		ON c.cafe_num = d.cafe_num
+		  		<include refid="selectOption"></include>
+		  		ORDER BY c.cafe_name ASC
+		  		WHERE d.cafe_status = 0)a)
+	<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+	]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>
 

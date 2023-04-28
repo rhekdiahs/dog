@@ -26,4 +26,14 @@ public interface CafeService {
 	public void updateCoords(String coord_x,String coord_y,
              				 Integer hospital_num);
 	
+	
+	//관리자
+	//카페 관리
+	//승인 요청 개수
+	public List<CafeVO> selectCafeAdminList(Map<String, Object> map);
+		
+		
+	//승인 요청 리스트
+	public int selectCafeAdminCount(Map<String, Object> map);
+	
 }
