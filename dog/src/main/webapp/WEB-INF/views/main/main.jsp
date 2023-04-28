@@ -11,7 +11,7 @@
 		<a class = "menu-list" href="javascript:void(0);" onclick="withCafeCity()">카페 목록</a>
 
 		<a class = "menu-list" href="${pageContext.request.contextPath}/shelter/shelterList.do">임시보호소</a>
-		<a class = "menu-list" href = "javascript:void(0);" onclick="withCurCity()">병원</a>
+		<a class = "menu-list" href = "javascript:void(0);" onclick="withCurCity()">병&nbsp;&nbsp;&nbsp;&nbsp;원</a>
 	</div>
 	<div class = "menu-login">
 		<c:if test="${!empty user}">

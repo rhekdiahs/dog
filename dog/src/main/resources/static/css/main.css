@@ -53,27 +53,27 @@ body{
 	margin-bottom : 5px;
 }
 .menu-list{
-	border-radius : 5px;
-	padding : 5px 0;
+	border-radius : 40px;
+	padding : 13px 0;
 	background: #FDF7C6;
 	font-size : 15px;
 	font-family : neon;
 	color : black;	
 }
 .menu-list:nth-child(1), .menu-list:nth-child(3){
-	margin-left : 65px;
+	margin-left : 70px;
 }
 .menu-list:nth-child(2), .menu-list:nth-child(4){
-	margin-right : 65px;
+	margin-right : 70px;
 }
 .menu-login{
 	margin-top : 30px;
 	font-family : neon;
-	font-size : 15px;
+	font-size : 13px;
 }
 .menu-login a{
-	padding : 0 20px;
-	color : black;
+	padding : 0 8px;
+	color : darkgray;
 }
 #main_header{
 	position : sticky;

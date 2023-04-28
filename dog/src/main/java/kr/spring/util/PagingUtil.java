@@ -55,7 +55,7 @@ public class PagingUtil {
 		// 이전 block 페이지
 		page = new StringBuffer();
 		if (currentPage > pageCount) {
-			page.append("<a href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url +">");
+			page.append("<a style = 'margin-right : 10px;' href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url +">");
 			page.append("<");
 			page.append("</a>");
 		}
@@ -65,7 +65,7 @@ public class PagingUtil {
 				break;
 			}
 			if (i == currentPage) {
-				page.append("&nbsp;<b><span style='color:red;'>");
+				page.append("&nbsp;<b><span>");
 				page.append(i);
 				page.append("</span></b>");
 			} else {
@@ -75,11 +75,11 @@ public class PagingUtil {
 				page.append(i);
 				page.append("</a>");
 			}
-			page.append("&nbsp;");
+			//page.append("&nbsp;");
 		}
 		// 다음 block 페이지
 		if (totalPage - startPage >= pageCount) {
-			page.append("<a href="+pageUrl+"?pageNum="+ (endPage + 1) + sub_url +">");
+			page.append("<a style = 'color: #828282; margin-left : 10px;' href="+pageUrl+"?pageNum="+ (endPage + 1) + sub_url +">");
 			page.append(">");
 			page.append("</a>");
 		}

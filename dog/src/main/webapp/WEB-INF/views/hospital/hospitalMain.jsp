@@ -45,7 +45,7 @@
 				</li>
 			</ul>
 		</form>
-		<div id = "map"></div>
+		<div id = "map" style = "border : 1px solid gray; border-radius : 5px;"></div>
 		<div class="custom_zoomcontrol radius_border"> 
        		<span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
         	<span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
@@ -64,8 +64,8 @@
 							getBookmark("${list.hospital_num}");
 						</script>
 						<div class = "list-title">
-							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${status.count}</strong></a>
-							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong>${list.h_name}</strong></a>
+							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong class = "index-bound">${status.count}</strong></a>
+							<a href = "/hospital/hospitalDetail.do?hospital_num=${list.hospital_num}" class = "title-index"><strong style = "color : #494949;">${list.h_name}</strong></a>
 							<span style = "font-size : 12px;">
 							<c:if test = "${list.hospital_type == 0}"><small>일반병원</small></c:if>
 		         			<c:if test = "${list.hospital_type == 1}">24시병원</c:if>
@@ -105,14 +105,19 @@ function zoomOut() {
 		center: new kakao.maps.LatLng(coordY, coordX), //지도의 중심좌표.
 		level: zoomLevel //지도의 레벨(확대, 축소 정도)
 	};
-	container.style.width = visualViewport.width + 'px';
-    container.style.height = visualViewport.width + 'px';
+	var mapWidth = document.getElementById('place-list').firstElementChild;
+	var rectPage = mapWidth.getBoundingClientRect();
+	
+	//container.style.width = (visualViewport.width*0.92) + 'px';
+    //container.style.height = (visualViewport.width*0.92) + 'px';
+    container.style.width = rectPage.width + 'px';
+    container.style.height = rectPage.width + 'px';
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
 	var pageDiv = document.getElementById('pageDiv');
 	var rectPage = pageDiv.getBoundingClientRect();
 	var rect = container.getBoundingClientRect();
-	$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height) + 'px');
+	$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height+20) + 'px');
 	/*========================= 
 		   병원 리스트 가져오기
 	===========================*/
@@ -256,7 +261,7 @@ function zoomOut() {
 	        	clickedTr.style.background = '';
 	        }
 	        clickedTr = document.getElementById(pos.hospital_num);
-	        clickedTr.style.background = '#feea3e';
+	        clickedTr.style.background = '#faf5ef';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
 	        map.setLevel(map.getLevel());
@@ -276,7 +281,7 @@ function zoomOut() {
 	        	clickedTr.style.background = '';
 	        }
 	        clickedTr = document.getElementById(pos.hospital_num);
-	        clickedTr.style.background = '#feea3e';
+	        clickedTr.style.background = '#faf5ef';
 	        overlay.setMap(map);
 	        clickedOverlay = overlay;
 	        map.setLevel(5);
