@@ -1,0 +1,129 @@
+/*========================
+        SETTINGS
+  ========================*/
+body{
+    margin : 0;
+	box-sizing : border-box;
+    padding : 0px;
+}
+
+#main_body{
+    font-size : 15px;
+    width : 100%;
+    margin : 0 auto;
+	box-sizing : border-box;
+	text-align : center;
+}
+
+.mypage-cate{
+    margin-bottom : 3px;;
+    border-bottom : 3px solid gray;
+    padding-top : 18px; padding-bottom: 35px;
+
+}
+/*========================
+          PROFILE
+  ========================*/
+
+.profile-cate{
+    width : 44%;
+    margin : 0px;
+    padding : 5px 0;
+    display : inline-block;
+    vertical-align : middle;
+}
+
+#profile_info p{
+    margin : 9px 0;
+    padding : 0;
+}
+
+/*----프로필 글자-----*/
+p#user_name{
+    font-size : 13.5pt;
+    font-weight : bolder;
+}
+
+p#user_email, p#user_register_date{
+    font-size : 8.5pt;
+    margin : 2px 0;
+}
+p#user_intro{
+    font-size : 8.5pt;
+}
+
+/*-----버튼------*/
+#profile_edit_btn{
+    background-color : #494949 ;
+    border : none;
+    border-radius : 13px;
+    color : white;
+    padding : 8px 13px;
+}
+/*========================
+     BOOKMARK LIST
+========================*/
+#bookmark_list{
+    clear : both;
+}
+
+div.wrap{
+    padding:10px;
+}
+div.wrap div{
+    box-sizing: border-box;
+    width:30%;
+    text-align: center;
+}
+
+div.bm-categories{
+    margin:0px;
+    padding:5px 0;
+}
+
+.bm-categories p{
+    margin:8px; padding:8px;
+    font-size: 13pt;
+}
+
+div.bm-category{
+    display : inline-block;
+    margin : 0px 15px;
+    padding : 0px 10px;
+}
+
+#bm_title p{
+    padding:0px; font-weight: 900;
+}
+p.bm-kind{
+    padding:0; margin:0;
+    font-size:10pt;
+}
+p.bm-count{
+    margin:0px; padding:1px 5px 5px 5px;
+    font-weight: 900;
+}
+.bm-count span{
+    font-size: 18pt; font-weight: 900;
+    color:#8cdcfc;
+}
+
+#bm_title{
+    margin:0px 0px 10px 0px;
+}
+
+/*========================
+     EXTRA CATEGORIES
+========================*/
+#my_ext{
+    width:100%;
+}
+.ext_cate{
+    font-size: 10pt;
+    box-sizing: border-box;
+    margin:0;
+    padding:5px 2px;
+    display: inline-block;
+    width:32%;
+    background-color: #feea3e ;
+}

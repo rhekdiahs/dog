@@ -28,9 +28,13 @@
     	<put-attribute name="title" value="마이페이지 메인"/>
     	<put-attribute name="body" value="/WEB-INF/views/mypage/mypageMain.jsp"/>
     </definition>
-	<definition name="editMain" extends="main">
+	<definition name="editForm" extends="main">
     	<put-attribute name="title" value="프로필 수정"/>
     	<put-attribute name="body" value="/WEB-INF/views/mypage/editProfileMain.jsp"/>
+    </definition>
+	<definition name="myBookmark" extends="main">
+    	<put-attribute name="title" value="프로필 수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/mypage/myBookmark.jsp"/>
     </definition>
     
 </tiles-definitions>

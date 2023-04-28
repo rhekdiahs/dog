@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mypage.dao.MyPageMapper">
+	
+  	<sql id="whichCategories">
+  		<if test="walk_num != null">
+  			AND walk_num = ${walk_num}
+  		</if>
+  		<if test="hospital_num != null">
+  			AND hospital_num = ${hospital_num}
+  		</if>
+  		<if test="cafe_num != null">
+  			AND cafe_num = ${cafe_num}
+  		</if>
+  	</sql>
+  	<select id="checkBookmark" parameterType="BookmarkVO" resultType="Integer">
+  		SELECT COUNT(*) FROM BOOKMARK_MAP WHERE mem_num =${mem_num} 
+  		<include refid="whichCategories"></include>
+  	</select>
+  	
+  
+  	<sql id="byCategories">
+		<where>
+			<if test="categories != null">
+				categories = ${categories}
+			</if>
+			<if test="categories == null">
+				categories = 0;
+			</if>
+		</where>
+  	</sql>
+ 	<select id="getBookmarkListByCategories" parameterType="map" resultType="BookmarkVO">
+ 		select * from (select a.*, rownum rnum from 
+	 		(SELECT * FROM BOOKMARK_MAP 
+	 		<include refid="byCategories"></include>
+	 	) a)
+	 	<![CDATA[
+  			where rnum >= #{start} and rnum <= #{end}
+  		]]>
+ 	</select>
+ 	
+ 	<select id="getBookmarkCountByCategories" parameterType="map" resultType="integer">
+ 		SELECT COUNT(*) FROM BOOKMARK_MAP 
+ 		<include refid="byCategories"></include>
+ 	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
