@@ -11,7 +11,7 @@
 			<img id = "menu_homeBtn" src = "${pageContext.request.contextPath}/image_bundle/home_btn.png">
 			</a>
 		</c:if>
-		<c:if test="${!empty user || user.mem_auth == 9}">
+		<c:if test="${!empty user && user.mem_auth == 9}">
 			<a class = "menu-icon" href = "${pageContext.request.contextPath}/main/admin.do">
 			<img id = "menu_homeBtn" src = "${pageContext.request.contextPath}/image_bundle/home_btn.png">
 			</a>
