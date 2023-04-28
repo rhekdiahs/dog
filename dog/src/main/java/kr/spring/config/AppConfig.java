@@ -52,7 +52,11 @@ public class AppConfig implements WebMvcConfigurer{
 			//LoginCheckInterceptor 설정
 			registry.addInterceptor(loginCheck).addPathPatterns("/community/lostList.do");
 			//AdminCheckInterceptor 설정
-			registry.addInterceptor(adminCheck).addPathPatterns("/admin/adminMain.do");
+			registry.addInterceptor(adminCheck)
+					.addPathPatterns("/main/admin.do")
+					.addPathPatterns("/admin/adminMain.do")
+					.addPathPatterns("/admin/adminMember.do")
+					.addPathPatterns("/admin/adminCafe.do");
 		}
 
 	//타일스 설정

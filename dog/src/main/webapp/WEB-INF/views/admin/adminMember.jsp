@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<div>
-		<c:if test="${count >= 0}">
+		<c:if test="${count > 0}">
 	<table>
 		<tr>
 			<th>회원번호</th>
@@ -14,10 +14,10 @@
 		</tr>
 		<c:forEach var="user" items="${user}">
 		<tr>
-			<td>${member.mem_num}</td>
-			<td>${member.mem_name}</td>
-			<td>${member.mem_email}</td>
-			<td>${member.mem_regdate}</td>
+			<td>${user.mem_num}</td>
+			<td>${user.mem_name}</td>
+			<td>${user.mem_email}</td>
+			<td>${user.mem_regdate}</td>
 		</tr>
 	</c:forEach>
 	</table>

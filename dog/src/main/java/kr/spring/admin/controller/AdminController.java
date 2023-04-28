@@ -107,7 +107,7 @@ public class AdminController {
 			cafe = cafeService.selectCafeList(map);
 		}
 		
-		logger.debug("user>>" + cafe);
+		logger.debug("cafe>>" + cafe);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("adminCafe");
