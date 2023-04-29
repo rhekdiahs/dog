@@ -9,11 +9,14 @@
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setBookmark.js"></script>
-<script src="${pageContext.request.contextPath}/js/setMenuBtn.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
-<form:form action="selectOption.do" method="get">
-	<select name="keyfield" id="keyfield" style="width:100%;">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
+<div class = "wrap">
+<form:form action="selectOption.do" id="search_region" method="get">
+	<ul id = "searchBar" class="search" style="list-style: none;">
+	<li>
+	<div class = "inputWrap">
+	<select name="keyfield" id="keyfield">
 		<option selected="selected">--선택--</option>
 		<option value="서울특별시"
 			<c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울</option>
@@ -50,19 +53,30 @@
 		<option value="제주특별자치도"
 			<c:if test="${param.keyfield == '제주특별자치도'}">selected</c:if>>제주</option>
 	</select>
-<script type="text/javascript">
-	$('#keyfield').change(function(){
-		location.href = "/walk/selectOption.do?keyfield=" + $(this).val();
-	});
-</script>
+	<script type="text/javascript">
+		$('#keyfield').change(function(){
+			location.href = "/walk/selectOption.do?keyfield=" + $(this).val();
+		});
+	</script>
+	<input type="search" name="keyword" id="keyword" value="${param.keyword}">
+	<input type="submit" id="submitBtn" value="찾기">
+	</div>
+	</li>
+	</ul>
 </form:form>
-<div id="map"></div>
+
+<div id="map" style="border : 1px solid gray; border-radius : 5px;"></div>
 	<div class="custom_zoomcontrol radius_border"> 
        		<span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
         	<span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
     </div>
+    <div id = "forFit"></div>
 <!-- list scroll -->
-<c:if test="${list == null}">리스트가 없습니다</c:if>
+<c:if test="${list == null}">
+<ul  id="place-list" class="place-list">
+	리스트 없음
+</ul>
+</c:if>
 <c:if test="${list != null}">
 <div>
 	<ul id="place-list" class="place-list">
@@ -78,15 +92,17 @@
 				</div>
 				<div class="list-title">
 					<a href="/walk/viewWalk.do?walk_num=${list.walk_num}"
-						class="title-index"><strong>${status.count}</strong></a> 
+						class="title-index"><strong class = "index-bound">${status.count}</strong></a> 
 					<a href="/walk/viewWalk.do?walk_num=${list.walk_num}"
 						class="title-index">
-					<c:if test="${list.mem_id != null}"><strong>${list.mem_id}</strong></c:if>
-					<c:if test="${list.mem_id == null}"><strong>🐶🐶</strong></c:if>님의 산책로</a>
+					<strong style = "color : #494949;">
+					<c:if test="${list.mem_name != null}">${list.mem_name}</c:if>
+					<c:if test="${list.mem_name == null}">🐶🐶</c:if>
+					님의 산책로</strong></a>
 				</div>
 				<div class="list-content">
-					<p>${list.walk_region}</p>
-					<p>${list.walk_distance}m</p>
+					<p><small>${list.walk_region}</small></p>
+					<p><small>${list.walk_distance}m</small></p>
 				</div>
 			</li>
 			<script type="text/javascript">
@@ -126,6 +142,7 @@
 	<div id = "pageDiv" style = "text-align : center;">
 		${page}
 	</div>
+</div>
 <script type="text/javascript">
 		//지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
 		function zoomIn() {
@@ -163,7 +180,7 @@
 			walk_dict['walk_num'] = '${path.walk_num}';
 			walk_dict['path'] = '${path.walk_position}';
 			walk_dict['city'] = '${path.walk_region}';
-			walk_dict['mem_id'] = '${path.mem_id}';
+			walk_dict['mem_name'] = '${path.mem_name}';
 			walk_dict['addr'] = '${path.walk_address}';
 			walk_dict['walk_distance'] = '${path.walk_distance}';
 			walk_array.push(walk_dict);
@@ -218,7 +235,7 @@
 			    
 			    var contentLink = document.createElement("a");
 				contentLink.className = "link";
-				contentLink.appendChild(document.createTextNode(pos.mem_id + ' 님의 산책로'));
+				contentLink.appendChild(document.createTextNode(pos.mem_name + ' 님의 산책로'));
 			    contentLink.href = "viewWalk.do?walk_num=" + pos.walk_num;
 			    contentName.appendChild(contentLink);
 				info.appendChild(contentName);
@@ -233,7 +250,7 @@
 				
 			    var contentImg = document.createElement("img");
 			    contentImg.className = "image";
-			    contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/defaltHospitalImg.png");
+			    contentImg.setAttribute("src", "${pageContext.request.contextPath}/image_bundle/sitting-dog.png");
 			    contentImg.setAttribute("width", "55");
 			    contentImg.setAttribute("height", "55");
 			    contentImg.setAttribute("style", "margin-left : 5px; margin-top : 5px;");

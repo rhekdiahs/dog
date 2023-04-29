@@ -3,15 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing,services"></script>
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
-<div id="main_body">
-<div id="form_wrap">
+<div class="wrap">
+<div>
 	<div class="inputWrap">
-<form:form action="selectRegionFromRegister.do" method="get">
-	<select name="keyfield" id="keyfield" style="width:100%;">
+<form:form action="selectRegionFromRegister.do" id="search_region" method="get">
+	<select name="keyfield" id="keyfield">
 		<option selected="selected">--선택--</option>
 		<option value="서울특별시"
 			<c:if test="${param.keyfield == '서울특별시'}">selected</c:if>>서울</option>
@@ -54,12 +55,13 @@
 	});
 </script>
 </form:form>
-	<form id="map_search_bar" onsubmit="searchPlaces(); return false;">
+	<form onsubmit="searchPlaces(); return false;">
 		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword">
-		<button type="submit" id="keyword_search">검색</button>
+		<button type="submit">찾기</button>
 	</form>
-		</div>
-	</div>
+		</div><!-- .input-wrap -->
+	</div><!-- wrap -->
+	<div id="map_wrap">
 	<p class="modes">
 		    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
 		    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
@@ -67,6 +69,7 @@
 		    <button id="register_btn" disabled="disabled" onclick="next();">완료</button>
 	</p>
 	<div id="map" style="width:100%;height:400px;"></div>
+	</div>
 	<form:form action="registerForm.do" modelAttribute="walkVO" id="registerForm" name="registerForm" method="post">
 		<form:input path="walk_position" type="hidden" value=""/>
 		<form:input path="walk_region" type="hidden" value=""/>
@@ -76,7 +79,6 @@
 		<form:button type="submit"></form:button>
 	</form:form>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50bad82a66475d629a06f73901975583&libraries=drawing,services"></script>
 <script type="text/javascript">
 
 	var keyfield = decodeURI(link);
@@ -286,6 +288,7 @@
 		   				clickLtnlng = [];
 		   				clickDistance = 0;
 		   				clickPolyline = '';
+		   				drawable.disabled = false;
 		   				drawingFlag=false;
 		   				undrawable.disabled = true;
 		   				saveMap.disabled = true;

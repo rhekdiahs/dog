@@ -57,12 +57,19 @@
 			<if test="keyfield == '제주특별자치도'">
 				walk_region = #{keyfield}
 			</if>
+			<if test = "keyword != null and keyword != ''">
+				<include refid="searchKeyword"></include>
+			</if>
 		</if>
 		</where>
 	</sql>
+		<sql id = "searchKeyword">
+		AND (walk_region LIKE '%' || #{keyword} || '%' OR
+		walk_address LIKE '%' || #{keyword} || '%')
+	</sql>
   	<select id="getListByRegion" parameterType="map" resultType="walkVO">
   		select * from (select list.*, rownum rnum from 
-  			(select * from walk 
+  			(select * from walk w join walk_detail d on w.walk_num = d.walk_num 
   			<include refid="selectOption"></include>
   			) list) 
   			<![CDATA[
@@ -72,8 +79,9 @@
   	<select id="getListCount" parameterType="map" resultType="integer">
   		SELECT
 			COUNT(*)
-		FROM WALK
+		FROM (select * from walk w join walk_detail d on w.walk_num = d.walk_num 
 		<include refid="selectOption"></include>
+		)
   	</select>
 </mapper>
 

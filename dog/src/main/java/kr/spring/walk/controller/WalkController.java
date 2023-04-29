@@ -95,7 +95,7 @@ public class WalkController {
 		
 		int count = walkService.getListCount(map);
 		
-		PagingUtil page	= new PagingUtil(keyfield, null, currentPage, count, 10, 5, "selectOption.do");
+		PagingUtil page	= new PagingUtil(keyfield, keyword, currentPage, count, 10, 5, "selectOption.do");
 		
 		MemberVO member = (MemberVO)session.getAttribute("user");
 		
@@ -238,7 +238,7 @@ public class WalkController {
 		String walk_position = walkService.getWalkPosition(walk_num);
 		logger.debug("좌표확인좀? " + walk_position);
 		
-		String[] walk_position_arr = walk_position.split(", ");
+		String[] walk_position_arr = walk_position.split(",");
 		
 		List<String[]> list = new ArrayList<String[]>();
 		for(int i=0; i<walk_position_arr.length; i+=2) {
@@ -249,7 +249,7 @@ public class WalkController {
 		logger.debug("리스트확인좀? " + Arrays.toString(list.get(i)));
 		}
 		
-		Integer center = (int)Math.round(Math.floor(list.size() /2));
+		Integer center = (int)Math.floor(list.size() /2);
 		
 		logger.debug("<<<<< 중간 좌표 index >>>>>" + center);
 		logger.debug("<<<<<<<< 중간 (x,y) 좌표>>>>" + Arrays.toString(list.get(center)));
