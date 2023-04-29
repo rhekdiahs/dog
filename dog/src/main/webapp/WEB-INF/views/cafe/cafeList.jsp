@@ -45,7 +45,11 @@
 				</li>
 		</ul>	
 	</form>
-	<div id="map"></div>
+	<div id="map" style="border : 1px solid gray; border-radius : 5px;"></div>
+	<div class="custom_zoomcontrol radius_border"> 
+       		<span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
+        	<span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
+    	</div>
 	<div id = "forFit"></div>
 		<div>
 			<ul id="place-list" class="place-list">
@@ -60,8 +64,8 @@
 							getBookmark("${cafe.cafe_num}");
 						</script>
 						<div class="list-title">
-							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${status.count}</strong></a>
-							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${cafe.cafe_name}</strong></a>
+							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong class = "index-bound">${status.count}</strong></a>
+							<a href="cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong style="color:#494949;">${cafe.cafe_name}</strong></a>
 							<span class="cafe-cate"> 
 								<c:if test="${cafe.cafe_cate == 0}"><small>애견 카페</small></c:if> 
 								<c:if test="${cafe.cafe_cate == 1}"><small>애견 동반 카페</small></c:if>
@@ -80,7 +84,9 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<div class="align-center">${page}</div>
+		<div id = "pageDiv" style = "text-align : center;">
+			${page}
+		</div>
 </div>
 <script>
 		var container = document.getElementById('map');
@@ -89,13 +95,23 @@
 			level: zoomLevel
 		};
 		
-		container.style.width = visualViewport.width + 'px';
-		container.style.height = visualViewport.width + 'px';
+		//container.style.width = visualViewport.width + 'px';
+		//container.style.height = visualViewport.width + 'px';
+		
+		var mapWidth = document.getElementById('place-list').firstElementChild;
+		var rectPage = mapWidth.getBoundingClientRect();
+	
+
+    	container.style.width = rectPage.width + 'px';
+    	container.style.height = rectPage.width + 'px';
+	
+		var pageDiv = document.getElementById('pageDiv');
+		var rectPage = pageDiv.getBoundingClientRect();		
 		
 		var map = new kakao.maps.Map(container, options);
 		
 		var rect = container.getBoundingClientRect();
-		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom)/*  - parseInt(40) */ + 'px');
+		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom)- parseInt(rectPage.height+20) + 'px');
 
 		/*========================= 
 		지도 화면 크기에 맞춰서 사이즈 설정
@@ -220,7 +236,7 @@
 		        	clickedTr.style.background = '';
 		        }
 		        clickedTr = document.getElementById(pos.cafe_num);
-		        clickedTr.style.background = '#feea3e';
+		        clickedTr.style.background = '#faf5ef';
 		        overlay.setMap(map);
 		        clickedOverlay = overlay;
 		        map.setLevel(map.getLevel());
@@ -238,7 +254,7 @@
 		    		clickedTr.style.background = '';
 		    	}
 		    	clickedTr = document.getElementById(pos.cafe_num);
-		    	clickedTr.style.background = '#feea3e';
+		    	clickedTr.style.background = '#faf5ef';
 		    	overlay.setMap(map);
 		    	clickedOverlay = overlay;
 		    	map.setLevel(5);
