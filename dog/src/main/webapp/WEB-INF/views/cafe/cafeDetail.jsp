@@ -98,7 +98,7 @@
 		<h3 class = "detail-cat">사진</h3>
 		<div>
 			<c:if test="${!empty cafe.cafe_image_name}">
-			<img src = "${pageContext.request.contextPath}/hospital/photoView.do?hospital_num=${cafe.cafe_num}">		
+			<img src = "${pageContext.request.contextPath}/cafe/photoView.do?cafe_num=${cafe.cafe_num}">		
 			</c:if>
 			<c:if test="${empty cafe.cafe_image_name}">
 			<img src = "${pageContext.request.contextPath}/image_bundle/logo.jpg" style = "width : 100%;">
