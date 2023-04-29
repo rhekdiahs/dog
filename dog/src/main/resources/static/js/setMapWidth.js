@@ -3,8 +3,8 @@
 	===========================*/
 	function resizeMap() {
 	    var container = document.getElementById('map');
-	    container.style.width = visualViewport.width + 'px';
-	    container.style.height = visualViewport.width + 'px';
+	    container.style.width = (visualViewport.width*0.9) + 'px';
+	    container.style.height = (visualViewport.width*0.9) + 'px';
 	}
 	function relayout() {
 	    map.relayout();

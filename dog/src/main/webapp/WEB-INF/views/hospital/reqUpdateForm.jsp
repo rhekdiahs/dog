@@ -18,83 +18,29 @@
 	</div>
 	<ul class = "select-section">
 		<li onclick = "linkTo(this)" data-li = "Pdelete">> 해당 위치에 지정된 장소가 없어요.</li>
-		<li class = "hide">
-		<div class = "reqContWrap">
-			<h4>해당 위치의 사진을 올려주세요.</h4>
-			<small>(주변 사진도 함께 촬영해주세요.)</small>
-			<div class = "formWrap">
-				<form action = "reqUpdateContent.do" method = "post" id = "reqForm">
-					<label for ="upload">사진 올리기</label>
-					<input type="file" name="upload" id="upload" style = "display : none;">
-				</form>
-			</div>
-		</div>
-		</li>
+		<li class = "hide" id ="PdeleteLi"></li>
 		<hr>
 		<li onclick = "linkTo(this)" data-li = "Pname">> 장소명을 수정해주세요.</li>
-		<li class = "hide">
-		<div class = "reqContWrap">
-			<h4>해당 장소의 사진을 올려주세요.</h4>
-			<small>(주변 사진도 함께 촬영해주세요.)</small>
-			<div class = "formWrap">
-				<form action = "reqUpdateContent.do" method = "post" id = "reqForm">
-					<input type = "text" class = "input-textbox" placeholder = "장소명을 입력해주세요.">
-					<label for ="upload">사진 올리기</label>
-					<input type="file" name="upload" id="upload" style = "display : none;">
-				</form>
-			</div>
-		</div>
-		</li>
+		<li class = "hide" id ="PnameLi"></li>
 		<hr>
 		<li onclick = "linkTo(this)" data-li = "Pdetail">> 상세 내용을 수정해주세요.</li>
-		<li class = "hide">
-		<div class = "reqContWrap">
-			<h4>상세 내용을 입력해주세요.</h4>
-			<small>(최대한 자세하게 적어주세요.)</small>
-			<div class = "formWrap">
-				<form action = "reqUpdateContent.do" method = "post" id = "reqForm">
-					<input type = "text" class = "input-textbox" placeholder = "내용을 입력해주세요.">
-				</form>
-			</div>
-		</div>
-		</li>
+		<li class = "hide" id ="PdetailLi"></li>
 		<hr>
 		<li onclick = "linkTo(this)" data-li = "Pphoto">> 사진을 수정해주세요.</li>
-		<li class = "hide">
-		<div class = "reqContWrap">
-			<h4>변경하고자 하는 사진을 올려주세요.</h4>
-			<small>(장소의 특징이 잘 보이게 촬영해주세요.)</small>
-			<div class = "formWrap">
-				<form action = "reqUpdateContent.do" method = "post" id = "reqForm">
-					<label for ="upload">사진 올리기</label>
-					<input type="file" name="upload" id="upload" style = "display : none;">
-				</form>
-			</div>
-		</div>
-		</li>
+		<li class = "hide" id ="PphotoLi"></li>
 		<hr>
-		<li onclick = "javascript:linkTo(this)" data-li = "Ploc">> 위치를 수정해주세요.</li>		
-		<li class = "hide" style = "margin-bottom : 20px;">
-		<div class = "reqContWrap">
-			<h4>지도를 움직여 정확한 위치를 알려주세요.</h4>
-			<div class = "formWrap">
-			<div id = "map"></div>
-				<form action = "reqUpdateContent.do" method = "post" id = "reqForm">
-					<input type="text" class = "input-textbox" id = "road">
-					<input type="text" class = "input-textbox" placeholder = "상세주소를 입력해주세요.">
-				</form>
-			</div>
-		</div>
-		</li>
+		<li onclick = "linkTo(this)" data-li = "Ploc">> 위치를 수정해주세요.</li>		
+		<li class = "hide" id ="PlocLi" style = "margin-bottom : 20px;" ></li>
 		<hr>
 		<li></li>	
 	</ul>
 	<div class = "submit-btn">
-		<button>제출하기</button>
+		<button id = "submit">제출하기</button>
 	</div>
 </div>
 <script>
 var clickedLi;
+var a;
 var geocoder = new kakao.maps.services.Geocoder();
 	function linkTo(e){
 		var hostURL = $('#hostURL').val();
@@ -107,48 +53,61 @@ var geocoder = new kakao.maps.services.Geocoder();
 			clickedLi = '';
 		}
 		if(submenu.is(":visible")){
-	    	submenu.slideUp();
+	    	submenu.slideUp('slow', function(){
+	    		$('.reqContWrap').remove();
+	    	});
 			clickedLi = '';
 		}else{
 	   		submenu.slideDown('slow', function(){
+	   		if(reqType == 'Pdelete'){
+	   			createPdel(reqType);
+	   			
+	   		}else if (reqType == 'Pname'){
+	   			createPname(reqType);
+	   		}else if (reqType == 'Pdetail'){
+	   			createPdetail(reqType);
+	   		}else if (reqType == 'Pphoto'){
+	   			createPphoto(reqType);
+	   		}else if (reqType == 'Ploc'){
+	   			createPloc(reqType);
+	   			
+	   			const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	   			
+	   			let options = { //지도를 생성할 때 필요한 기본 옵션
+	   				center: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), //지도의 중심좌표.
+	   				level: 3 //지도의 레벨(확대, 축소 정도)
+	   			};
+	   			let map = new kakao.maps.Map(container, options);
+	   			
+	   			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+	 			// 마커 이미지의 이미지 크기 입니다
+		   	 	var imageSize = new kakao.maps.Size(24, 35);
+		   		// 마커 이미지를 생성합니다    
+		    	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+		   		
+	   			var marker = new kakao.maps.Marker({
+	   		        map: map, // 마커를 표시할 지도
+	   		        position: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), // 마커를 표시할 위치
+	   		        image : markerImage // 마커 이미지 
+	   		    });
+	   			searchDetailAddrFromCoords(map.getCenter(), function(result, status) {
+					if (status === kakao.maps.services.Status.OK) {
+						var road = document.getElementById('road');
+						road.value = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+					}
+				});
+	   			kakao.maps.event.addListener(map, 'center_changed', function() {
+	   			 	var position = map.getCenter();
+	    			marker.setPosition(position);
+	    			searchDetailAddrFromCoords(map.getCenter(), function(result, status) {
+	    				if (status === kakao.maps.services.Status.OK) {
+	    					var road = document.getElementById('road');
+	    					road.value = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+	    				}
+	    			});
+	   			});
+	   		}
 	   		
-   		  	const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-   			
-   			let options = { //지도를 생성할 때 필요한 기본 옵션
-   				center: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), //지도의 중심좌표.
-   				level: 3 //지도의 레벨(확대, 축소 정도)
-   			};
-   			let map = new kakao.maps.Map(container, options);
-   			
-   			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
- 			// 마커 이미지의 이미지 크기 입니다
-	   	 	var imageSize = new kakao.maps.Size(24, 35);
-	   		// 마커 이미지를 생성합니다    
-	    	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-	   		
-   			var marker = new kakao.maps.Marker({
-   		        map: map, // 마커를 표시할 지도
-   		        position: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), // 마커를 표시할 위치
-   		        image : markerImage // 마커 이미지 
-   		    });
-   			searchDetailAddrFromCoords(map.getCenter(), function(result, status) {
-				if (status === kakao.maps.services.Status.OK) {
-					var road = document.getElementById('road');
-					road.value = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
-				}
-			});
-   			kakao.maps.event.addListener(map, 'center_changed', function() {
-   			 	var position = map.getCenter();
-    			marker.setPosition(position);
-    			searchDetailAddrFromCoords(map.getCenter(), function(result, status) {
-    				if (status === kakao.maps.services.Status.OK) {
-    					var road = document.getElementById('road');
-    					road.value = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
-    				}
-    			});
-   			});
-   			
-   			
 		});
 			clickedLi = submenu;
 		}
@@ -161,7 +120,5 @@ var geocoder = new kakao.maps.services.Geocoder();
 	    // 좌표로 법정동 상세 주소 정보를 요청합니다
 	    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 	}
-	$(function(){
-		
-	});
 </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/reqUpdateForm.js"></script>

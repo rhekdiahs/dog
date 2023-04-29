@@ -57,6 +57,24 @@ hr{
 	padding : 10px 10px;
 	margin-bottom : 5px;
 }
+#input-textbox1{
+	position: relative;
+	width : calc(100% - 20px);
+	border : 1px solid #e1e5e7;
+	box-shadow : 0 1px 3px 0 rgba(0,0,0,.03);
+	border-radius : 5px;
+	padding : 10px 10px;
+	margin-bottom : 5px;
+}
+#input-textbox2{
+	position: relative;
+	width : calc(100% - 20px);
+	border : 1px solid #e1e5e7;
+	box-shadow : 0 1px 3px 0 rgba(0,0,0,.03);
+	border-radius : 5px;
+	padding : 10px 10px;
+	margin-bottom : 5px;
+}
 #map{
 	margin : 0 auto;
 	width : 90vw;

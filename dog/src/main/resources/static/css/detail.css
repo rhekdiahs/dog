@@ -6,7 +6,10 @@ hr{
 	margin : 0 auto;
 }
 h3{
-	margin-bottom : 15px;
+	margin-bottom : 25px;
+}
+h5{
+	color : #a5a5a5;
 }
 .wrap-detail{
 	width : 100vw;
@@ -44,10 +47,10 @@ h3{
 	cursor : pointer;
 }
 .direct-scroll li:not(:last-child){
-	border-right : 1px solid navajowhite;
+	border-right : 1px solid #a5a5a5;
 }
 .margin-detail{
-	margin : 20px 10px 0 10px;
+	margin : 15px 10px 25px 10px;
 }
 .detail-cat{
 	text-align : center;

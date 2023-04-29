@@ -3,9 +3,10 @@ var container = document.getElementById('map'), // 지도를 표시할 div
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     }; 
-    
-container.style.width = visualViewport.width + 'px';
-container.style.height = visualViewport.width + 'px';
+var mapWidth = document.getElementById('searchBox');
+var rectPage = mapWidth.getBoundingClientRect();
+container.style.width = rectPage.width + 'px';
+container.style.height = rectPage.width + 'px';
 
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(container, option); 

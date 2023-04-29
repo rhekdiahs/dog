@@ -3,6 +3,7 @@ package kr.spring.hospital.vo;
 import java.io.IOException;
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class HospitalVO {
@@ -12,6 +13,7 @@ public class HospitalVO {
 	private String coord_x;
 	private String coord_y;
 	private String road;
+	@NotEmpty
 	private String h_name;
 	private String h_address;
 	private String h_phone;
@@ -19,6 +21,7 @@ public class HospitalVO {
 	
 	private int h_info_num;
 	private String h_info_name;
+	@NotEmpty
 	private String h_info_detail;
 	private Date h_info_date;
 	private int h_info_auth;

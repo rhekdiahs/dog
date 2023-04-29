@@ -9,8 +9,8 @@
 	<form:form action="hospitalWrite.do" method="post" 
 			   modelAttribute="hospitalVO" enctype="multipart/form-data">
 		<form:errors element="div" cssClass="error-color"/>
-		<ul>
-			<li>
+		<ul id = "cont_ul">
+			<li style = "margin-top : 30px;">
 				<div class="cafe_cate">
 				<p>병원 종류</p>
 			     <input type="radio" id="cafe_cate0" name="hospital_type" checked="checked" value="0">
@@ -20,9 +20,9 @@
 				</div>
 			</li>
 			<li>
-				<p><label for="h_name">병원명</label><p>
+				<p><label for="h_name">병원명</label></p>
 				<form:input path="h_name" id="cafe_name" name="h_name" value="${h_name}"/>			
-				<p><form:errors path="h_name" cssClass="error-color"/></p>
+				<form:errors path="h_name" cssClass="error-color"/>
 			</li>
 			<li>
 				<p><label for="cafe_addr">주소</label></p>
@@ -35,11 +35,11 @@
 				<input type="text" id="cafe_addr2"  name="h_address" value="${h_address}">
 				</c:if>
 			</li>
-			<li>
+			<li style = "display : none;">
 				<input type="hidden" id="cafe_y" name="coord_y" value="${coord_y}"/>
 				<input type="hidden" id="cafe_x" name="coord_x" value="${coord_x}"/>
 			</li>
-			<li>
+			<li style = "display : none;">
 				<input type="hidden" id="cafe_region" name="hospital_region" value="${hospital_region}"/>
 			</li>
 			<li>
@@ -53,28 +53,31 @@
 			<li>
 				<p><label for="cafe_content">내용</label></p>
 				<form:textarea rows="8" cols="33" path="h_info_detail" id="cafe_content" name="h_info_detail"/>
-				<p><form:errors path="h_info_detail" cssClass="error-color"/></p>
+				<form:errors path="h_info_detail" cssClass="error-color"/>
 			</li>
 			<li>
-				<p><label for="upload">사진 등록</label></p>
+				<p><label for="upload">사진등록</label></p>
 				<input type="file" name="upload" id="upload">
 				
 			</li>
-			<li style="margin-top: 10px;">
-				<input type="submit" id="regi_btn" value="신청하기">
-				<input type="button" id="back_btn" value="뒤로가기" onclick="location.href='hospitalSelect.do'">
+			<div id="map"></div>
+			<li style="margin-top: 30px; margin-bottom : 20px;">
+				<input type="submit" id="regi_btn" value="신청">
+				<input type="button" id="back_btn" value="이전" onclick="location.href='hospitalSelect.do'">
 			</li>
 		</ul>
 	</form:form>
 	</div>
-	<div id="map" style="width:100%;height:350px; margin-top: 15px;"></div>
+	
 	<script>
+		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), // 지도의 중심좌표
 		        level: 3 // 지도의 확대 레벨
 		    };
-		
+		mapContainer.style.width = (visualViewport.width*0.85) + 'px';
+		mapContainer.style.height = (visualViewport.width*0.85) + 'px';
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		
@@ -88,6 +91,17 @@
 	        map: map, // 마커를 표시할 지도
 	        position: new kakao.maps.LatLng('${coord_y}', '${coord_x}'), // 마커를 표시할 위치
 	        image : markerImage // 마커 이미지 
+	    });
+	    
+	    $('#cafe_name').keyup(function() {
+	    	if($('#h_name.errors')){
+	    		$('.error-color').remove();
+	    	}
+	    });
+	    $('#cafe_content').keyup(function() {
+	    	if($('#h_info_detail.errors')){
+	    		$('.error-color').remove();
+	    	}
 	    });
 	</script>
 </div>

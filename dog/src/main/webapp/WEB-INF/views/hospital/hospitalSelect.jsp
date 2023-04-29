@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f51f9d8c2a383e5820415bbc36c1551a&libraries=services,clusterer,drawing"></script>
-<script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/select.css">
 <script type="text/javascript">
 $(function(){
@@ -22,7 +21,6 @@ $(function(){
 });
 </script>
 <div class="map_wrap">
-    <div id="map" style="position:relative; overflow:hidden;"></div>
     <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div id="searchBox">           
@@ -33,11 +31,12 @@ $(function(){
                 </form>
             </div>
         </div>
-        <div id="clickLatlng"></div>
-        <hr>
+
+    </div>
+    <div id="map" style="position:relative; overflow:hidden;"></div>
+            <div id="clickLatlng"></div>
         <ul id="placesList"></ul>
         <div id="pagination"></div>
-    </div>
 	<form action="hospitalWrite.do" method="get" id="cafe_regi">
 	    <input type="hidden" id="cafe_name" name="h_name">
 	    <input type="hidden" id="cafe_addr1" name="road">
