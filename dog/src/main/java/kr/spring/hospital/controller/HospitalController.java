@@ -31,8 +31,11 @@ import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
+import kr.spring.walk.service.WalkService;
+import kr.spring.walk.vo.WalkVO;
 import kr.spring.bookmark.vo.BookmarkVO;
 import kr.spring.cafe.controller.CafeController;
+import kr.spring.cafe.service.CafeService;
 
 @Controller
 public class HospitalController {
@@ -41,6 +44,12 @@ public class HospitalController {
 
 	@Autowired
 	private HospitalService hospitalService;
+	
+	@Autowired
+	private CafeService cafeService;
+	
+	@Autowired
+	private WalkService walkService;
 	
 	@ModelAttribute
 	public HospitalVO initCommand() {
@@ -309,7 +318,34 @@ public class HospitalController {
 		 
 		 return "redirect:/hospital/hospitalList.do?keyfield="+encodedParam; 
 	 }
-
+	 
+	 @RequestMapping("/hospital/reqUpdate.do")
+	 public String reqUpdate(@RequestParam int pk_num, HttpServletRequest request, HttpSession session, Model model) {
+		 
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다.");
+			model.addAttribute("url", "/member/login.do");
+			return "common/resultView";
+		}
+		 String hostURL = request.getHeader("referer").split("/")[3];
+		 
+		 model.addAttribute("hostURL", hostURL);
+		 
+		 model.addAttribute("pk_num", pk_num);
+		 if(hostURL.equals("walk")) {
+			 //WalkVO walk = walkService.
+		 }else if(hostURL.equals("hospital")) {
+			 HospitalVO hospital = hospitalService.selectHospital(pk_num);
+			 model.addAttribute("coord_x", hospital.getCoord_x());
+			 model.addAttribute("coord_y", hospital.getCoord_y());
+		 }else if(hostURL.equals("cafe")) {
+			 CafeVO cafe = cafeService.selectCafedetail(pk_num);
+			 model.addAttribute("coord_x", cafe.getCafe_x());
+			 model.addAttribute("coord_y", cafe.getCafe_y());
+		 }
+		 return "reqUpdateForm";
+	 }
 	/* 사용 끝
 	 * @RequestMapping("/hospital/insertCoords.do")
 	@ResponseBody

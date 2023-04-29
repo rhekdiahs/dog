@@ -54,4 +54,11 @@
     	<put-attribute name="title" value="병원위치선택"/>
     	<put-attribute name="body" value="/WEB-INF/views/hospital/hospitalWrite.jsp"/>     
     </definition>
+    
+    
+    
+    <definition name="reqUpdateForm" extends="memberRegister">
+    	<put-attribute name="title" value="병원위치선택"/>
+    	<put-attribute name="body" value="/WEB-INF/views/hospital/reqUpdateForm.jsp"/>     
+    </definition>
 </tiles-definitions>
