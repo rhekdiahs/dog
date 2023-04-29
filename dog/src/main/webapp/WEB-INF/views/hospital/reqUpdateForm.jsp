@@ -34,13 +34,15 @@
 		<hr>
 		<li></li>	
 	</ul>
-	<div class = "submit-btn">
-		<button id = "submit">제출하기</button>
+	<div id = "submit-btn">
+		<button id = "submit" disabled='disabled' onclick = "console.log('b')">제출하기</button>
 	</div>
 </div>
 <script>
 var clickedLi;
 var a;
+var upload;
+var textBox;
 var geocoder = new kakao.maps.services.Geocoder();
 	function linkTo(e){
 		var hostURL = $('#hostURL').val();
@@ -50,27 +52,76 @@ var geocoder = new kakao.maps.services.Geocoder();
 		var submenu = $(e).next("li");
 		if(clickedLi){
 			clickedLi.slideUp();
+			$('#submit').css('background-color', '#ccc');
+			$('#submit').attr("disabled", true);
 			clickedLi = '';
 		}
 		if(submenu.is(":visible")){
 	    	submenu.slideUp('slow', function(){
 	    		$('.reqContWrap').remove();
+	    		$('#submit').css('background-color', '#ccc');
+   				$('#submit').attr("disabled", true);
 	    	});
 			clickedLi = '';
 		}else{
 	   		submenu.slideDown('slow', function(){
 	   		if(reqType == 'Pdelete'){
 	   			createPdel(reqType);
-	   			
+	   			//삭제 요청시 업로드 불러오기
+	   			upload = $('#upload');
+	   			upload.on('change', function(){
+	   				$('#submit').css('background-color', '#fba082');
+	   				$('#submit').attr("disabled", false);
+	   			});
 	   		}else if (reqType == 'Pname'){
 	   			createPname(reqType);
+	   			//삭제 요청시 업로드 불러오기
+	   			upload = $('#upload');
+	   			textBox = $('.input-textbox');
+	   			textBox.keyup(function(){
+	   				if(upload.val() != ''){
+		   				$('#submit').css('background-color', '#fba082');
+		   				$('#submit').attr("disabled", false);		   					
+	   				}
+	   				
+	   			});
+	   			upload.on('change', function(){
+	   				if(textBox[0].value != ''){
+		   				$('#submit').css('background-color', '#fba082');
+		   				$('#submit').attr("disabled", false);	   					
+	   				}
+	   			});
 	   		}else if (reqType == 'Pdetail'){
 	   			createPdetail(reqType);
+	   			textBox = $('.input-textbox');
+	   			textBox.keyup(function(){
+	   				if(textBox[0].value != ''){
+			   			$('#submit').css('background-color', '#fba082');
+			   			$('#submit').attr("disabled", false);		   					
+	   				}else{
+	   		    		$('#submit').css('background-color', '#ccc');
+	   	   				$('#submit').attr("disabled", true);	   					
+	   				}
+	   			});
 	   		}else if (reqType == 'Pphoto'){
 	   			createPphoto(reqType);
+	   			upload = $('#upload');
+	   			upload.on('change', function(){
+	   				$('#submit').css('background-color', '#fba082');
+	   				$('#submit').attr("disabled", false);
+	   			});
 	   		}else if (reqType == 'Ploc'){
 	   			createPloc(reqType);
-	   			
+	   			textBox = $('.input-textbox');
+	   			textBox.keyup(function(){
+	   				if(textBox[1].value != ''){
+			   			$('#submit').css('background-color', '#fba082');
+			   			$('#submit').attr("disabled", false);		   					
+	   				}else{
+	   		    		$('#submit').css('background-color', '#ccc');
+	   	   				$('#submit').attr("disabled", true);	   					
+	   				}
+	   			});
 	   			const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	   			
 	   			let options = { //지도를 생성할 때 필요한 기본 옵션
