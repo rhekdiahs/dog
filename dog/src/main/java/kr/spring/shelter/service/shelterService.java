@@ -36,7 +36,6 @@ import kr.spring.shelter.vo.shelterVO;
 @Service
 public class shelterService {
 	private WebDriver driver;
-	private WebDriver driver2;
 	@Value("${driver.path}")
 	private String driverPath;
     private static final String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8F%99%EB%AC%BC+%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C&oquery=%EC%9E%84%EC%8B%9C%EB%B3%B4%ED%98%B8%EC%86%8C&tqi=iv%2BQRsprvN8ssSdWX7Nssssstsw-025886";
@@ -61,7 +60,8 @@ public class shelterService {
         options.addArguments("--disable-application-cache");//캐시 사용하지 않기
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받음
         
-        prefs.put("profile.managed_default_content_settings.images", 2);
+        prefs.put("profile.managed_default_content_settings.images", 2);//이미지 로딩 비활성화
+        
         options.setExperimentalOption("prefs", prefs);
         
         driver = new ChromeDriver(options);

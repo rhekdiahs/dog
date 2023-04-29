@@ -9,35 +9,40 @@
 		<div class="sub_tit">
 			<h3>임시보호소</h3>
 		</div><br>
+		
 		<div class="loading"></div>
-		<div class="footer-map" id="map" style="width:70%;height:400px;"></div>
+		
+		<div class="footer-map" id="map"></div>
+		<br><br>
 		<div>
-			<table class="ex" style="margin-left:auto;margin-right:auto;"></table>
+			<div class="ex"></div>
 			<br><br>
-		    <table class= "table" style="margin-left:auto;margin-right:auto;">
-		        <tr>
-		            <th>이름</th>
-		            <th>위치</th>
-		            <th>도로명</th>
-		        </tr>
-		        <c:forEach var="alist" items="${shelterVO}">
-		         <tr>
-		             <td class="shelter_url" data-id="${alist.url}"><span>"${alist.subject}" </span></td>
-		             <td><span>"${alist.location}" </span></td>
-		             <td><span>"${alist.address}"</span></td>
-		         </tr>
-		        </c:forEach>
-		    </table>
+			
+			<div>
+			<ul id = "place-list" class = "place-list" >
+				<c:forEach var="alist" items="${shelterVO}" varStatus="status">
+					<li class = "shel" data-id="${alist.url}">
+						<div class = "list-title">
+							<strong><span class="index">${status.count}</span> ${alist.subject}</strong>
+						</div>
+						<div class = "list-content">
+							<p>${alist.address}</p>
+							<p><small>${alist.location}</small></p>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+		   </div>
 		</div>
 	</div>
 </div>
 <script>
-$(window).on('load', function(){
+ $(window).on('load', function(){
 	// 3초 후에 로딩 화면 숨김
     setTimeout(function() {
         $(".loading").fadeOut();
-    }, 2400);
-});  
+    }, 4300);
+});   
 </script>
 
 <script>
@@ -136,38 +141,24 @@ $(window).on('load', function(){
 			    					$('.ex').empty();
 			    					$(param.list).each(function(index,item){
 			    						let output = '';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "이름 " + '</td>';
-			    						output += '<td>' + item.subject + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "주소 " + '</td>';
-			    						output += '<td>' + item.address + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "이미지 " + '</td>';
-			    						output += '<td>' + item.img + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "전화번호 " + '</td>';
-			    						output += '<td>' + item.phone + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "영업시간 " + '</td>';
-			    						output += '<td>' + item.time + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "설명 " + '</td>';
-			    						output += '<td>' + item.explanation + '</td>';
-			    						output += '</tr>';
-			    						output += '<tr>';
-			    						output += '<td class="extd">' + "홈페이지 " + '</td>';
+			    						output += '<ul id="place-list">';
+			    						output += '<li><p><strong>';
+			    						output += item.subject + '</strong></p><br>';
+			    						output += '<p>' + "주소 : ";
+			    						output += item.address + '</p><br>';
+			    						output += '<p>' + "전화번호 : ";
+			    						output += item.phone + '</p><br>';
+			    						output += '<p>' + "영업시간 : ";
+			    						output += item.time + '</p><br>';
+			    						output += '<p>' + "설명 : ";
+			    						output += item.explanation + '</p><br>';
+			    						output += '<p>' + "홈페이지 : ";
 			    						if(item.blog == "홈페이지가 없습니다."){
-			    						output += '<td>' + item.blog + '</td>';
+			    						output += item.blog + '</p><br>';
 			    						}else{
-			    							output += '<td><a href="'+item.blog+'">' + item.blog + '</a></td>';
+			    							output += '<a href="'+item.blog+'">' + item.blog +'</a></p>';
 			    						}
-			    						output += '</tr>';
+			    						output += '</li></ul>';
 			    						
 			    						$('.ex').append(output);
 			    					});
@@ -183,13 +174,13 @@ $(window).on('load', function(){
 			      });
 			      
 		      }
-	      }, 200);
-		}, 2700);	
+	      }, 300);
+		}, 4700);	
 </script>
 
 <script>
 //상세페이지 보여지기 부분
-$(document).on('click','.shelter_url',function(event){
+$(document).on('click','.shel',function(event){
 	var url = $(this).data('id');
 	//alert(url); // url 값 확인
 	
@@ -203,38 +194,24 @@ $(document).on('click','.shelter_url',function(event){
 				$('.ex').empty();
 				$(param.list).each(function(index,item){
 					let output = '';
-					output += '<tr>';
-					output += '<td class="extd">' + "이름 " + '</td>';
-					output += '<td>' + item.subject + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "주소 " + '</td>';
-					output += '<td>' + item.address + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "이미지 " + '</td>';
-					output += '<td>' + item.img + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "전화번호 " + '</td>';
-					output += '<td>' + item.phone + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "영업시간 " + '</td>';
-					output += '<td>' + item.time + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "설명 " + '</td>';
-					output += '<td>' + item.explanation + '</td>';
-					output += '</tr>';
-					output += '<tr>';
-					output += '<td class="extd">' + "홈페이지 " + '</td>';
+					output += '<ul id="place-list">';
+					output += '<li><p><strong>';
+					output += item.subject + '</strong></p><br>';
+					output += '<p>' + "주소 : ";
+					output += item.address + '</p><br>';
+					output += '<p>' + "전화번호 : ";
+					output += item.phone + '</p><br>';
+					output += '<p>' + "영업시간 : ";
+					output += item.time + '</p><br>';
+					output += '<p>' + "설명 : ";
+					output += item.explanation + '</p><br>';
+					output += '<p>' + "홈페이지 : ";
 					if(item.blog == "홈페이지가 없습니다."){
-					output += '<td>' + item.blog + '</td>';
+					output += item.blog + '</p><br>';
 					}else{
-						output += '<td><a href="'+item.blog+'">' + item.blog + '</a></td>';
+						output += '<a href="'+item.blog+'">' + item.blog +'</a></p>';
 					}
-					output += '</tr>';
+					output += '</li></ul>';
 				
 					$('.ex').append(output);
 				});

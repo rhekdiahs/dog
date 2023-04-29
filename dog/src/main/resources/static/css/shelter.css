@@ -17,20 +17,44 @@
 .extd{
 	width:100px;
 }
-.ex tr{
-	margin:10px;
-}
-.ex tr td{
-	margin:10px;
-	overflow: auto;
-}
+
 .loading{
-    width:30%;
-    height:60%;
-    position:fixed;
-    left:510px;
-    top:100px;
+	position: absolute;
+  	top: 20%;
+  	left: 40%;
+    width:20vw;
+    height:20vw;
+    padding:0 auto;
+    margin:0 auto;
     background-image:url('../images/loading.gif');
     background-size: cover;
     z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
+}
+.place-list{
+	overflow:auto;
+	position: relative;
+}
+.place-list li{
+	
+	padding : 10px 10px;
+	border-bottom : 2px solid lightgray;
+}
+#map{
+	 padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    position: relative;
+    
+    top: 20px;
+    z-index: 1000;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+}
+.index{
+	border-radius: 5px;
+    background: #494949;
+    color: white;
+    padding: 2px 7px;
+    font-weight: bold;
 }
