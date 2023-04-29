@@ -18,6 +18,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -100,7 +101,9 @@ public class shelterService {
         for (WebElement content : contents) {
         	WebElement cl = content.findElement(By.cssSelector("div.rDx68 span.Q8Zql a.vcshc"));
         	cl.click();
-        	String add = content.findElement(By.cssSelector("div.jg1ED > div.o8CtQ")).getText();//주소
+        	String add = null;
+        	add = content.findElement(By.cssSelector("div.MaJkh > div.jg1ED > div.o8CtQ")).getText();//주소
+        	
         	shelterVO shelter = shelterVO.builder()
                     .subject(content.findElement(By.cssSelector("span.place_bluelink")).getText())		// 제목
                     .url(content.findElement(By.cssSelector("div div a")).getAttribute("href"))		// 링크
