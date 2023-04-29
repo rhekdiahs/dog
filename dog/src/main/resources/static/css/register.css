@@ -1,4 +1,8 @@
 @charset "UTF-8";
+input::placeholder{
+	color : #cccccc;
+	font-size : 10px;
+}
 
 #main_div{
 	background : #faf5ef;
@@ -8,6 +12,12 @@
 	border-radius : 60px;
 	display : table;
 }
+#main_div{
+	text-align: left;
+}
+label {
+	margin-left : 18px;
+}
 .wrap-cont{
 	display: table-cell;
 	vertical-align : middle;
@@ -15,8 +25,8 @@
 .login-btn{
 	background : #feb69f;
 	border : none;
-	border-radius : 5px;
-	width : 130px;
+	border-radius : 20px;
+	width : 95px;
 	height : 30px;
 	color : white;
 	margin-bottom : 20px;
@@ -24,19 +34,22 @@
 }
 .inputWrap{
 	padding : 5px 5px;
-	border : 1px solid navajowhite;
-	border-radius : 10px;
-	margin : 10px auto ;
+	border : none;
+	border-radius : 20px;
+	margin : 0 auto ;
+	margin-top : 5px;
+	margin-bottom : 10px;
 	width : 70vw;
 	height : 30px;
 	background : white;
 }
 .align-left{
 	float : left;
-	width : 50vw;
+	width : 45vw;
 	height : 30px;
 	border: none;
 	background : none;
+	padding-left: 10px;
 }
 .checkSome{
 	float : right;
@@ -46,12 +59,13 @@
 	font-size : 12px;
 	font-weight :bold;
 	color : #494949;
+	margin: 0 10px;
 }
 #user_email{
-	width : 35vw;
+	width : 25vw;
 }
 
-#confirmEmail{
+#confrimEmail{
 	float : right;
 	height : 30px;
 	border : none;

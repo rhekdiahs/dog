@@ -11,7 +11,9 @@
 
 <div id = "main_div">
 	<div class = "wrap-cont">
+		<div style = "text-align: center;">
 		<img id = "4orDog_title" src = "${pageContext.request.contextPath}/image_bundle/4orDog.png" style = "margin : 10px 0; width : 60vw">
+		</div>
 		<br>
 		<form:form action="findPw.do" id="find_form" modelAttribute="memberVO">
 			<div>
@@ -40,6 +42,7 @@
 							<option value="nate.com">nate.com</option>
 							<option value="direct">직접입력</option>
 						</select>
+						<button type="button" class="btn btn-primary checkSome" id="mail-Check-Btn">전송</button>
 					</div>
 					</div>
 					<input type="text" id="email_direct" class = "inputWrap" name="email_direct" placeholder="이메일 입력"/>
@@ -50,14 +53,14 @@
 						<div class = "inputWrap">
 						<input class="form-control mail-check-input align-left" placeholder="인증번호 6자리 입력" disabled="disabled" maxlength="6">
 						
-						<button type="button" class="btn btn-primary checkSome" id="mail-Check-Btn">본인인증</button>
+						
 						</div>
 					</div>
 					<div id="mail-check-warn"></div>
 				</li>
 			</ul>
 			</div>
-			<div>
+			<div style = "text-align: center;">
 				<form:button class = "login-btn">비밀번호 찾기</form:button>
 			</div>
 		</form:form>

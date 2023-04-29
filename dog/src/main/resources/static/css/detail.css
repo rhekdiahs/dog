@@ -16,7 +16,8 @@ h3{
 	margin-top : 20px;
 }
 .nameNcat{
-	margin : 5px 0;
+	margin-top : 40px;
+	margin-bottom : 5px;
 }
 .content-title{
 	display : inline-block;
@@ -30,7 +31,8 @@ h3{
 	color : #8cdcfc;
 }
 .direct-scroll{
-	padding : 30px 20px;
+	padding : 0 2px;
+	padding-top : 40px;
 	height : 50px;
 	display : flex;
 	margin : 0 auto;

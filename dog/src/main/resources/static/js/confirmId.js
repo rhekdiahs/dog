@@ -1,10 +1,18 @@
 $(function(){
 	let checkId = 0;
+	$('#message_id').css('margin-left', '17px');
+	$('#message_id').css('margin-bottom', '10px');
+	$('#message_id').css('text-align', 'left');
+	$('#message_id').css('font-size', '11px');
 	
+	$('#confirmMsg').css('margin-left', '17px');
+	$('#confirmMsg').css('margin-bottom', '10px');
+	$('#confirmMsg').css('text-align', 'left');
+	$('#confirmMsg').css('font-size', '11px');
 	//=============아이디 중복 체크=============
 	$('#confirmId').click(function(){
 		if($('#mem_id').val().trim()==''){
-			$('#message_id').css('color','#E65962').text('아이디를 입력하세요');
+			$('#message_id').css('color','#fba082').text('아이디를 입력하세요');
 			$('#mem_id').val('').focus();
 			return;
 		}
@@ -20,10 +28,10 @@ $(function(){
 					$('#message_id').css('color','#000').text('사용가능합니다.');
 					checkId = 1;	
 				}else if(param.result == 'idDuplicated'){
-					$('#message_id').css('color','#E65962').text('존재하는 아이디입니다.');
+					$('#message_id').css('color','#fba082').text('존재하는 아이디입니다.');
 					checkId = 0;
 				}else if(param.result == 'notMatchPattern'){
-					$('#message_id').css('color','#E65962').text('4~12자의 영문 소문자, 숫자만 사용 가능합니다.');
+					$('#message_id').css('color','#fba082').text('4~12자의 영문 소문자, 숫자만 사용 가능합니다.');
 					checkId = 0;
 				}else{
 					checkId = 0;
@@ -47,7 +55,7 @@ $(function(){
 	//submit 이벤트 발생시 아이디 중복 체크 여부 확인
 	$('#register_form').submit(function(){
 		if(checkId==0){
-			$('#message_id').css('color','#E65962').text('중복체크 필수');
+			$('#message_id').css('color','#fba082').text('중복체크 필수');
 			if($('#mem_id').val().trim()==''){
 				$('#mem_id').val('').focus();
 			}
@@ -72,7 +80,7 @@ $(function(){
 				return;
 			}
 			if(mem_pw != pw_confirm){
-				$("#confirmMsg").text("비밀번호 불일치").css('color','#E65962');
+				$("#confirmMsg").text("비밀번호 불일치").css('color','#fba082');
 				return;					
 			}
 		}

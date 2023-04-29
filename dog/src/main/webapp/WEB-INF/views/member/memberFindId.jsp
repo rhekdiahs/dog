@@ -11,7 +11,9 @@
 
 <div id = "main_div">
 	<div class = "wrap-cont">
+		<div style = "text-align: center;">
 		<img id = "4orDog_title" src = "${pageContext.request.contextPath}/image_bundle/4orDog.png" style = "margin : 10px 0; width : 60vw">
+		</div>
 		<br>
 		<form:form action="findId.do" id="find_form" modelAttribute="memberVO">
 			<div>
@@ -27,7 +29,7 @@
 				<li>
 					<label for="user_email"><small>이메일</small></label>
 					<div class = "inputWrap">
-					<input type="text" id="user_email" class = "align-left" required placeholder = "이메일을 입력하세요">
+					<input type="text" id="user_email" class = "align-left" required placeholder = "이메일 입력">
 					<div id = "confrimEmail">
 						<span id="middle"><small>@</small></span>
 						<select id="email_address" name="email_address" title="이메일 선택" class="email_address">
@@ -38,6 +40,7 @@
 							<option value="nate.com">nate.com</option>
 							<option value="direct">직접입력</option>
 						</select>
+					<button type="button" class="btn btn-primary checkSome" id="mail-Check-Btn">전송</button>
 					</div>
 					</div>
 					<input type="text" id="email_direct" class = "inputWrap" name="email_direct" placeholder="이메일 입력"/>
@@ -48,14 +51,14 @@
 						<div class = "inputWrap">
 						<input class="form-control mail-check-input align-left" placeholder="인증번호 6자리 입력" disabled="disabled" maxlength="6">
 						
-						<button type="button" class="btn btn-primary checkSome" id="mail-Check-Btn">본인인증</button>
+						
 						</div>
 					</div>
 					<div id="mail-check-warn"></div>
 				</li>
 			</ul>
 			</div>
-			<div>
+			<div style = "text-align: center;">
 				<form:button class = "login-btn">아이디 찾기</form:button>
 			</div>
 		</form:form>

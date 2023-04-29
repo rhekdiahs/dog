@@ -1,5 +1,8 @@
 $(function(){
-	
+	$('#mail-check-warn').css('margin-left', '17px');
+	$('#mail-check-warn').css('margin-bottom', '10px');
+	$('#mail-check-warn').css('text-align', 'left');
+	$('#mail-check-warn').css('font-size', '11px');
 	//=================이메일 합치기==================
 	$("#email_direct").hide();
 	
@@ -41,7 +44,7 @@ $(function(){
 		if($('#user_email').val()==''){
 			$('#user_email').val('').focus();
 			$('#mail-check-warn').html('이메일을 입력해주세요');
-			$('#mail-check-warn').css('color','#E65962');
+			$('#mail-check-warn').css('color','#fba082');
 			return;
 		}else{
 			$('#mail-check-warn').html('');
@@ -51,7 +54,7 @@ $(function(){
 				$("#email_direct").show();
 				$('#email_direct').val('').focus();
 				$('#mail-check-warn').html('이메일을 입력해주세요');
-				$('#mail-check-warn').css('color','#E65962');
+				$('#mail-check-warn').css('color','#fba082');
 				return;
 			}
 		}
@@ -84,7 +87,7 @@ $(function(){
 			$resultMsg.css('color','green');
 		}else{
 			$resultMsg.html('인증번호가 불일치 합니다');
-			$resultMsg.css('color','#E65962');
+			$resultMsg.css('color','#fba082');
 			
 		}
 	});
