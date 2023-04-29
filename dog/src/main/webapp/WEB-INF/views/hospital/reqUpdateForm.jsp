@@ -13,8 +13,8 @@
 		<p>수정 신청을 해주세요.</p>
 	</div>
 	<div>
-		<input id = "hostURL" type = "text" style = "display : none;" value = "${hostURL}">
-		<input id = "pk_num" type = "text" style = "display : none;" value = "${pk_num}">
+		<input id = "hostURLsam" type = "text" style = "display : none;" value = "${hostURL}">
+		<input id = "pk_numsam" type = "text" style = "display : none;" value = "${pk_num}">
 	</div>
 	<ul class = "select-section">
 		<li onclick = "linkTo(this)" data-li = "Pdelete">> 해당 위치에 지정된 장소가 없어요.</li>
@@ -35,7 +35,7 @@
 		<li></li>	
 	</ul>
 	<div id = "submit-btn">
-		<button id = "submit" disabled='disabled' onclick = "console.log('b')">제출하기</button>
+		<button id = "submit" disabled='disabled'>제출하기</button>
 	</div>
 </div>
 <script>

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.spring.cafe.vo.CafeVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.hospital.vo.UpdateVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
@@ -345,6 +346,17 @@ public class HospitalController {
 			 model.addAttribute("coord_y", cafe.getCafe_y());
 		 }
 		 return "reqUpdateForm";
+	 }
+	 @RequestMapping("/hospital/reqUpdateContent.do")
+	 public String reqContUp(UpdateVO update, HttpSession session, Model model) {
+		  
+		 logger.debug("업뎃데이터: " + update);
+		 MemberVO user = (MemberVO)session.getAttribute("user");
+		 update.setMem_num(user.getMem_num());
+		 //여기서 db 처리하며고 관리자에서 꺼내 쓰면 됩니다.
+		model.addAttribute("message", "신청이 완료되었습니다.");
+		model.addAttribute("url", "/main/main.do");
+		 return "common/resultView";
 	 }
 	/* 사용 끝
 	 * @RequestMapping("/hospital/insertCoords.do")

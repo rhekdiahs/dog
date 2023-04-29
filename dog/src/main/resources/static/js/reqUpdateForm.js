@@ -1,5 +1,10 @@
 $(function(){
-
+	var btn = $('#submit');
+	
+	btn.on('click', function(){
+		$('#reqForm').submit();
+		//console.log('aa');
+	});
 });
 	function createPdel(reqType){
 
@@ -21,6 +26,7 @@ $(function(){
 		form.action = 'reqUpdateContent.do';
 		form.method = 'post';
 		form.id = 'reqForm';
+		form.enctype = 'multipart/form-data';
 
 		const label = document.createElement('label');
 		label.htmlFor = 'upload';
@@ -31,6 +37,20 @@ $(function(){
 		input.name = 'upload';
 		input.id = 'upload';
 		input.style.display = 'none';
+		
+		const hostURL = document.createElement('input');
+		hostURL.id = 'hostURL';
+		hostURL.type = 'text';
+		hostURL.name = 'hostURL';
+		hostURL.style.display = 'none';
+		hostURL.value = $('#hostURLsam').val();
+		
+		const pk_num = document.createElement('input');
+		pk_num.id = 'pk_num';
+		pk_num.type = 'text';
+		pk_num.name = 'pk_num';
+		pk_num.style.display = 'none';
+		pk_num.value = $('#pk_numsam').val();
 
 		parentElem.appendChild(divReqContWrap);
 		divReqContWrap.appendChild(h4);
@@ -39,6 +59,8 @@ $(function(){
 		divFormWrap.appendChild(form);
 		form.appendChild(label);
 		form.appendChild(input);
+		form.appendChild(hostURL);
+		form.appendChild(pk_num);
 	}
 	
 	function createPname(reqType){
@@ -61,9 +83,11 @@ $(function(){
 		form.action = 'reqUpdateContent.do';
 		form.method = 'post';
 		form.id = 'reqForm';
+		form.enctype = 'multipart/form-data';
 		
 		const inputText = document.createElement('input');
 		inputText.type = 'text';
+		inputText.name = 'place_name';
 		inputText.classList.add('input-textbox');
 		inputText.placeholder = '장소명을 입력해주세요.';
 		
@@ -77,6 +101,20 @@ $(function(){
 		input.id = 'upload';
 		input.style.display = 'none';
 		
+		const hostURL = document.createElement('input');
+		hostURL.id = 'hostURL';
+		hostURL.type = 'text';
+		hostURL.name = 'hostURL';
+		hostURL.style.display = 'none';
+		hostURL.value = $('#hostURLsam').val();
+		
+		const pk_num = document.createElement('input');
+		pk_num.id = 'pk_num';
+		pk_num.type = 'text';
+		pk_num.name = 'pk_num';
+		pk_num.style.display = 'none';
+		pk_num.value = $('#pk_numsam').val();
+		
 		parentElem.appendChild(divReqContWrap);
 		divReqContWrap.appendChild(h4);
 		divReqContWrap.appendChild(small);
@@ -85,6 +123,8 @@ $(function(){
 		form.appendChild(inputText);
 		form.appendChild(label);
 		form.appendChild(input);
+		form.appendChild(hostURL);
+		form.appendChild(pk_num);
 	}
 	
 	function createPdetail(reqType){
@@ -107,11 +147,28 @@ $(function(){
 		form.action = 'reqUpdateContent.do';
 		form.method = 'post';
 		form.id = 'reqForm';
+		form.enctype = 'multipart/form-data';
 		
 		const inputText = document.createElement('input');
 		inputText.type = 'text';
+		inputText.name = 'place_detail';
 		inputText.classList.add('input-textbox');
 		inputText.placeholder = '내용을 입력해주세요.';
+		
+		const hostURL = document.createElement('input');
+		hostURL.id = 'hostURL';
+		hostURL.type = 'text';
+		hostURL.name = 'hostURL';
+		hostURL.style.display = 'none';
+		hostURL.value = $('#hostURLsam').val();
+		
+		const pk_num = document.createElement('input');
+		pk_num.id = 'pk_num';
+		pk_num.type = 'text';
+		pk_num.name = 'pk_num';
+		pk_num.style.display = 'none';
+		pk_num.value = $('#pk_numsam').val();
+		
 		
 		parentElem.appendChild(divReqContWrap);
 		divReqContWrap.appendChild(h4);
@@ -119,6 +176,8 @@ $(function(){
 		divReqContWrap.appendChild(divFormWrap);
 		divFormWrap.appendChild(form);
 		form.appendChild(inputText);
+		form.appendChild(hostURL);
+		form.appendChild(pk_num);
 	}
 	
 	function createPphoto(reqType){
@@ -141,6 +200,7 @@ $(function(){
 		form.action = 'reqUpdateContent.do';
 		form.method = 'post';
 		form.id = 'reqForm';
+		form.enctype = 'multipart/form-data';
 		
 		const label = document.createElement('label');
 		label.htmlFor = 'upload';
@@ -151,6 +211,20 @@ $(function(){
 		input.name = 'upload';
 		input.id = 'upload';
 		input.style.display = 'none';
+	
+		const hostURL = document.createElement('input');
+		hostURL.id = 'hostURL';
+		hostURL.type = 'text';
+		hostURL.name = 'hostURL';
+		hostURL.style.display = 'none';
+		hostURL.value = $('#hostURLsam').val();
+		
+		const pk_num = document.createElement('input');
+		pk_num.id = 'pk_num';
+		pk_num.type = 'text';
+		pk_num.name = 'pk_num';
+		pk_num.style.display = 'none';
+		pk_num.value = $('#pk_numsam').val();
 		
 		parentElem.appendChild(divReqContWrap);
 		divReqContWrap.appendChild(h4);
@@ -159,6 +233,8 @@ $(function(){
 		divFormWrap.appendChild(form);
 		form.appendChild(label);
 		form.appendChild(input);
+		form.appendChild(hostURL);
+		form.appendChild(pk_num);
 	}
 	
 	function createPloc(reqType){
@@ -181,16 +257,33 @@ $(function(){
 		form.action = 'reqUpdateContent.do';
 		form.method = 'post';
 		form.id = 'reqForm';
+		form.enctype = 'multipart/form-data';
 		
 		const inputRoad = document.createElement('input');
 		inputRoad.type = 'text';
+		inputRoad.name = 'place_road';
 		inputRoad.classList.add('input-textbox');
 		inputRoad.id = 'road';
 		
 		const inputAddress = document.createElement('input');
 		inputAddress.type = 'text';
+		inputAddress.name = 'place_address';
 		inputAddress.classList.add('input-textbox');
 		inputAddress.placeholder = '상세주소를 입력해주세요.';
+		
+		const hostURL = document.createElement('input');
+		hostURL.id = 'hostURL';
+		hostURL.type = 'text';
+		hostURL.name = 'hostURL';
+		hostURL.style.display = 'none';
+		hostURL.value = $('#hostURLsam').val();
+		
+		const pk_num = document.createElement('input');
+		pk_num.id = 'pk_num';
+		pk_num.type = 'text';
+		pk_num.name = 'pk_num';
+		pk_num.style.display = 'none';
+		pk_num.value = $('#pk_numsam').val();
 		
 		parentElem.appendChild(divReqContWrap);
 		divReqContWrap.appendChild(h4);
@@ -199,5 +292,7 @@ $(function(){
 		divFormWrap.appendChild(form);
 		form.appendChild(inputRoad);
 		form.appendChild(inputAddress);
+		form.appendChild(hostURL);
+		form.appendChild(pk_num);
 		
 	}
