@@ -141,8 +141,7 @@
 		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
 		  		ON c.cafe_num = d.cafe_num
 		  		<include refid="selectOption"></include>
-		  		ORDER BY c.cafe_name ASC
-		  		WHERE d.cafe_status = 0 and cafe_status != NULL)a)
+		  		WHERE d.cafe_status = 0 and d.cafe_status != NULL)a)
 	<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 	]]>

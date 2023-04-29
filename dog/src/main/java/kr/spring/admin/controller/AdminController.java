@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,11 @@ public class AdminController {
 	//회원 관리
 	@RequestMapping("/admin/adminMember.do")
 	public ModelAndView memberList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
-								  String keyfield, String keyword){
+								  String keyfield, String keyword, HttpSession session){
+		
+		MemberVO mem = (MemberVO)session.getAttribute("user");
+		
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -62,23 +68,29 @@ public class AdminController {
 		
 		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 10, 5 ,"adminMember.do");
 		
-		List<MemberVO> user = null;
+		List<MemberVO> userList = null;
 		
 		if(count > 0) {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
-			user = memberService.selectList(map);
+			userList = memberService.selectList(map);
 		}
 		
-		logger.debug("user>>" + user);
-		
+		logger.debug("user>>" + userList);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("adminMember");
 		
-		mav.addObject("count", count);
-		mav.addObject("user", user);
-		mav.addObject("page", page.getPage());
+		if(mem.getMem_auth() == 9) {
+			mav.addObject("user", mem);
+			//mav.addObject("auth", mem.getMem_auth());
+			mav.addObject("count", count);
+			mav.addObject("user", userList);
+			mav.addObject("page", page.getPage());
+			mav.setViewName("adminMember");
+		}else {
+			mav.setViewName("memberLogin");
+		}
+		
 		
 		return mav;
 	}
@@ -93,8 +105,8 @@ public class AdminController {
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		
-		int count = cafeService.selectCafeCount(map);
-		//int count2 = cafeService.selectCafeAdminCount(map);
+		//int count = cafeService.selectCafeCount(map);
+		int count = cafeService.selectCafeAdminCount(map);
 		
 		logger.debug("count>>" + count);
 		
@@ -108,7 +120,8 @@ public class AdminController {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
-			cafe = cafeService.selectCafeList(map);
+			//cafe = cafeService.selectCafeList(map);
+			cafe = cafeService.selectCafeAdminList(map);
 		}
 		
 		logger.debug("cafe>>" + cafe);

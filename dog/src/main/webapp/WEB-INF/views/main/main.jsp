@@ -14,7 +14,11 @@
 		<a class = "menu-list" href = "javascript:void(0);" onclick="withCurCity()">병&nbsp;&nbsp;&nbsp;&nbsp;원</a>
 	</div>
 	<div class = "menu-login">
-		<c:if test="${!empty user}">
+		<c:if test="${!empty user && auth != 9}">
+		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
+		<a href = "${pageContext.request.contextPath}/mypage/main.do">마이페이지</a>
+		</c:if>
+		<c:if test="${!empty user && auth == 9}">
 		<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 		<a href = "${pageContext.request.contextPath}/mypage/main.do">마이페이지</a>
 		</c:if>

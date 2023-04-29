@@ -22,13 +22,27 @@
 			COUNT(*)
 		FROM member m LEFT OUTER JOIN member_detail d
 		ON m.mem_num = d.mem_num
+		<where>
 		<if test="keyword != null and keyword != ''">
-  			WHERE d.mem_name LIKE '%' || #{keyword} || '%' OR
-  				  d.mem_num LIKE '%' || #{keyword} || '%'
-  		</if>
+			<if test="keyfield == 1">
+				m.mem_id LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 2">
+				d.mem_name LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 3">
+				d.mem_email LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 4">
+				m.mem_id LIKE '%' || #{keyword} || '%' OR
+				d.mem_name LIKE '%' || #{keyword} || '%' OR
+				d.mem_email LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</where>
 	</select>
 	
-	<select id="selectList" parameterType="map" resultType="integer">
+	<select id="selectList" parameterType="map" resultType="memberVO">
 		SELECT
 		  *
 		FROM (SELECT 
@@ -38,20 +52,29 @@
 			  		  *
 			  		FROM member m LEFT OUTER JOIN member_detail d
 			  		ON m.mem_num = d.mem_num
-			  		<if test="keyword != null and keyword != ''">
-				  		WHERE d.mem_name LIKE '%' || #{keyword} || '%' OR
-				  			  d.mem_num LIKE '%' || #{keyword} || '%' 
-			  		</if>
-  		            <if test="keyfield == 1 or keyfield == null">
-  		            ORDER BY d.mem_regdate DESC NULLS LAST
-  		            </if>
-  		            <if test="keyfield == 2">
-  		            ORDER BY d.mem_name ASC, d.mem_regdate DESC NULLS LAST
-  		            </if>
-  		            )a) 				  		
-  		<![CDATA[
-  		WHERE rnum >= #{start} AND rnum <= #{end}
-  		]]> 
-	</select>
+			  		<where>
+						<if test="keyword != null and keyword != ''">
+							<if test="keyfield == 1">
+								m.mem_id LIKE '%' || #{keyword} || '%'
+							</if>
+							<if test="keyfield == 2">
+								d.mem_name LIKE '%' || #{keyword} || '%'
+							</if>
+							<if test="keyfield == 3">
+								d.mem_email LIKE '%' || #{keyword} || '%'
+							</if>
+							<if test="keyfield == 4">
+								m.mem_id LIKE '%' || #{keyword} || '%' OR
+								d.mem_name LIKE '%' || #{keyword} || '%' OR
+								d.mem_email LIKE '%' || #{keyword} || '%'
+							</if>
+						</if>
+					</where>
+			  		
+			  		ORDER BY d.mem_regdate DESC NULLS LAST)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+		</select>
 </mapper>
 
