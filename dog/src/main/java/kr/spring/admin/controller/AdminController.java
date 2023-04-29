@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,16 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.admin.service.AdminService;
 import kr.spring.cafe.service.CafeService;
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
+import kr.spring.walk.vo.WalkVO;
 
 @Controller
 public class AdminController {
@@ -30,7 +35,6 @@ public class AdminController {
 	
 	@Autowired
 	private MemberService memberService;
-	
 	
 	@Autowired
 	private AdminService adminService;
@@ -43,6 +47,21 @@ public class AdminController {
 		return new MemberVO();
 	}
 	
+	@ModelAttribute
+	public CafeVO initCafeCommand() {
+		return new CafeVO();
+	}
+	
+	@ModelAttribute
+	public HospitalVO initHosCommand() {
+		return new HospitalVO();
+	}
+	
+	@ModelAttribute
+	public WalkVO initWalkCommand() {
+		return new WalkVO();
+	}
+	
 	@RequestMapping("/admin/adminMain.do")
 	public String main(Model model) {
 		return "adminMain";//타일스 설정값
@@ -51,10 +70,7 @@ public class AdminController {
 	//회원 관리
 	@RequestMapping("/admin/adminMember.do")
 	public ModelAndView memberList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
-								  String keyfield, String keyword, HttpSession session){
-		
-		MemberVO mem = (MemberVO)session.getAttribute("user");
-		
+								  String keyfield, String keyword){
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -79,24 +95,16 @@ public class AdminController {
 		
 		logger.debug("user>>" + userList);
 		ModelAndView mav = new ModelAndView();
-		
-		if(mem.getMem_auth() == 9) {
-			mav.addObject("user", mem);
-			//mav.addObject("auth", mem.getMem_auth());
+		mav.setViewName("adminMember");
 			mav.addObject("count", count);
-			mav.addObject("user", userList);
+			mav.addObject("userList", userList);
 			mav.addObject("page", page.getPage());
-			mav.setViewName("adminMember");
-		}else {
-			mav.setViewName("memberLogin");
-		}
-		
-		
+	
 		return mav;
 	}
 	
 	//카페 관리
-	@RequestMapping("/admin/adminCafe.do")
+	@RequestMapping("/admin/admincafe.do")
 	public ModelAndView cafeList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
 								  String keyfield, String keyword){
 		
@@ -105,47 +113,52 @@ public class AdminController {
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		
-		//int count = cafeService.selectCafeCount(map);
 		int count = cafeService.selectCafeAdminCount(map);
 		
 		logger.debug("count>>" + count);
-		
-		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 5, 5 ,"adminCafe.do");
-		//PagingUtil page2 = new PagingUtil(keyfield, keyword, currentPage, count2, 5, 5 ,"adminCafe.do");
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 5, 5 ,"admincafe.do");
 		
 		List<CafeVO> cafe = null;
-		//List<CafeVO> cafe2 = null;
 		
 		if(count > 0) {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 			
-			//cafe = cafeService.selectCafeList(map);
 			cafe = cafeService.selectCafeAdminList(map);
 		}
 		
 		logger.debug("cafe>>" + cafe);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("adminCafe");
+		mav.setViewName("admincafe");
 		
 		mav.addObject("count", count);
 		mav.addObject("cafe", cafe);
-		mav.addObject("page", page.getPage());
-		
-		/*
-		mav.addObject("count2", count2);
-		mav.addObject("cafe2", cafe2);
-		mav.addObject("page2", page2);
-		*/
+		mav.addObject("page", page.getPage());	
 		
 		return mav;
 	}
-	
-	
-	
-	
-	
-	
-	
+		
+	@PostMapping("/cafe/cafeDetail.do")
+	public String updateStatus(@RequestParam(value="p_num")int p_num, HttpServletRequest request){
+		
+		String url = request.getHeader("referer").split("/")[3];
+		
+		if(url.equals("cafe")) {
+				CafeVO cafe = new CafeVO();
+				cafe.setCafe_num(p_num);
+				adminService.updateCafeStatus(cafe);
+			}else if(url.equals("hospital")) {
+				HospitalVO hos = new HospitalVO();
+				hos.setHospital_num(p_num);
+				adminService.updateHosStatus(hos);
+			}else if(url.equals("walk")) {
+				WalkVO walk = new WalkVO();
+				walk.setWalk_num(p_num);
+				adminService.updateWalkStatus(walk);
+			}else {
+
+			}
+		return "redirect:/admin/admin"+url+".do";
+	}
 }

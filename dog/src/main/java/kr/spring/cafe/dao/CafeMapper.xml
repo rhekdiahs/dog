@@ -77,6 +77,9 @@
 		</where>
 	</sql>
 
+
+	<!-- 관리자 -->
+
 	<select id="selectCafeCount" parameterType="map" resultType="integer">
 		SELECT
 		COUNT(*)
@@ -103,24 +106,6 @@
 	
 	<!-- 관리자 -->
 	
-	<sql id="cafeAdminSearch">
-		AND
-		<if test="keyword != null and keyword != ''">
-			<if test="keyfield == 1">
-				c.cafe_name LIKE '%' || #{keyword} || '%'
-			</if>
-			<if test="keyfield == 2 and keyword == '애견 동반' or keyword == '동반' or keyword == '애견동반'">
-				c.cafe_cate = 1
-			</if>
-			<if test="keyfield == 3">
-				c.cafe_addr1 LIKE '%' || #{keyword} || '%' OR
-				c.cafe_addr2 LIKE '%' || #{keyword} || '%'
-			</if>
-		</if>
-	</sql>
-	
-	
-	
 	
 	<select id="selectCafeAdminCount" parameterType="map" resultType="integer">
 		SELECT
@@ -141,26 +126,12 @@
 		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
 		  		ON c.cafe_num = d.cafe_num
 		  		<include refid="selectOption"></include>
-		  		WHERE d.cafe_status = 0 and d.cafe_status != NULL)a)
+		  		WHERE d.cafe_status = 0 and d.cafe_status IS NOT NULL)a)
 	<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 	]]>
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 </mapper>
 
 

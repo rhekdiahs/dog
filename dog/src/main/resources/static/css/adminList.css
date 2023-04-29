@@ -3,3 +3,40 @@
 .align-center{
 	text-align: center;
 }
+
+input[type="search"], input[type="submit"]{
+  	vertical-align: middle;
+}
+select{
+  vertical-align: middle;
+}
+.main-body{
+	margin : 0 auto;
+}
+
+.place-list{
+	overflow:auto;
+}
+.place-list li{
+	height : 105px;
+	padding : 15px 15px;
+	box-shadow : 3px 6px 6px lightgray;
+	border-radius : 10px;
+    margin: 0 15px;
+} 
+.list-title a{
+	font-size : 17px;
+}
+.list-content p{
+	font-size : 15px;
+	margin: 3px 0;
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
+}
+.list-content p small{
+	color : #888;
+}
+.list-item{
+	margin: 10px 0px;
+}

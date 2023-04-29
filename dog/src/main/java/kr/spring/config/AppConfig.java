@@ -56,7 +56,7 @@ public class AppConfig implements WebMvcConfigurer{
 					.addPathPatterns("/main/admin.do")
 					.addPathPatterns("/admin/adminMain.do")
 					.addPathPatterns("/admin/adminMember.do")
-					.addPathPatterns("/admin/adminCafe.do");
+					.addPathPatterns("/admin/admincafe.do");
 		}
 
 	//타일스 설정

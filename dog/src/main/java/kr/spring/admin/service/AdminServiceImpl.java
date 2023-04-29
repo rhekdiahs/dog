@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.admin.dao.AdminMapper;
+import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.walk.vo.WalkVO;
 
 @Service
 @Transactional
@@ -31,6 +34,27 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateByAdmin(MemberVO memberVO) {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateCafeStatus(CafeVO cafeVO) {
+		adminMapper.updateCafeStatus(cafeVO);
+		
+	}
+
+
+	@Override
+	public void updateHosStatus(HospitalVO hospitalVO) {
+		adminMapper.updateHosStatus(hospitalVO);
+		
+	}
+
+
+	@Override
+	public void updateWalkStatus(WalkVO walkVO) {
+		adminMapper.updateWalkStatus(walkVO);
 		
 	}
 
