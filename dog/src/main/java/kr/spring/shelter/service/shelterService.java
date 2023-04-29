@@ -58,12 +58,12 @@ public class shelterService {
         options.addArguments("disable-infobars"); //브라우저에서 다운로드나 알림 등의 메시지를 표시하는 기능 비활성화
         options.addArguments("--disable-extensions"); //확장 프로그램(Extensions)을 비활성화
         options.addArguments("--remote-allow-origins=*");//모든 도메인 요청 허용
-        options.addArguments("--disable-application-cache");//캐시 사용하지 않기
+        //options.addArguments("--disable-application-cache");//캐시 사용하지 않기
         options.addArguments("--blink-settings=imagesEnabled=false"); //이미지 다운 안받음
         
-        prefs.put("profile.managed_default_content_settings.images", 2);//이미지 로딩 비활성화
+        //prefs.put("profile.managed_default_content_settings.images", 2);//이미지 로딩 비활성화
         
-        options.setExperimentalOption("prefs", prefs);
+        //options.setExperimentalOption("prefs", prefs);
         
         driver = new ChromeDriver(options);
         
@@ -102,7 +102,7 @@ public class shelterService {
         	WebElement cl = content.findElement(By.cssSelector("div.rDx68 span.Q8Zql a.vcshc"));
         	cl.click();
         	String add = null;
-        	add = content.findElement(By.cssSelector("div.MaJkh > div.jg1ED > div.o8CtQ")).getText();//주소
+        	add = content.findElement(By.cssSelector("div.jg1ED > div.o8CtQ")).getText();//주소
         	
         	shelterVO shelter = shelterVO.builder()
                     .subject(content.findElement(By.cssSelector("span.place_bluelink")).getText())		// 제목

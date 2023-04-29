@@ -35,9 +35,11 @@
 	position: relative;
 }
 .place-list li{
-	
-	padding : 10px 10px;
-	border-bottom : 2px solid lightgray;
+	height: 60px;
+    padding: 15px 15px;
+    box-shadow: 3px 6px 6px lightgray;
+    border-radius: 10px;
+    margin: 0 15px;
 }
 #map{
 	 padding: 0;
