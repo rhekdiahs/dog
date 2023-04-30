@@ -305,7 +305,7 @@
 			        	clickedTr.style.background = '';
 			        }
 			        clickedTr = document.getElementById(pos.walk_num);
-			        clickedTr.style.background = '#feea3e';
+			        clickedTr.style.background = '#faf5ef';
 			        overlay.setMap(map);
 			        clickedOverlay = overlay;
 			        map.setLevel(map.getLevel());
@@ -324,7 +324,7 @@
 			        	clickedTr.style.background = '';
 			        }
 			        clickedTr = document.getElementById(pos.walk_num);
-			        clickedTr.style.background = '#feea3e';
+			        clickedTr.style.background = '#faf5ef';
 			        overlay.setMap(map);
 			        clickedOverlay = overlay;
 			        map.setLevel(5);
