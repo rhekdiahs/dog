@@ -4,6 +4,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=970af4bda553ab08ae535abf4de88a1f&libraries=services"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shelter.css">
+<c:if test="${empty shelterVO}">
+	<script type="text/javascript">
+		location.reload();
+	</script>
+</c:if>
 <div class="location_con01">
 	<div class="inner">
 		<div class="sub_tit">
@@ -36,7 +41,8 @@
 		</div>
 	</div>
 </div>
-<script>
+
+<script type="text/javascript">
  $(window).on('load', function(){
 	// 3초 후에 로딩 화면 숨김
     setTimeout(function() {
@@ -45,7 +51,7 @@
 });   
 </script>
 
-<script>
+<script type="text/javascript">
 	//도로명주소
 	var add = [];
 	//이름
@@ -109,7 +115,8 @@
 		      //console.log(positions);
 		      //console.log(positions.length);
 		      //마커이미지 주소
-		      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		      //var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		      var imageSrc = "${pageContext.request.contextPath}/image_bundle/shelter_marker.png";
 		      for(var j=0; j<positions.length; j++){
 		    	  // 마커 이미지의 이미지 크기 입니다
 		    	  var imageSize = new kakao.maps.Size(24, 35); 
@@ -141,7 +148,7 @@
 			    					$('.ex').empty();
 			    					$(param.list).each(function(index,item){
 			    						let output = '';
-			    						output += '<ul id="place-list">';
+			    						output += '<ul id="place-list" class="place-list2">';
 			    						output += '<li><p><strong>';
 			    						output += item.subject + '</strong></p><br>';
 			    						output += '<p>' + "주소 : ";
@@ -178,7 +185,7 @@
 		}, 4600);	
 </script>
 
-<script>
+<script type="text/javascript">
 //상세페이지 보여지기 부분
 $(document).on('click','.shel',function(event){
 	var url = $(this).data('id');
@@ -194,7 +201,7 @@ $(document).on('click','.shel',function(event){
 				$('.ex').empty();
 				$(param.list).each(function(index,item){
 					let output = '';
-					output += '<ul id="place-list">';
+					output += '<ul id="place-list" class="place-list2">';
 					output += '<li><p><strong>';
 					output += item.subject + '</strong></p><br>';
 					output += '<p>' + "주소 : ";

@@ -95,7 +95,7 @@ public class shelterService {
         // 웹 요소 대기
         //WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li.VLTHu")));
         
-        
+        try {
         //크롤링 목록
         List<WebElement> contents = driver.findElements(By.cssSelector("li.VLTHu"));
         for (WebElement content : contents) {
@@ -111,6 +111,10 @@ public class shelterService {
                     .address(add.replaceAll("도로명", "").replaceAll("복사", "").replaceAll("지번", "").trim()) // 주소
                     .build();
             list.add(shelter);
+        }
+        }catch(NoSuchElementException e) {
+        	list = null;
+        	return list;
         }
         return list;
     }
