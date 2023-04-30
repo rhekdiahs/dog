@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/deleteModal.css">
 <div id="main_body">
       <div id="my_profile" class="mypage-cate">
           <div id="profile_main" class="profile-cate">
@@ -54,10 +55,16 @@
       </div>
       <div class="black-bg" style="display:none;">
 	      <div id="passwd_modal">
-	      	<form method="post" action="delete.do">	
+	      	<form method="post" action="delete.do">
+	      		<div class = "menu-div">
+	      		<span>비밀번호 확인</span>
+	      		<div class = "close"></div>
+	      		</div>
+	      		<div class = "wrap-conte">	
 				<p>비밀번호를 입력하세요</p>
 				<input id="input_pw" type="text" name="mem_pw">
 				<input id="submit_pw" type="submit" value="확인">
+				</div>
 	      	</form>
 	      </div>
       </div>
@@ -66,7 +73,12 @@
 	function displayModal(){
 		$('.black-bg').show();
 	}
-	
+	/* $('.black-bg').on('click',function(){
+		$('.black-bg').hide();
+	}); */
+	$('.close').on('click', function(){
+		$('.black-bg').hide();
+	});
 	var submit_pw = $('#submit_pw');
 	var input_pw = $('#input_pw');
 	
