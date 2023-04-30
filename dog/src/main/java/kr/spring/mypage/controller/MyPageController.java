@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.bookmark.vo.BookmarkVO;
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.mypage.service.MyPageService;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import kr.spring.walk.controller.WalkController;
 import kr.spring.walk.vo.WalkVO;
@@ -146,4 +149,6 @@ public class MyPageController {
 		}
 		return "common/resultView";
 	}
+
+	
 }

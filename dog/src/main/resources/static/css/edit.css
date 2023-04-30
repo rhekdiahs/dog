@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+p{
+	
+}
+.rg_title{
+	font-size:20px;
+}
+#cont_ul li:not(:last-child){
+	/* text-align : left; */
+	justify-content: space-between;
+	margin : 10px 0;
+	padding : 0 40px;
+	align-items: center;
+}
+@font-face {
+    font-family: 'neon';
+    src: url('../font/NanumSquareNeo-dEb.ttf') format('truetype');
+}
+
+#form_wrap{
+	text-align: center;
+	margin-top: 5px;
+}
+
+#map{
+	border : 1px solid gray;
+	border-radius : 10px;
+	margin : 0 auto;
+	margin-top : 30px;
+	margin-bottom : 20px;
+}
+
+#upload{
+	width: 180px;
+}
+/* .cafe_cate input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 100px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+} */
+
+input[type=text]{
+	width: 190px;
+	height: 35px;
+	margin: 2px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	padding : 0 10px;
+	text-align:center;
+}
+textarea#mem_intro{
+	margin-top: 5px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    resize: none;
+    width: 220px;
+    margin-right: 2px;
+	box-sizing:border-box;
+	padding:10px;
+}
+/* li:has(input[type=hidden]){
+	display : none;
+} */
+
+.error-color{
+	color: #FF0000;
+	position : absolute;
+	left: 160px;
+	font-size : 13px;
+}
+
+input[type=file]::file-selector-button {
+ 	background: #fff;
+  	border: 1px solid #A2A2A2;
+  	border-radius: 5px;
+  	cursor: pointer;
+  	margin-left: 17px;
+	}
+input[type=file]::file-selector-button:hover {
+    background: #A2A2A2;
+    color: #fff;
+}
+
+#regi_btn{
+	background: white;
+	width: 70px;
+	height: 30px;
+	border-radius: 20px;
+	border: 2px solid #8cdcfc;
+	margin-right : 5px;
+	padding : 3px 3px;
+	color :#8cdcfc;
+	font-weight : bold;
+}
+
+#cancel_btn{
+	background: #FFF;
+	width: 70px;
+	height: 30px;
+	border-radius: 20px;
+	border: 2px solid #9b9b9b;
+	margin-left : 5px;
+	padding : 3px 3px;
+	color : #9b9b9b;
+	font-weight : bold;
+}
+
+

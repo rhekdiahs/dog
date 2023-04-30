@@ -1,40 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/edit.css">
 <div id="main_body">
 	<div id="form_wrap">
+	<img src = "${pageContext.request.contextPath}/mypage/photoView.do" class = "profile-photo" width = "150" height = "150">
+			<br>
+			<br>
+			<input type = "file" id = "upload" accept = "image/gif, image/png, image/jpeg" style = "margin-left : 57px;">
 		<form:form action="modifyProfile.do'" method="post" 
 				   modelAttribute="memberVO" enctype="multipart/form-data">
 			<ul  id = "cont_ul">
 				<li style = "margin-top : 50px;">
 					<div class="rg_title">
-					<input disabled type="text" value="${member.mem_name}">
+					<form:input type="text" value="${member.mem_name}" path="mem_name"/>
 					</div>
 				</li>
 				
 				<li>
-					<label>도로명</label>			
-					<input disabled type="text" value="">		
-					<form:input path="" type="hidden" value=""/>
-				</li>
-				<li>>
-					<p><label>지번</label></p>
-					<input disabled type="text" value="">
-					<form:input path="" type="hidden" value=""/>		
+					<p><label>이메일</label></p>		
+					<input disabled type="text" value="${member.mem_email}">		
 				</li>
 				<li>
-					<p><label>내용</label></p>
-					<form:textarea rows="8" cols="35" placeholder="산책로에 대해 간단히 적어주세요" path=""/>
-				</li>
-				<li>
-					<p><label>파일</label></p>
-					<input type="file" name="upload" id="upload">
+					<p><label>자기소개</label></p>
+					<form:textarea rows="8" cols="35" path="mem_intro"/>
 				</li>
 				<li style="margin-top: 35px;">
-					<input type="submit" id="regi_btn" value="등록">
-					<input type="button" id="back_btn" value="이전" onclick="location.href='history.go(-1)'">
+					<input type="button" id="cancel_btn" value="취소">
+					<input type="submit" id="regi_btn" value="저장">
 				</li>
 			</ul>
 		</form:form>
 	</div>
 </div>
+<script type="text/javascript"></script>

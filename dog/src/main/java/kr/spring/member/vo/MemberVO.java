@@ -26,6 +26,7 @@ public class MemberVO {
 	private Date mem_mdate;
 	
 	private String mem_kakao;
+	private String mem_intro;
 	
 	//아이디 찾기 시 전체 아이디
 	private String[] mem_all_id;
@@ -62,6 +63,13 @@ public class MemberVO {
 		return false;
 	}
 	
+	public String getMem_intro() {
+		return mem_intro;
+	}
+	
+	public void setMem_intro(String mem_intro) {
+		this.mem_intro = mem_intro;
+	}
 	
 	public int getEmail_code() {
 		return email_code;
