@@ -109,6 +109,7 @@
 			container.style.width = (parseInt(rectPage.width)) + 'px';
 		    container.style.height = (parseInt(rectPage.width)) + 'px';
 		    $('#place-list').hide();
+		    $('#pageDiv').hide();
 		}
 
     	container.style.width = rectPage.width + 'px';
