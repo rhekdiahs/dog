@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/deleteModal.css">
 <div id="main_body">
@@ -19,7 +20,12 @@
               <br>환영합니다!!!</p>
               <p id="user_email" style="text-align: start;">${member.mem_email}</p>
               <p id="user_register_date" style="color:gray;text-align: start;"><fmt:formatDate value="${member.mem_regdate}" pattern="yyyy년 MM월 가입"/></p>
-              <p id="user_intro" style="text-align: start;">시베리아 허스키 견주🐺 안녕하세요!</p>
+              <c:if test="${member.mem_intro != null }">
+	              <p id="user_intro" style="text-align: start;">${member.mem_intro}</p>
+              </c:if>
+              <c:if test="${member.mem_intro == null}">
+              	  <p id="user_intro" style="text-align: start;color:#b5b5b5;">자기소개가 없습니다.<br><a onclick="location.href='${pageContext.request.contextPath}/mypage/editMain.do?mem_num=${member.mem_num}'">👉쓰러가기</a></p>
+              </c:if>
               
           </div>
       </div>

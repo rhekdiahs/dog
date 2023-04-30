@@ -107,8 +107,7 @@ public class MyPageController {
 	}
 	
 	@PostMapping("/mypage/updateProfile.do")
-	public String modifyProfile(@RequestParam Map<String, Object> map, BindingResult result, HttpSession session, Model model) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
+	public String modifyProfile(@ModelAttribute("memberVO") MemberVO member, BindingResult result, HttpSession session, Model model) {
 		String encodedParam = ""; 
 		
 		
