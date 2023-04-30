@@ -193,11 +193,17 @@ public class HospitalController {
 	@RequestMapping("/hospital/hospitalList.do")
 	public String hospital_main(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage, 
 								Model model, HttpServletRequest request, 
-								@RequestParam(value = "keyfield", defaultValue = "--선택") String keyfield) {
+								@RequestParam(value = "keyfield", defaultValue = "--선택") String keyfield, HttpSession session) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyfield", keyfield);
 		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user != null) {
+			model.addAttribute("user", user);
+			model.addAttribute("auth", user.getMem_auth());
+		}
 		
 		int count = hospitalService.selectRegionListCount(map);
 		
@@ -236,7 +242,12 @@ public class HospitalController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		if(user != null) {
+			model.addAttribute("user", user);
+			model.addAttribute("auth", user.getMem_auth());
+		}
 		System.out.println(keyword);
 		int count = hospitalService.selectRegionListCount(map);
 		

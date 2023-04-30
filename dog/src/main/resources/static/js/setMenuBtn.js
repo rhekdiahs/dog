@@ -7,10 +7,10 @@ $(function(){
 	console.log(link);
 	console.log(link3);
 	
-	if(link3 == 'walkList.do'){
+	if(link3 == 'walkList.do' || link3 == 'selectOption.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
 		aTag.attr('href', '/walk/registerMap.do?keyfield=서울특별시');
-	}else if(link3 == 'hospitalList.do'){
+	}else if(link3 == 'hospitalList.do' || link3 =='h_selectOption.do'){
 		notiBtn.attr('src', '../image_bundle/regiBtn.png');
 		aTag.attr('href', '/hospital/hospitalSelect.do');
 	}else if(link3 == 'cafeList.do'){
