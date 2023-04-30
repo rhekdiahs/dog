@@ -15,7 +15,7 @@
 					<form:input path="walk_distance" type="hidden" value="${walk.walk_distance}"/>
 					<form:input path="walk_region" type="hidden" value="${walk.walk_region}"/>		
 				</li>				
-				<li style = "margin-top : 50px;">
+				<li style = "margin-top : 50px; display : block;">
 					<div class="rg_title">
 					<p>🐶 <strong>${walk.mem_id}</strong> 님의 산책로 🐶</p>
 					</div>
@@ -27,7 +27,7 @@
 					<form:input path="walk_road" type="hidden" value="${walk.walk_road}"/>
 				</li>
 				</c:if>
-				<li>>
+				<li>
 					<p><label>지번</label></p>
 					<input disabled type="text" value="${walk.walk_address}">
 					<form:input path="walk_address" type="hidden" value="${walk.walk_address}"/>		

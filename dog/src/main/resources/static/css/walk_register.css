@@ -6,9 +6,8 @@ p{
 .rg_title{
 	font-size:20px;
 }
-
 #cont_ul li:not(:last-child){
-	text-align : left;
+	/* text-align : left; */
 	display : flex;
 	justify-content: space-between;
 	margin : 10px 0;
