@@ -20,6 +20,10 @@ public interface MyPageMapper {
 	@Select("select * from MEMBER_detail WHERE mem_num=${mem_num}")
 	public MemberVO getMemInfo(Integer mem_num);
 	
+	//프로필 사진 정보 입력
+	@Update("UPDATE MEMBER_DETAIL SET mem_name=#{mem_name}, mem_intro=#{mem_intro}, mem_photo=#{mem_photo}, mem_photo_name = #{mem_photo_name} WHERE mem_num=#{mem_num}")
+	public void updateProfile(MemberVO member);
+	
 /*======================
   		BOOKMARK	
  =======================*/

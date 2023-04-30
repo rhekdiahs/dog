@@ -7,7 +7,7 @@
       <div id="my_profile" class="mypage-cate">
           <div id="profile_main" class="profile-cate">
               <div id="profile_img">
-                  <img src="${pageContext.request.contextPath}/image_bundle/profile.png" width="150" height="150">
+                  <img src = "${pageContext.request.contextPath}/mypage/photoView.do" class = "profile-photo" width = "150" height = "150">
               </div>
               <div id="profile_edit">
                   <button id="profile_edit_btn" 

@@ -44,4 +44,9 @@ public class MyPageServiceImpl implements MyPageService{
 	public Integer getBookmarkCount(Integer mem_num) {
 		return mypageMapper.getBookmarkCount(mem_num);
 	}
+
+	@Override
+	public void updateProfile(MemberVO member) {
+		mypageMapper.updateProfile(member);
+	}
 }

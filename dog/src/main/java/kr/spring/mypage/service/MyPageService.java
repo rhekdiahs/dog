@@ -20,4 +20,6 @@ public interface MyPageService {
 	public List<BookmarkVO> getBookmarkListByCategories(Map<String, Object> map);
 	
 	public Integer getBookmarkCountByCategories(Map<String, Object> map);
+	
+	public void updateProfile(MemberVO member);
 }

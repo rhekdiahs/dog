@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.bookmark.vo.BookmarkVO;
 import kr.spring.hospital.vo.HospitalVO;
@@ -104,21 +106,20 @@ public class MyPageController {
 		return "myBookmark";
 	}
 	
-	@PostMapping("/mypage/modifyProfile.do")
-	public String modifyProfile(@ModelAttribute("memberVO") MemberVO member, HttpSession session, Model model) {
-		if(member == null) {
-			logger.debug("어랏 도둑인가");
-			model.addAttribute("message","로그인 먼저");
-			return "common/resultView";
-		}
-		Integer mem_num = member.getMem_num();
-		logger.debug("이름 대 : " + mem_num);
+	@PostMapping("/mypage/updateProfile.do")
+	public String modifyProfile(@RequestParam Map<String, Object> map, BindingResult result, HttpSession session, Model model) {
+		MemberVO member = (MemberVO)session.getAttribute("user");
+		String encodedParam = ""; 
 		
-		member = mypageService.getMemInfo(mem_num);
-		logger.debug("이름 대 : " + member.getMem_name() + "/이메일도 : " + member.getMem_email());
 		
-		model.addAttribute("member", member);
-		return "";
+		if(member.getMem_photo().length >= 5*1024*1024) {
+			 result.reject("limitUploadSize", new Object[] {"5MB"}, null); }
+		
+		mypageService.updateProfile(member);
+		
+		logger.debug("여기까지 오면 성공인듯 >>>>" + member);
+		
+		return "redirect:/mypage/main.do";
 	}
 	
 	@PostMapping("/mypage/delete.do")
@@ -149,6 +150,33 @@ public class MyPageController {
 		}
 		return "common/resultView";
 	}
-
 	
+	//프로필 사진 공통코드
+	public void viewProfile(MemberVO member, HttpServletRequest request, Model model) {
+		if(member.getMem_photo_name() == null) {
+			byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/profile.png"));
+			model.addAttribute("imageFile", readbyte);
+			model.addAttribute("filename", "profile.png");
+		}else {
+			model.addAttribute("imageFile",member.getMem_photo());
+			model.addAttribute("filename", member.getMem_photo_name());
+		}
+	}
+	
+	@RequestMapping("/mypage/photoView.do")
+	public String getProfile(HttpSession session, HttpServletRequest request, Model model) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+				
+		if(user == null) {
+			byte[] readbyte = FileUtil.getBytes(
+					request.getServletContext().getRealPath("/image_bundle/profile.png"));
+			model.addAttribute("imageFile", readbyte);
+			model.addAttribute("filename", "profile.png");
+		}else {
+			MemberVO member = mypageService.getMemInfo(user.getMem_num());
+			viewProfile(member,request,model);
+		}
+		return "imageView";
+	}
 }
