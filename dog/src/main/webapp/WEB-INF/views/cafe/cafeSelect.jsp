@@ -22,7 +22,6 @@ $(function(){
 });
 </script>
 <div class="map_wrap">
-    <div id="map" style="position:relative; overflow:hidden;"></div>
     <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div id="searchBox">           
@@ -33,11 +32,11 @@ $(function(){
                 </form>
             </div>
         </div>
-        <div id="clickLatlng"></div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
     </div>
+    <div id="map" style="position:relative; overflow:hidden;"></div>
+    <div id="clickLatlng"></div>
+    <ul id="placesList"></ul>
+    <div id="pagination"></div>
 	<form action="cafeWrite.do" method="get" id="cafe_regi">
 	    <input type="hidden" id="cafe_name" name="cafe_name">
 	    <input type="hidden" id="cafe_addr1" name="cafe_addr1">

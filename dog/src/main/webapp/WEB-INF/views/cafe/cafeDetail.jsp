@@ -23,6 +23,9 @@
 	<hr>
 	<div id = "forScrollInfo" class = "margin-detail">
 		<h3 class = "detail-cat">상세</h3>
+		<div style = "text-align : right">
+		<a href = "/hospital/reqUpdate.do?pk_num=${cafe.cafe_num}" style = "font-size : 11px; position : relative; bottom : 15px; text-decoration: underline;">정보 수정 신청</a>
+		</div>
 		<div class = "content-road margin-bot">
 			<img class = "detail-icon" src = "${pageContext.request.contextPath}/image_bundle/addressMarker.png">
 			<div class = "padding-text">

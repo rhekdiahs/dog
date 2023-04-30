@@ -9,8 +9,8 @@
 	<form:form action="cafeWrite.do" method="post" 
 			   modelAttribute="cafeVO" enctype="multipart/form-data">
 		<form:errors element="div" cssClass="error-color"/>
-		<ul>
-			<li>
+		<ul id="cont_ul">
+			<li style="margin-top: 30px;">
 				<div class="cafe_cate">
 				<p>카페 종류</p>
 			     <input type="radio" id="cafe_cate0" name="cafe_cate" checked="checked" value="0">
@@ -22,7 +22,7 @@
 			<li>
 				<p><label for="cafe_name">카페명</label><p>
 				<form:input path="cafe_name" id="cafe_name" name="cafe_name" value="${cafe_name}"/>			
-				<p><form:errors path="cafe_name" cssClass="error-color"/></p>
+				<form:errors path="cafe_name" cssClass="error-color"/>
 			</li>
 			<li>
 				<p><label for="cafe_addr">주소</label></p>
@@ -35,11 +35,11 @@
 				<input type="text" id="cafe_addr2"  name="cafe_addr2" value="${cafe_addr2}">
 				</c:if>
 			</li>
-			<li>
+			<li style = "display : none;">
 				<input type="hidden" id="cafe_y" name="cafe_y" value="${cafe_y}"/>
 				<input type="hidden" id="cafe_x" name="cafe_x" value="${cafe_x}"/>
 			</li>
-			<li>
+			<li style = "display : none;">
 				<input type="hidden" id="cafe_region" name="cafe_region" value="${cafe_region}"/>
 			</li>
 			<li>
@@ -56,28 +56,31 @@
 				<p><form:errors path="cafe_content" cssClass="error-color"/></p>
 			</li>
 			<li>
-				<p><label for="upload">사진 등록</label></p>
+				<p><label for="upload">사진등록</label></p>
 				<input type="file" name="upload" id="upload">
 				
 			</li>
-			<li style="margin-top: 10px;">
-				<input type="submit" id="regi_btn" value="신청하기">
-				<input type="button" id="back_btn" value="뒤로가기" onclick="location.href='cafeSelect.do'">
+			<div id="map"></div>
+			<li style="margin-top: 30px; margin-bottom : 20px;">
+				<input type="submit" id="regi_btn" value="신청">
+				<input type="button" id="back_btn" value="뒤로" onclick="location.href='cafeSelect.do'">
 			</li>
 		</ul>
 	</form:form>
 	</div>
-	<div id="map" style="width:100%;height:350px; margin-top: 15px;"></div>
 	<script>
+	
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 		        center: new kakao.maps.LatLng('${cafe_y}', '${cafe_x}'), // 지도의 중심좌표
 		        level: 3 // 지도의 확대 레벨
 		    };
 		
+		mapContainer.style.width = (visualViewport.width*0.85) + 'px';
+		mapContainer.style.height = (visualViewport.width*0.85) + 'px';
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
-		
+	
 		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 		// 마커 이미지의 이미지 크기 입니다
 	    var imageSize = new kakao.maps.Size(24, 35);
@@ -88,6 +91,17 @@
 	        map: map, // 마커를 표시할 지도
 	        position: new kakao.maps.LatLng('${cafe_y}', '${cafe_x}'), // 마커를 표시할 위치
 	        image : markerImage // 마커 이미지 
+	    });
+	    
+	    $('#cafe_name').keyup(function() {
+	    	if($('#cafe_name.errors')){
+	    		$('.error-color').remove();
+	    	}
+	    });
+	    $('#cafe_content').keyup(function() {
+	    	if($('#cafe_detail.errors')){
+	    		$('.error-color').remove();
+	    	}
 	    });
 	</script>
 </div>
