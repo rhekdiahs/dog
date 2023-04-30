@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/setBookmark.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/marker.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk_overlays.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
 <div class = "wrap">
 <form:form action="selectOption.do" id="search_region" method="get">
@@ -154,22 +154,28 @@
 		    map.setLevel(map.getLevel() + 1);
 		}
 		
+		var mapWidth = document.getElementById('place-list').firstElementChild;
+		var rectPage = mapWidth.getBoundingClientRect();
+		
+		//container.style.width = (visualViewport.width*0.92) + 'px';
+	    //container.style.height = (visualViewport.width*0.92) + 'px';
+	    
+	    
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
 	        center: new kakao.maps.LatLng(coordY, coordX), // 지도의 중심좌표
 	        level: zoomLevel // 지도의 확대 레벨
 	    };
 		
-		mapContainer.style.width = visualViewport.width + 'px';
-		mapContainer.style.height = visualViewport.width + 'px';
-		
+	    mapContainer.style.width = rectPage.width + 'px';
+	    mapContainer.style.height = rectPage.width + 'px';
 		// 지도 div와 지도 옵션으로 지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOptions), overlays = []; // 지도에 그려진 도형을 담을 배열
 		    
 		var pageDiv = document.getElementById('pageDiv');
 		var rectPage = pageDiv.getBoundingClientRect();
 		var rect = mapContainer.getBoundingClientRect();
-		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height) + 'px');
+		$('.place-list').css("height", parseInt(visualViewport.height) - parseInt(rect.bottom) - parseInt(rectPage.height+20) + 'px');
 		
 		
 		let walk_array = [];
@@ -282,7 +288,7 @@
 			    var contentDetail = document.createElement("a");
 			    contentDetail.className = "detail";
 			    contentDetail.innerHTML = "상세보기";
-			    contentDetail.href = "viewWalk.do?walk_num" + pos.walk_num;
+			    contentDetail.href = "viewWalk.do?walk_num=" + pos.walk_num;
 			    info.appendChild(contentDetail);
 			    
 				var overlay = new daum.maps.CustomOverlay({

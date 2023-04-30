@@ -7,10 +7,9 @@
 <script src="${pageContext.request.contextPath}/js/setMapWidth.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_coord.js"></script>
 <script src="${pageContext.request.contextPath}/js/main_findLocation.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/walk.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/registerMap.css">
 <div class="wrap">
-<div>
-	<div class="inputWrap">
+	<div id="searchBox" class="inputWrap">
 <form:form action="selectRegionFromRegister.do" id="search_region" method="get">
 	<select name="keyfield" id="keyfield">
 		<option selected="selected">--선택--</option>
@@ -55,20 +54,22 @@
 	});
 </script>
 </form:form>
-	<form onsubmit="searchPlaces(); return false;">
-		<input type="text" value="" placeholder="장소를 입력하세요" id="keyword">
-		<button type="submit">찾기</button>
-	</form>
+		<form onsubmit="searchPlaces(); return false;">
+			<input type="text" value="" placeholder="장소를 입력하세요" id="search_keyword" class="keyword-blank">
+			<button type="submit" id="submitBtn">찾기</button>
+		</form>
 		</div><!-- .input-wrap -->
 	</div><!-- wrap -->
-	<div id="map_wrap">
-	<p class="modes">
-		    <button id="draw_btn" onclick="selectOverlay('POLYLINE');" >그리기</button>
-		    <button id="drawEnd_btn" disabled="disabled" onclick="end();" >그리기 종료</button>
-		    <button id="reset_btn" disabled="disabled" onclick="resetMap();" >초기화</button>
-		    <button id="register_btn" disabled="disabled" onclick="next();">완료</button>
-	</p>
-	<div id="map" style="width:100%;height:400px;"></div>
+	<div id="map_wrap" style="position:relative;">
+	<div class="drawing-modes modes">
+		    <button id="draw_btn" class="start" onclick="selectOverlay('POLYLINE');" >시 작</button>
+		    <button id="drawEnd_btn" class="stop" disabled="disabled" onclick="end();" >마 침</button>
+		    <button id="reset_btn" class="reset" disabled="disabled" onclick="resetMap();" >초기화</button>
+	</div>
+	<div id="map"></div>
+	<div class="drawend-modes modes">
+		    <button id="register_btn" class="end" disabled="disabled" onclick="next();">완 료</button>
+	</div>
 	</div>
 	<form:form action="registerForm.do" modelAttribute="walkVO" id="registerForm" name="registerForm" method="post">
 		<form:input path="walk_position" type="hidden" value=""/>
@@ -78,11 +79,20 @@
 		<form:input path="walk_distance" type="hidden" value=""/>
 		<form:button type="submit"></form:button>
 	</form:form>
-</div>
 <script type="text/javascript">
 
 	var keyfield = decodeURI(link);
 	var curLink = window.location.href;
+	
+	function zoomIn() {
+	    map.setLevel(map.getLevel() - 1);
+	}
+	
+	// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+	function zoomOut() {
+	    map.setLevel(map.getLevel() + 1);
+	}
+	
 	
 	var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	if(curLink.split('mapCen=')[1] == null){
@@ -99,6 +109,10 @@
 		};
 	}
 	
+	var mapWidth = document.getElementById('searchBox');
+	var rectPage = mapWidth.getBoundingClientRect();
+	mapContainer.style.width = rectPage.width + 'px';
+	mapContainer.style.height = rectPage.width + 'px';
 	
 	var map = new kakao.maps.Map(mapContainer, mapOption), //지도 생성 및 객체 리턴
 		overlays = [];
@@ -337,7 +351,7 @@
 		var region = $('#keyfield').val();
 		
 		function searchPlaces() {
-		    var keyword = $('#keyword').val();
+		    var keyword = $('#search_keyword').val();
 			var link = decodeURI(document.location.href.split('keyfield=')[1]);
 			
 			 if (!keyword.replace(/^\s+|\s+$/g, '')) {

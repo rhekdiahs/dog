@@ -10,7 +10,7 @@ public interface WalkService {
 	public void insertWalkInfoAll(WalkVO walk);
 	
 	//산책경로 리스트 뽑기
-	public List<WalkVO> getWalkList();
+	public WalkVO getWalkList(int walk_num);
 	
 	//좌표 뽑기
 	public String getWalkPosition(Integer walk_num);

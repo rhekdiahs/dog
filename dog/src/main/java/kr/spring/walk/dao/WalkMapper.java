@@ -34,8 +34,8 @@ public interface WalkMapper {
 	public String getWalkPosition(Integer walk_num);
 	
 	//산책경로 리스트 뽑기
-	@Select("SELECT * FROM WALK")
-	public List<WalkVO> getWalkList();
+	@Select("SELECT * FROM WALK w JOIN WALK_DETAIL d ON w.walk_num = d.walk_num WHERE w.walk_num=#{walk_mum}")
+	public WalkVO getWalkList(int walk_num);
 
 	//해당 지역의 경로 갯수
 	public Integer getListCount(Map<String, Object> map);

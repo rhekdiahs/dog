@@ -24,8 +24,8 @@ public class WalkServiceImpl implements WalkService{
 	}
 
 	@Override
-	public List<WalkVO> getWalkList() {
-		return walkMapper.getWalkList();
+	public WalkVO getWalkList(int walk_num) {
+		return walkMapper.getWalkList(walk_num);
 	}
 
 	@Override

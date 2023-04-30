@@ -4,19 +4,6 @@
 		SETTINGS
   =======================*/
 
-
-/*=======================
-	   FORM SETTINGS
-  =======================*/
-/* #form_wrap{
-	text-align: center;
-	margin-top: 5px;
-}
-
-select#keyfield{
-	width:100%;
-	height:40x;
-} */
 .scroll::-webkit-scrollbar {
   display: none;
 }
@@ -63,10 +50,11 @@ select{
 	background: none;
 }
 #keyword{
-	width : 70%;
+	width : 62%;
 	height : 25px;
 	border : none;
 	padding-left: 10px;
+	margin-left:8px;
 }
 
 #submitBtn{
@@ -76,11 +64,7 @@ select{
 	background : none;
 	padding-top: 1px;
 }
-#keyword_search{
-	height:30px;
-	width:20%;
-	float:right;
-}
+
 /*=======================
 		MAP ZOOM
   =======================*/
@@ -90,7 +74,7 @@ select{
 }  
 .custom_zoomcontrol {
 	position:absolute;
-	top:350px; right:15px;
+	top: 333px;right: 28px;
 	width:36px;height:80px;
 	overflow:hidden;
 	z-index:1001;
@@ -147,10 +131,15 @@ select{
 }
 .list-content p{
 	font-size : 15px;
-	margin : 5px 0;
 	overflow : hidden;
    	white-space:nowrap;
    	text-overflow : ellipsis;
+}
+.list-content p:nth-child(1){
+	margin : 8px 0px 0px 0px;
+}
+.list-content p:nth-child(2){
+	margin : 3px 0px 0px 0px;
 }
 .list-content p small{
 	color : #888;

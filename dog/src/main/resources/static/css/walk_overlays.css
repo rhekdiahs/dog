@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+/* 백업 */
+.cont-wrap {
+	position: absolute;
+	left: 0;
+	bottom: 40px;
+	width: 288px;
+	height: 132px;
+	margin-left: -144px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 12px;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	line-height: 1.5;
+}
+
+.cont-wrap .info {
+	width: 260px;
+	height: 120px;
+	border-radius: 5px;
+	border-bottom: 2px solid #ccc;
+	border-right: 1px solid #ccc;
+	overflow: hidden;
+	background: #fff;
+}
+
+.cont-wrap .info:nth-child(1) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+	overflow: hidden;
+}
+
+.info .title {
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
+	padding: 5px 0 0 10px;
+	margin-bottom: 5px;
+	height: 35px;
+	background: #faf5ef;
+	border-bottom: 1px solid #ddd;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 35px;
+}
+
+a:link{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover, a:active{
+	text-decoration: underline;
+}
+
+.info .close {
+	background-image: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+	position: absolute;
+	top: 12px;
+	right: 38px;
+	color: #888;
+	width: 17px;
+	height: 17px;
+}
+
+.info .close:hover {
+	cursor: pointer;
+}
+
+
+.info .image{
+	position: absolute;
+}
+
+.info .addr1 {
+	overflow : hidden;
+   	white-space:nowrap;
+   	text-overflow : ellipsis;
+   	width : 215px;
+	position: relative;
+	margin: 7px 0 0 70px;
+}
+
+.info .addr2 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: relative;
+	width : 215px;
+	margin: 7px 0 0 70px;
+	font-size: 11px;
+	color: #888;
+	margin-top: -1px;
+}
+
+.info .phone {
+	position: relative;
+	margin-left: 70px;
+	font-size: 11px;
+}
+
+.info .phoneImg{
+	position: relative;
+	width: 13px;
+	height: 13px;
+}
+
+.info .detail {
+	position: relative;
+	margin: 7px 0 0 70px;
+	color: #5085BB;
+	font-size: 11px;
+}
+
+.info:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: 0;
+	width: 22px;
+	height: 12px;
+	background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}

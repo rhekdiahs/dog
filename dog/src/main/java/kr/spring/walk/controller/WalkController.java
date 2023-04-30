@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 import kr.spring.walk.service.WalkService;
 import kr.spring.walk.vo.WalkVO;
@@ -176,7 +178,8 @@ public class WalkController {
 		return mapAjax;
 	}
 	
-	//지역 설정
+/*	
+  	//지역 설정
 	@RequestMapping("/walk/selectRegionFromList.do")
 	public String selectRegionFromList(@RequestParam(value = "keyfield", defaultValue = "서울특별시") String keyfield, Model model) {
 			List<WalkVO> list = walkService.getWalkList();
@@ -185,7 +188,7 @@ public class WalkController {
 			
 			return "walkList";
 		}
-	
+*/	
 	//지역 설정
 	@RequestMapping("/walk/selectRegionFromRegister.do")
 	public String selectRegionFromRegister(@RequestParam(value = "keyfield", defaultValue = "서울특별시", required = false) String keyfield) {
@@ -235,12 +238,14 @@ public class WalkController {
 	//선택한 산책경로 보기
 	@RequestMapping("/walk/viewWalk.do")
 	public String viewWalk(@RequestParam Integer walk_num, Model model) {
-		String walk_position = walkService.getWalkPosition(walk_num);
+		WalkVO walk = walkService.getWalkList(walk_num);		//상세정보까지 다 있는 리스트
+		
+		String walk_position = walk.getWalk_position();
 		logger.debug("좌표확인좀? " + walk_position);
 		
 		String[] walk_position_arr = walk_position.split(",");
 		
-		List<String[]> list = new ArrayList<String[]>();
+		List<String[]> list = new ArrayList<String[]>();			//좌표만 들어있는 리스트
 		for(int i=0; i<walk_position_arr.length; i+=2) {
 			list.add(Arrays.copyOfRange(walk_position_arr, i, i+2));
 		}
@@ -254,6 +259,7 @@ public class WalkController {
 		logger.debug("<<<<< 중간 좌표 index >>>>>" + center);
 		logger.debug("<<<<<<<< 중간 (x,y) 좌표>>>>" + Arrays.toString(list.get(center)));
 		
+		model.addAttribute("walk", walk);
 		model.addAttribute("list", list);
 		model.addAttribute("center",center);
 		
@@ -310,5 +316,25 @@ public class WalkController {
 		 return "redirect:/walk/walkList.do?keyfield="+encodedParam; 
 	 }
 	 
+	public void viewProfile(WalkVO walk, HttpServletRequest request, Model model) {
+		if(walk.getWalk_img_name() == null) {
+			byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/defaltHospitalImg.png"));
+			model.addAttribute("imageFile", readbyte);
+			model.addAttribute("filename", "defaltHospitalImg.png");
+		}else {
+			model.addAttribute("imageFile", walk.getWalk_img());
+			model.addAttribute("filename", walk.getWalk_img_name());
+		}
+	}
 	 
+	@RequestMapping("/walk/photoView.do")
+	public String getProfile(@RequestParam int walk_num,HttpServletRequest request, Model model) {
+		
+		WalkVO walk = walkService.getWalkList(walk_num);
+		logger.debug("<walk?>" + walk);
+		viewProfile(walk,request,model);
+		
+		return "imageView";
+	}
+ 
 }
