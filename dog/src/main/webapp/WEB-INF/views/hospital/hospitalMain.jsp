@@ -106,12 +106,15 @@ function zoomOut() {
 		level: zoomLevel //지도의 레벨(확대, 축소 정도)
 	};
 	var mapWidth = document.getElementById('place-list').firstElementChild;
-	var rectPage = mapWidth.getBoundingClientRect();
-	
-	//container.style.width = (visualViewport.width*0.92) + 'px';
-    //container.style.height = (visualViewport.width*0.92) + 'px';
-    container.style.width = rectPage.width + 'px';
-    container.style.height = rectPage.width + 'px';
+	if(mapWidth != null){
+		var rectPage = mapWidth.getBoundingClientRect();
+		container.style.width = rectPage.width + 'px';
+	    container.style.height = rectPage.width + 'px';
+	}else{
+		container.style.width = (visualViewport.width*0.85) + 'px';
+	    container.style.height = (visualViewport.width*0.85) + 'px';
+	}
+    
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
 	var pageDiv = document.getElementById('pageDiv');
