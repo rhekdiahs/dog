@@ -141,7 +141,6 @@
 		</script>
 	</div>
 </div>
-<div id="map" style="width:100%; height:400px;"></div>
 <span id="centerPoint" data-point="${center}" style="display:none;"></span>
 <script type="text/javascript">
 	var center = $('#centerPoint').attr('data-point');			//중간좌표
