@@ -21,13 +21,13 @@
 					</div>
 				</li>
 				<c:if test="${walk.walk_road != ''}">
-				<li>
+				<li <c:if test="${walk.walk_road != ''}">style="margin-top:20px;"</c:if>>
 					<label>도로명</label>			
 					<input disabled type="text" value="${walk.walk_road}">		
 					<form:input path="walk_road" type="hidden" value="${walk.walk_road}"/>
 				</li>
 				</c:if>
-				<li>
+				<li <c:if test="${walk.walk_road != ''}">style="margin-top:20px;"</c:if>>
 					<p><label>지번</label></p>
 					<input disabled type="text" value="${walk.walk_address}">
 					<form:input path="walk_address" type="hidden" value="${walk.walk_address}"/>		
