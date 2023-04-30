@@ -154,12 +154,6 @@
 		    map.setLevel(map.getLevel() + 1);
 		}
 		
-		var mapWidth = document.getElementById('place-list').firstElementChild;
-		var rectPage = mapWidth.getBoundingClientRect();
-		
-		//container.style.width = (visualViewport.width*0.92) + 'px';
-	    //container.style.height = (visualViewport.width*0.92) + 'px';
-	    
 	    
 		var mapContainer = document.getElementById('map'),
 	    mapOptions = {
@@ -167,6 +161,22 @@
 	        level: zoomLevel // 지도의 확대 레벨
 	    };
 		
+		var mapWidth = document.getElementById('place-list').firstElementChild;
+		if(mapWidth != null){
+			var rectPage = mapWidth.getBoundingClientRect();
+			mapContainer.style.width = rectPage.width + 'px';
+			mapContainer.style.height = rectPage.width + 'px';
+		}else{
+			var inputWarp = document.getElementsByClassName('inputWrap')[0];
+			var rectPage = inputWarp.getBoundingClientRect();
+			mapContainer.style.width = (parseInt(rectPage.width)) + 'px';
+			mapContainer.style.height = (parseInt(rectPage.width)) + 'px';
+		    $('#place-list').hide();
+		}
+		
+		//container.style.width = (visualViewport.width*0.92) + 'px';
+	    //container.style.height = (visualViewport.width*0.92) + 'px';
+	    
 	    mapContainer.style.width = rectPage.width + 'px';
 	    mapContainer.style.height = rectPage.width + 'px';
 		// 지도 div와 지도 옵션으로 지도를 생성합니다
