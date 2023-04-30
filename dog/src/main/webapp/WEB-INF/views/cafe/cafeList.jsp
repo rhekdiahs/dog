@@ -99,8 +99,17 @@
 		//container.style.height = visualViewport.width + 'px';
 		
 		var mapWidth = document.getElementById('place-list').firstElementChild;
-		var rectPage = mapWidth.getBoundingClientRect();
-	
+		if(mapWidth != null){
+			var rectPage = mapWidth.getBoundingClientRect();
+			container.style.width = rectPage.width + 'px';
+		    container.style.height = rectPage.width + 'px';
+		}else{
+			var inputWarp = document.getElementsByClassName('inputWrap')[0];
+			var rectPage = inputWarp.getBoundingClientRect();
+			container.style.width = (parseInt(rectPage.width)) + 'px';
+		    container.style.height = (parseInt(rectPage.width)) + 'px';
+		    $('#place-list').hide();
+		}
 
     	container.style.width = rectPage.width + 'px';
     	container.style.height = rectPage.width + 'px';
