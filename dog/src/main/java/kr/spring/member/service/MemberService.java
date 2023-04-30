@@ -27,4 +27,7 @@ public interface MemberService {
 	public List<MemberVO> selectList(Map<String, Object> map);
 	public int selectRowCount(Map<String, Object> map);
 	public void updateByAdmin(MemberVO memberVO);
+	
+	//마이페이지
+	public MemberVO getMemInfo(Integer mem_num);
 }

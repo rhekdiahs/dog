@@ -19,7 +19,10 @@ body{
     margin-bottom : 3px;;
     border-bottom : 3px solid gray;
     padding-top : 18px; padding-bottom: 35px;
-
+}
+div#bookmark_list{
+    margin-bottom:0;
+	border:none;	
 }
 /*========================
           PROFILE
@@ -59,6 +62,12 @@ p#user_intro{
     border-radius : 13px;
     color : white;
     padding : 8px 13px;
+}
+button#profile_edit_btn:hover,a{
+	cursor:pointer;
+}
+button#profile_edit_btn:active{
+	background-color:#cdcdda;	
 }
 /*========================
      BOOKMARK LIST
@@ -117,13 +126,19 @@ p.bm-count{
 ========================*/
 #my_ext{
     width:100%;
-}
-.ext_cate{
+    padding:10px 2px;
+    background-color: #feea3e ;
     font-size: 10pt;
     box-sizing: border-box;
     margin:0;
-    padding:5px 2px;
+}
+#my_ext div{
+	display:inline-block;
+	box-sizing:border-box;
+	padding:0 15px;
+	margin:0 5px;
+}
+/* .ext_cate{
     display: inline-block;
     width:32%;
-    background-color: #feea3e ;
-}
+} */

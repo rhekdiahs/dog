@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.bookmark.vo.BookmarkVO;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.mypage.service.MyPageService;
 import kr.spring.util.PagingUtil;
@@ -27,6 +29,9 @@ public class MyPageController {
 	private static final Logger logger = LoggerFactory.getLogger(WalkController.class);
 	@Autowired
 	private MyPageService mypageService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@ModelAttribute("memberVO")
 	   public MemberVO initCommand() {
@@ -54,12 +59,11 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("/mypage/editMain.do")
-	public String editProfileMain(HttpSession session) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
-		if(member == null) {
-			logger.debug("어랏 도둑인가");
-		}
-		logger.debug("member = " + member);
+	public String editProfileMain(@RequestParam Integer mem_num, HttpSession session, Model model) {
+		MemberVO member = memberService.getMemInfo(mem_num);
+		logger.debug("member = " + member.toString());
+		
+		model.addAttribute("member",member);
 		
 		return "editForm";
 	}
@@ -97,9 +101,8 @@ public class MyPageController {
 		return "myBookmark";
 	}
 	
-	@RequestMapping("/mypage/modifyProfile.do")
-	public String modifyProfile(HttpSession session, Model model) {
-		MemberVO member = (MemberVO)session.getAttribute("user");
+	@PostMapping("/mypage/modifyProfile.do")
+	public String modifyProfile(@ModelAttribute("memberVO") MemberVO member, HttpSession session, Model model) {
 		if(member == null) {
 			logger.debug("어랏 도둑인가");
 			model.addAttribute("message","로그인 먼저");

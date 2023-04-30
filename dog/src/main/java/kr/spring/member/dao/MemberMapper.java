@@ -56,6 +56,9 @@ public interface MemberMapper {
 	public int selectRowCount(Map<String, Object> map);
 	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
 	public void updateByAdmin(MemberVO memberVO);
+	
+	@Select("SELECT * FROM MEMBER m JOIN MEMBER_DETAIL d ON m.mem_num = d.mem_num WHERE m.mem_num=${mem_num}")
+	public MemberVO getMemInfo(Integer mem_num);
 
 
 

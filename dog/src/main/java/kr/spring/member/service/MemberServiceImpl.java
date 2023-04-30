@@ -60,4 +60,11 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public MemberVO getMemInfo(Integer mem_num) {
+		return memberMapper.getMemInfo(mem_num);
+	}
+	
+	
 }

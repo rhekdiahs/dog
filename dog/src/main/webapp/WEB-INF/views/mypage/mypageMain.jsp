@@ -10,7 +10,7 @@
               </div>
               <div id="profile_edit">
                   <button id="profile_edit_btn" 
-                          onclick="location.href='${pageContext.request.contextPath}/mypage/editMain.do'">프로필 편집</button>
+                          onclick="location.href='${pageContext.request.contextPath}/mypage/editMain.do?mem_num=${member.mem_num}'">프로필 편집</button>
               </div>
           </div>
           <div id="profile_info" class="profile-cate">
@@ -24,23 +24,23 @@
       </div>
       <div id="bookmark_list" class="mypage-cate">
           <div id="bm_title" class="bm-categories">
-              <p>북마크 <span class="bm-count" style="font-size: 20pt; color:#feb69f;">${totalCount}</span>개</p>
+              <p>북마크 <a><span class="bm-count" style="font-size: 20pt; color:#feb69f;">${totalCount}</span>개</a></p>
           </div>
           <div id="bm_content" class="bm-categories">
               <div id="wrap_top" class="wrap">
                   <div id="bm_walk" class="bm-category">
-                      <p class="bm-kind">산책로</p> <p class="bm-count"><span id="walk_count">5</span> 개</p>
+                      <p class="bm-kind">산책로</p> <p class="bm-count"><a><span id="walk_count">5</span> 개</a></p>
                   </div>
                   <div id="bm_cafe" class="bm-category">
-                      <p class="bm-kind">펫존</p> <p class="bm-count"><span id="cafe_count">7</span> 개</p>
+                      <p class="bm-kind">펫존</p> <p class="bm-count"><a><span id="cafe_count">7</span> 개</a></p>
                   </div>
               </div>
               <div id="wrap_bottom" class="wrap">
                   <div id="bm_hos" class="bm-category">
-                      <p class="bm-kind">병원</p> <p class="bm-count"><span id="hos_count">0</span> 개</p>
+                      <p class="bm-kind">병원</p> <p class="bm-count"><a><span id="hos_count">0</span> 개</a></p>
                   </div>
                   <div id="bm_pro" class="bm-category">
-                      <p class="bm-kind">임시보호소</p><p class="bm-count"><span id="pro_count">0</span> 개</p>
+                      <p class="bm-kind">임시보호소</p><p class="bm-count"><a><span id="pro_count">0</span> 개</a></p>
                   </div>
               </div>
           </div>
