@@ -41,6 +41,32 @@ select{
 	margin: 10px 0px;
 }
 
+#pageDiv{
+	margin : 10px 0;
+}
+#pageDiv b{
+	color : white;
+	background : #8cdcfc;
+    padding: 5px 9px;
+    border-radius: 3px;
+    margin: 0 5px;
+    font-size : 13px;
+}
+#pageDiv a{
+	color : black;
+	background : #f2f2f2;
+    padding: 5px 9px;
+    border-radius: 3px;	
+    margin: 0 5px;
+    font-size : 13px;
+}
+.index-bound{
+	border-radius : 5px;
+	background : #494949;
+	color : white;
+	padding : 2px 7px;
+	font-weight : bold;
+}
 
 /* 테이블 */
 table {

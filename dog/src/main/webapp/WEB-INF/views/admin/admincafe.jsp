@@ -12,8 +12,8 @@
 					<c:forEach var="cafe" items="${cafe}" varStatus="status">
 						<li id="${cafe.cafe_num}">
 							<div class="list-title">
-								<a href="${pageContext.request.contextPath}/cafe/cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${status.count}</strong></a>
-								<a href="${pageContext.request.contextPath}/cafe/cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong>${cafe.cafe_name}</strong></a>
+								<a href="${pageContext.request.contextPath}/cafe/cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong class = "index-bound">${status.count}</strong></a>
+								<a href="${pageContext.request.contextPath}/cafe/cafeDetail.do?cafe_num=${cafe.cafe_num}" class="title-index"><strong style="color:#494949;">${cafe.cafe_name}</strong></a>
 								<span class="cafe-cate"> 
 									<c:if test="${cafe.cafe_cate == 0}"><small>애견 카페</small></c:if> 
 									<c:if test="${cafe.cafe_cate == 1}"><small>애견 동반 카페</small></c:if>
@@ -31,7 +31,7 @@
 				</li>
 			</c:forEach>
 		</ul>
-	<div class="align-center">${page}</div>
+	<div id = "pageDiv" class="align-center">${page}</div>
 	</div>
 	</c:if>
 	</div>
