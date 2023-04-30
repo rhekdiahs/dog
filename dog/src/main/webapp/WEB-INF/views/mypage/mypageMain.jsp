@@ -49,7 +49,32 @@
           <div id="my_list" class="ext_cate"><a>내 게시물 관리</a></div>
           <div id="request_list" class="ext_cate"><a>신청 현황</a></div>
           <div id="delete_btn" class="ext_cate">
-              <a onclick="location.href='${pageContext.request.contextPath}/mypage/delete.do'">회원탈퇴</a>
+              <a onclick="displayModal();">회원탈퇴</a>
           </div>
       </div>
+      <div class="black-bg" style="display:none;">
+	      <div id="passwd_modal">
+	      	<form method="post" action="delete.do">	
+				<p>비밀번호를 입력하세요</p>
+				<input id="input_pw" type="text" name="mem_pw">
+				<input id="submit_pw" type="submit" value="확인">
+	      	</form>
+	      </div>
+      </div>
 </div>
+<script type="text/javascript">
+	function displayModal(){
+		$('.black-bg').show();
+	}
+	
+	var submit_pw = $('#submit_pw');
+	var input_pw = $('#input_pw');
+	
+	submit_pw.on('click',function(){
+		if(input_pw.val().trim() == ''){
+			alert('비밀번호를 입력해주세요');
+			return false;
+		}
+	});
+	
+</script>

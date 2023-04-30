@@ -118,21 +118,32 @@ public class MyPageController {
 		return "";
 	}
 	
-	@RequestMapping("/mypage/delete.do")
-	public String deleteMyId(HttpSession session, Model model) {
+	@PostMapping("/mypage/delete.do")
+	public String deleteMyId(@RequestParam("mem_pw") String mem_pw, HttpSession session, Model model) {
 		MemberVO member = (MemberVO)session.getAttribute("user");
+		
 		if(member == null) {
 			logger.debug("어랏 도둑인가");
 		}
 		
 		Integer mem_num = member.getMem_num();
+		String mem_db_pw = mypageService.getMemInfo(mem_num).getMem_pw();
 		
-		mypageService.deleteAccount(mem_num);
-		
-		model.addAttribute("accessMsg", "회원탈퇴가 완료되었습니다.");
-		
-		session.removeAttribute("user");
-		
-		return "common/notice";
+		if(!mem_pw.equals(mem_db_pw)) {
+			logger.debug("안ㅁ자아");
+			model.addAttribute("message", "비밀번호가 맞지 않습니다.");
+			model.addAttribute("url", "/mypage/main.do");
+		}else {
+			logger.debug("ok");
+			
+			mypageService.deleteAccount(mem_num);
+			
+			model.addAttribute("message", "회원탈퇴가 완료되었습니다.");
+			model.addAttribute("url", "/main/main.do");
+			
+			session.removeAttribute("user");
+			
+		}
+		return "common/resultView";
 	}
 }

@@ -37,9 +37,15 @@ public interface MyPageMapper {
   	  DELETE ACCOUNT	
  =======================*/
 	//회원탈퇴
+	//회원 상태 탈퇴로 변경
 	@Update("UPDATE MEMBER SET mem_auth=0 WHERE mem_num=#{mem_num}")
 	public void changeAuth(Integer mem_num);
 	
+	//해당 회원의 상세정보는 모두 삭제
 	@Delete("DELETE FROM MEMBER_DETAIL WHERE mem_num = ${mem_num}")
 	public void deleteAcoount(Integer mem_num);
+	
+	//해당 회원이 북마크 해놨던 정보도 삭제
+	@Delete("DELETE FROM BOOKMARK_MAP WHERE mem_num=${mem_num}")
+	public void deleteBookmark(Integer mem_num);
 }

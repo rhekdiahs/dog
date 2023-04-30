@@ -25,6 +25,7 @@ public class MyPageServiceImpl implements MyPageService{
 
 	@Override
 	public void deleteAccount(Integer mem_num) {
+		mypageMapper.deleteBookmark(mem_num);
 		mypageMapper.changeAuth(mem_num);
 		mypageMapper.deleteAcoount(mem_num);
 	}
