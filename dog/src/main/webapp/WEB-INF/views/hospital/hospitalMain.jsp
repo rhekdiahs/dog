@@ -111,8 +111,10 @@ function zoomOut() {
 		container.style.width = rectPage.width + 'px';
 	    container.style.height = rectPage.width + 'px';
 	}else{
-		container.style.width = (visualViewport.width*0.85) + 'px';
-	    container.style.height = (visualViewport.width*0.85) + 'px';
+		var inputWarp = document.getElementsByClassName('inputWrap')[0];
+		var rectPage = inputWarp.getBoundingClientRect();
+		container.style.width = (parseInt(rectPage.width)) + 'px';
+	    container.style.height = (parseInt(rectPage.width)) + 'px';
 	}
     
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
