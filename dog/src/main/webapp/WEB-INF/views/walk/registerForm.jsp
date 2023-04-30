@@ -27,7 +27,8 @@
 					<form:input path="walk_road" type="hidden" value="${walk.walk_road}"/>
 				</li>
 				</c:if>
-				<li <c:if test="${walk.walk_road != ''}">style="margin-top:20px;"</c:if>>
+				<li <c:if test="${walk.walk_road != ''}">style="margin-top:10px;"</c:if>
+					<c:if test="${walk.walk_road == ''}">style="margin-top:20px;"</c:if>>
 					<p><label>지번</label></p>
 					<input disabled type="text" value="${walk.walk_address}">
 					<form:input path="walk_address" type="hidden" value="${walk.walk_address}"/>		
