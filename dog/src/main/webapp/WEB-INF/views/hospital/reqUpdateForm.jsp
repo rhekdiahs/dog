@@ -52,19 +52,20 @@ var geocoder = new kakao.maps.services.Geocoder();
 		var submenu = $(e).next("li");
 		if(clickedLi){
 			clickedLi.slideUp();
+			$('.reqContWrap').remove();
 			$('#submit').css('background-color', '#ccc');
 			$('#submit').attr("disabled", true);
 			clickedLi = '';
 		}
 		if(submenu.is(":visible")){
-	    	submenu.slideUp('slow', function(){
+	    	submenu.slideUp('', function(){
 	    		$('.reqContWrap').remove();
 	    		$('#submit').css('background-color', '#ccc');
    				$('#submit').attr("disabled", true);
 	    	});
 			clickedLi = '';
 		}else{
-	   		submenu.slideDown('slow', function(){
+	   		submenu.slideDown('', function(){
 	   		if(reqType == 'Pdelete'){
 	   			createPdel(reqType);
 	   			//삭제 요청시 업로드 불러오기
