@@ -95,4 +95,10 @@
 		}
 	});
 	
+	$('.black-bg').click(function(e){
+		if(e.target == e.currentTarget){
+			$('.black-bg').hide();
+		}
+	});
+	
 </script>
