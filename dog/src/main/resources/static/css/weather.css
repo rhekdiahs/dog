@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.wea{
+	
+	position: relative;
+}
+.wea li{
+	height: 200px;
+	width: 400px;
+    padding: 15px 15px;
+    box-shadow: 3px 6px 6px lightgray;
+    border-radius: 10px;
+    margin: 0 15px;
+    list-style:none;
+}
+#icon{
+	width:150px;
+	height:150px;
+	float:left;
+}
+.r{
+	float:right;
+}
+<!-- 오른쪽 float 후 왼쪽 정렬-->
+.l{
+	float:left;
+}

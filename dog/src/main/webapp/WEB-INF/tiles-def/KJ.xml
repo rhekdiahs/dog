@@ -9,5 +9,9 @@
     	<put-attribute name="title" value="임시보호소 위치"/>
     	<put-attribute name="body" value="/WEB-INF/views/shelter/shelterList.jsp"/>        
     </definition>
+    <definition name="weather" extends="main">
+    	<put-attribute name="title" value="날씨"/>
+    	<put-attribute name="body" value="/WEB-INF/views/weather/weather.jsp"/>        
+    </definition>
   
 </tiles-definitions>

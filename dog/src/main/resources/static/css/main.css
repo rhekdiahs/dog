@@ -60,7 +60,7 @@ body{
 	font-family : neon;
 	color : black;	
 }
-.menu-list:nth-child(1), .menu-list:nth-child(3){
+.menu-list:nth-child(1), .menu-list:nth-child(3), .menu-list:nth-child(5){
 	margin-left : 70px;
 }
 .menu-list:nth-child(2), .menu-list:nth-child(4){

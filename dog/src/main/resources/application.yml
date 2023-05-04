@@ -66,3 +66,5 @@ server:
 property:
   key:
     apikey: ${APIKEY_KAKAO}
+    weatherkey: ${APIKEY_WEATHER}
+    
