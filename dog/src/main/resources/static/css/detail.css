@@ -74,6 +74,22 @@ h5{
 	border : 1px solid gray;
 	border-radius : 5px;
 }
+
+#admin_check{
+	float: right;
+	background: white;
+	width: 70px;
+	height: 30px;
+	border-radius: 20px;
+	border: 2px solid #8cdcfc;
+	margin-right : 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding : 3px 3px;
+	color :#8cdcfc;
+	font-weight : bold;
+}
+
 .label {margin-bottom: 96px;}
 .label * {display: inline-block;vertical-align: top;}
 .label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}

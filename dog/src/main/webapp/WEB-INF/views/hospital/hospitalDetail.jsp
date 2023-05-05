@@ -119,6 +119,14 @@
 	<div id = "forScrollMap" class = "margin-detail" style = "margin-bottom : 30px;">
 		<h3 class = "detail-cat">지도</h3>
 		<div id = "map"></div>
+		<div>
+		<c:if test="${user.mem_auth == 9 && cafe.cafe_status == 0}">
+		<form action="cafeDetail.do" method="post">
+			<input name="p_num" type="hidden" value="${cafe.cafe_num}">
+			<button type="submit" id="admin_check">승인</button>
+		</form>
+		</c:if>
+		</div>
 		<script>
 			const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 			

@@ -121,7 +121,7 @@
 		<c:if test="${user.mem_auth == 9 && cafe.cafe_status == 0}">
 		<form action="cafeDetail.do" method="post">
 			<input name="p_num" type="hidden" value="${cafe.cafe_num}">
-			<button type="submit">승인</button>
+			<button type="submit" id="admin_check">승인</button>
 		</form>
 		</c:if>
 		</div>

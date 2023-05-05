@@ -56,6 +56,19 @@
     	<put-attribute name="body" value="/WEB-INF/views/admin/admincafe.jsp"/>
     	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
     </definition>
+	<definition name="adminhospital" template="/WEB-INF/views/template/layout.jsp">
+    	<put-attribute name="title" value="회원 관리페이지"/>
+    	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/admin/adminhospital.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
+    </definition>
+    <definition name="admincafe" template="/WEB-INF/views/template/layout.jsp">
+    	<put-attribute name="title" value="회원 관리페이지"/>
+    	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/admin/admincafe.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>         
+    </definition>
+	
 	
 </tiles-definitions>
 
