@@ -58,5 +58,29 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 
+
+	@Override
+	public List<HospitalVO> selectHosAdminList(Map<String, Object> map) {
+		return adminMapper.selectHosAdminList(map);
+	}
+
+
+	@Override
+	public int selectHosAdminCount(Map<String, Object> map) {
+		return adminMapper.selectHosAdminCount(map);
+	}
+
+
+	@Override
+	public List<WalkVO> selectWalkAdminList(Map<String, Object> map) {
+		return adminMapper.selectWalkAdminList(map);
+	}
+
+
+	@Override
+	public int selectWalkAdminCount(Map<String, Object> map) {
+		return adminMapper.selectHosAdminCount(map);
+	}
+
 	
 }

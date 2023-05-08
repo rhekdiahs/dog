@@ -112,6 +112,14 @@
 	<div id = "forScrollMap" class = "margin-detail" style = "margin-bottom : 30px;">
 		<h3 class = "detail-cat">지도</h3>
 		<div id = "map"></div>
+		<div>
+		<c:if test="${user.mem_auth == 9 && walk.walk_perm == 0}">
+		<form action="viewWalk.do" method="post">
+			<input name="p_num" type="hidden" value="${walk.walk_num}">
+			<button type="submit" id="admin_check">승인</button>
+		</form>
+		</c:if>
+		</div>
 		<script type="text/javascript">
 			$(function(){
 				var menubar = document.getElementById('main_header');

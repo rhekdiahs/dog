@@ -4,5 +4,124 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.admin.dao.AdminMapper">
 
+<sql id="whichCategories">
+  		<if test="walk_num != null">
+  			AND walk_num = ${walk_num}
+  		</if>
+  		<if test="hospital_num != null">
+  			AND hospital_num = ${hospital_num}
+  		</if>
+  		<if test="cafe_num != null">
+  			AND cafe_num = ${cafe_num}
+  		</if>
+  	</sql>
+  	
+<sql id="selectOption">
+		<where>
+		<if test="keyfield != null">
+			<if test="keyfield == '서울특별시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '부산광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '대구광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '인천광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '광주광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '대전광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '울산광역시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '세종특별자치시'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경기도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '강원도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '충청북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '충청남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '전라북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '전라남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경상북도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '경상남도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyfield == '제주특별자치도'">
+				cafe_region = #{keyfield}
+			</if>
+			<if test="keyword != null and keyword != ''">
+			<include refid="whichCategories"></include>
+			</if>
+		</if>
+		</where>
+	</sql>
+	
+<select id="selectHosAdminCount" parameterType="map" resultType="integer">
+	SELECT
+	COUNT(*)
+	FROM hospital_detail
+	WHERE h_info_auth = 0
+</select>
+
+<select id="selectHosAdminList" parameterType="map" resultType="hospitalVO">
+	SELECT
+	  *
+	FROM (SELECT
+			a.*,
+			rownum rnum
+		  FROM (SELECT
+		  		  *
+		  		FROM hospital h LEFT OUTER JOIN hospital_detail d
+		  		ON h.hospital_num = d.hospital_num
+		  		WHERE d.h_info_auth = 0)a)
+		  	<![CDATA[
+		  		WHERE rnum >= #{start} AND rnum <= #{end}	
+		  	]]>
+</select>
+
+<select id="selectWalkAdminCount" parameterType="map" resultType="integer">
+	SELECT
+	COUNT(*)
+	FROM walk_detail
+	WHERE walk_perm = 0
+</select>
+
+<select id="selectWalkAdminList" parameterType="map" resultType="walkVO">
+	SELECT
+	  *
+	FROM (SELECT
+			a.*,
+			rownum rnum
+		  FROM (SELECT
+		  		  *
+		  		FROM walk w LEFT OUTER JOIN walk_detail d
+		  		ON w.walk_num = d.walk_num
+		  		WHERE d.walk_perm = 0)a)
+		  	<![CDATA[
+		  		WHERE rnum >= #{start} AND rnum <= #{end}	
+		  	]]>
+</select>
+
 </mapper>
 

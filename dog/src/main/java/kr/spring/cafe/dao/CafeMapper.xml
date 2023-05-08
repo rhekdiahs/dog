@@ -77,9 +77,6 @@
 		</where>
 	</sql>
 
-
-	<!-- 관리자 -->
-
 	<select id="selectCafeCount" parameterType="map" resultType="integer">
 		SELECT
 		COUNT(*)
@@ -126,7 +123,7 @@
 		  		FROM cafe c LEFT OUTER JOIN cafe_detail d 
 		  		ON c.cafe_num = d.cafe_num
 		  		<include refid="selectOption"></include>
-		  		WHERE d.cafe_status = 0 and d.cafe_status IS NOT NULL)a)
+		  		WHERE d.cafe_status = 0)a)
 	<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 	]]>

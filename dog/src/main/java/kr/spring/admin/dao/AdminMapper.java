@@ -30,5 +30,14 @@ public interface AdminMapper {
 	@Update("UPDATE walk_detail SET walk_perm=1 WHERE walk_num=#{walk_num}")
 	public void updateWalkStatus(WalkVO walkVO);
 	
+	
+	//승인 요청 리스트 조회(병원)
+	public List<HospitalVO> selectHosAdminList(Map<String, Object> map);
+	public int selectHosAdminCount(Map<String, Object> map);
+	
+	//승인 요청 리스트 조회(산책로)
+	public List<WalkVO> selectWalkAdminList(Map<String, Object> map);
+	public int selectWalkAdminCount(Map<String, Object> map);
+	
 }
 

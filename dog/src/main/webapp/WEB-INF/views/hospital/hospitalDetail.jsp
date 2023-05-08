@@ -120,9 +120,9 @@
 		<h3 class = "detail-cat">지도</h3>
 		<div id = "map"></div>
 		<div>
-		<c:if test="${user.mem_auth == 9 && cafe.cafe_status == 0}">
-		<form action="cafeDetail.do" method="post">
-			<input name="p_num" type="hidden" value="${cafe.cafe_num}">
+		<c:if test="${user.mem_auth == 9 && hospital.h_info_auth == 0}">
+		<form action="hospitalDetail.do" method="post">
+			<input name="p_num" type="hidden" value="${hospital.hospital_num}">
 			<button type="submit" id="admin_check">승인</button>
 		</form>
 		</c:if>

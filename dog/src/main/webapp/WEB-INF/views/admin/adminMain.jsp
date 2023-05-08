@@ -6,12 +6,12 @@
 <div id = "main_div">
 	<img id = "main_logo" src = "${pageContext.request.contextPath}/image_bundle/logo1.png">
 	<div class = "menu-grid">
-		<a class = "menu-list" href="#" onclick="withWalkCityList()">산책로 관리</a>
+		<a class = "menu-list" href="${pageContext.request.contextPath}/admin/adminwalk.do">산책로 관리</a>
 
 		<a class = "menu-list" href="${pageContext.request.contextPath}/admin/admincafe.do">카페 관리</a>
 
 		<a class = "menu-list" href="#">임시보호소</a>
-		<a class = "menu-list" href = "#" onclick="withCurCity()">병원 관리</a>
+		<a class = "menu-list" href = "${pageContext.request.contextPath}/admin/adminhospital.do">병원 관리</a>
 	</div>
 	<div class = "menu-login">
 		<c:if test="${!empty user}">

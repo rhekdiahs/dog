@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.admin.service.AdminService;
 import kr.spring.cafe.service.CafeService;
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -41,6 +40,9 @@ public class AdminController {
 	
 	@Autowired
 	private CafeService cafeService;
+	
+	@Autowired
+	private HospitalService hospitalService;
 	
 	@ModelAttribute
 	public MemberVO initCommand() {
@@ -138,8 +140,76 @@ public class AdminController {
 		
 		return mav;
 	}
+	
+	//병원 관리
+	@RequestMapping("/admin/adminhospital.do")
+	public ModelAndView hospitalList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
+								  String keyfield, String keyword){
 		
-	@PostMapping("/cafe/cafeDetail.do")
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int count = adminService.selectHosAdminCount(map);
+		
+		logger.debug("count>>" + count);
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 5, 5 ,"adminhospital.do");
+		
+		List<HospitalVO> hospital = null;
+		
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			hospital = adminService.selectHosAdminList(map);
+		}
+		
+		logger.debug("hos>>" + hospital);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("adminhospital");
+		
+		mav.addObject("count", count);
+		mav.addObject("hospital", hospital);
+		mav.addObject("page", page.getPage());	
+		
+		return mav;
+	}
+	
+	//산책로 관리
+	@RequestMapping("/admin/adminwalk.do")
+	public ModelAndView walkList(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
+								  String keyfield, String keyword){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int count = adminService.selectWalkAdminCount(map);
+		
+		logger.debug("count>>" + count);
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 5, 5 ,"adminwalk.do");
+		
+		List<WalkVO> walk = null;
+		
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			walk = adminService.selectWalkAdminList(map);
+		}
+		
+		logger.debug("walk>>" + walk);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("adminwalk");
+		
+		mav.addObject("count", count);
+		mav.addObject("walk", walk);
+		mav.addObject("page", page.getPage());	
+		
+		return mav;
+	}
+	
+	
+	
+	@PostMapping(value={"/cafe/cafeDetail.do","/hospital/hospitalDetail.do","/walk/viewWalk.do"})
 	public String updateStatus(@RequestParam(value="p_num")int p_num, HttpServletRequest request){
 		
 		String url = request.getHeader("referer").split("/")[3];
@@ -161,4 +231,5 @@ public class AdminController {
 			}
 		return "redirect:/admin/admin"+url+".do";
 	}
+	
 }
