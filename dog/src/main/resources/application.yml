@@ -67,4 +67,6 @@ property:
   key:
     apikey: ${APIKEY_KAKAO}
     weatherkey: ${APIKEY_WEATHER}
+    clientId : ${APIKEY_ID}
+    clientSecret : ${APIKEY_SECRET}
     

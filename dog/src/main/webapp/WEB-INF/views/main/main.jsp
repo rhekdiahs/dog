@@ -14,6 +14,7 @@
 		<a class = "menu-list" href = "javascript:void(0);" onclick="withCurCity()">병&nbsp;&nbsp;&nbsp;&nbsp;원</a>
 		
 		<a class = "menu-list" href="${pageContext.request.contextPath}/weather/weather.do">날씨</a>
+		<a class = "menu-list" href="${pageContext.request.contextPath}/naver/search.do">블로그 검색</a>
 		
 	</div>
 	<div class = "menu-login">

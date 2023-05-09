@@ -63,7 +63,7 @@ body{
 .menu-list:nth-child(1), .menu-list:nth-child(3), .menu-list:nth-child(5){
 	margin-left : 70px;
 }
-.menu-list:nth-child(2), .menu-list:nth-child(4){
+.menu-list:nth-child(2), .menu-list:nth-child(4), .menu-list:nth-child(6){
 	margin-right : 70px;
 }
 .menu-login{
