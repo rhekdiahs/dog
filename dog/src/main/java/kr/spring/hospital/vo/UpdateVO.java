@@ -11,8 +11,13 @@ public class UpdateVO {
 	private String place_address;
 	private byte[] place_newImg;
 	private String place_newImgName;
+	
 	private String pk_num;
 	private String hostURL;
+	
+	private int cafe_num;
+	private int hospital_num;
+	private int walk_num;
 	private int mem_num;
 	
 	public void setUpload(MultipartFile upload) throws IOException{
@@ -21,40 +26,51 @@ public class UpdateVO {
 		//파일 이름
 		setPlace_newImgName(upload.getOriginalFilename());
 	}
-	
+
 	public String getPlace_name() {
 		return place_name;
 	}
+
 	public void setPlace_name(String place_name) {
 		this.place_name = place_name;
 	}
+
 	public String getPlace_detail() {
 		return place_detail;
 	}
+
 	public void setPlace_detail(String place_detail) {
 		this.place_detail = place_detail;
 	}
+
 	public String getPlace_road() {
 		return place_road;
 	}
+
 	public void setPlace_road(String place_road) {
 		this.place_road = place_road;
 	}
+
 	public String getPlace_address() {
 		return place_address;
 	}
+
 	public void setPlace_address(String place_address) {
 		this.place_address = place_address;
 	}
+
 	public byte[] getPlace_newImg() {
 		return place_newImg;
 	}
+
 	public void setPlace_newImg(byte[] place_newImg) {
 		this.place_newImg = place_newImg;
 	}
+
 	public String getPlace_newImgName() {
 		return place_newImgName;
 	}
+
 	public void setPlace_newImgName(String place_newImgName) {
 		this.place_newImgName = place_newImgName;
 	}
@@ -75,6 +91,30 @@ public class UpdateVO {
 		this.hostURL = hostURL;
 	}
 
+	public int getCafe_num() {
+		return cafe_num;
+	}
+
+	public void setCafe_num(int cafe_num) {
+		this.cafe_num = cafe_num;
+	}
+
+	public int getHospital_num() {
+		return hospital_num;
+	}
+
+	public void setHospital_num(int hospital_num) {
+		this.hospital_num = hospital_num;
+	}
+
+	public int getWalk_num() {
+		return walk_num;
+	}
+
+	public void setWalk_num(int walk_num) {
+		this.walk_num = walk_num;
+	}
+
 	public int getMem_num() {
 		return mem_num;
 	}
@@ -87,9 +127,8 @@ public class UpdateVO {
 	public String toString() {
 		return "UpdateVO [place_name=" + place_name + ", place_detail=" + place_detail + ", place_road=" + place_road
 				+ ", place_address=" + place_address + ", place_newImgName=" + place_newImgName + ", pk_num=" + pk_num
-				+ ", hostURL=" + hostURL + "]";
+				+ ", hostURL=" + hostURL + ", cafe_num=" + cafe_num + ", hospital_num=" + hospital_num + ", walk_num="
+				+ walk_num + ", mem_num=" + mem_num + "]";
 	}
-	
-	
 	
 }

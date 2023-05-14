@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.cafe.dao.CafeMapper;
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.vo.UpdateVO;
 
 @Service
 @Transactional
@@ -60,5 +61,13 @@ public class CafeServiceImpl implements CafeService{
 	@Override
 	public int selectCafeAdminCount(Map<String, Object> map) {
 		return cafeMapper.selectCafeAdminCount(map);
+	}
+
+
+
+	@Override
+	public void updateInfo(UpdateVO update) {
+		cafeMapper.updateInfo(update);
+		
 	}
 }

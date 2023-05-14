@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.vo.UpdateVO;
 
 public interface CafeService {
 	
@@ -35,5 +36,9 @@ public interface CafeService {
 		
 	//승인 요청 리스트
 	public int selectCafeAdminCount(Map<String, Object> map);
+	
+	//수정 요청
+	public void updateInfo(UpdateVO update);
+	
 	
 }

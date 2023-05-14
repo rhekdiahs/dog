@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.cafe.vo.CafeVO;
+import kr.spring.hospital.vo.UpdateVO;
 
 @Mapper
 public interface CafeMapper {
@@ -52,12 +53,23 @@ public interface CafeMapper {
 			                @Param(value="hospital_num") Integer hospital_num);
 	
 	
+	//수정 요청
+	@Insert("INSERT INTO upInfo (upInfo_num, place_name, place_detail, place_road, place_address,"
+		  + "place_newImgName, place_newImg, cafe_num, hospital_num, walk_num, mem_num) VALUES "
+		  + "(upInfo_seq.nextval, #{place_name}, #{place_detail}, #{place_road}, #{place_address},"
+		  + "#{place_newImgName}, #{place_newImg}, #{cafe_num}, #{hospital_num}, #{walk_num}, #{mem_num})")
+	public void updateInfo(UpdateVO update);
+	
+	/*
+	@Insert("INSERT INTO upInfo (upInfo_num, place_newImgName, place_newImg) VALUES "
+		  + "(upInfo_seq.nextval, #{place_newImgName}, #{place_newImg})")
+	public void updatePlace(UpdateVO update);
+	*/
+	
 	//관리자
 	//카페 관리
 	//승인 요청 개수
-	public List<CafeVO> selectCafeAdminList(Map<String, Object> map);
-		
-		
+	public List<CafeVO> selectCafeAdminList(Map<String, Object> map);	
 	//승인 요청 리스트
 	public int selectCafeAdminCount(Map<String, Object> map);
 	

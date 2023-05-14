@@ -365,8 +365,9 @@ public class HospitalController {
 		 MemberVO user = (MemberVO)session.getAttribute("user");
 		 update.setMem_num(user.getMem_num());
 		 //여기서 db 처리하며고 관리자에서 꺼내 쓰면 됩니다.
-		model.addAttribute("message", "신청이 완료되었습니다.");
-		model.addAttribute("url", "/main/main.do");
+		 //cafeService.updateInfo(update);
+		 model.addAttribute("message", "신청이 완료되었습니다.");
+		 model.addAttribute("url", "/main/main.do");
 		 return "common/resultView";
 	 }
 	/* 사용 끝
