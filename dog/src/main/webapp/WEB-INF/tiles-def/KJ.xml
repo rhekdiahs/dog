@@ -17,5 +17,21 @@
     	<put-attribute name="title" value="검색"/>
     	<put-attribute name="body" value="/WEB-INF/views/naver/naver.jsp"/>        
     </definition>
+    <definition name="clist" extends="main">
+    	<put-attribute name="title" value="글리스트"/>
+    	<put-attribute name="body" value="/WEB-INF/views/community/list.jsp"/>        
+    </definition>
+    <definition name="cwrite" extends="main">
+    	<put-attribute name="title" value="글쓰기"/>
+    	<put-attribute name="body" value="/WEB-INF/views/community/write.jsp"/>        
+    </definition>
+    <definition name="cupdate" extends="main">
+    	<put-attribute name="title" value="글수정"/>
+    	<put-attribute name="body" value="/WEB-INF/views/community/update.jsp"/>        
+    </definition>
+    <definition name="cdetail" extends="main">
+    	<put-attribute name="title" value="상세보기"/>
+    	<put-attribute name="body" value="/WEB-INF/views/community/detail.jsp"/>        
+    </definition>
   
 </tiles-definitions>
