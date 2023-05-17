@@ -1,8 +1,5 @@
 ## 🐶For Dog
-<!-- <p align="center">
-<img src="https://github.com/rhekdiahs/dog/assets/121605597/4594fa88-b1fb-4654-b5d6-43e94618b12d.png" >
-</p> -->
-![fordog readme](https://github.com/rhekdiahs/dog/assets/121605597/c469b564-b51a-44cf-bb33-c3dca99b68d0)
+![fordogreadme](https://github.com/rhekdiahs/dog/assets/121605597/0b08c571-4163-4e03-8785-8499ea636243)
 
 
 ## 🐶프로젝트 소개
