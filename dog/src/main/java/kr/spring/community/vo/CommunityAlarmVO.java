@@ -10,7 +10,7 @@ public class CommunityAlarmVO {
 	private int re_num;
 	private int mem_num;
 	private int lf_num;
-	private String mem_id;
+	private String mem_id;//상대방의 아이디 
 	
 	public String getMem_id() {
 		return mem_id;

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.community.dao.CommunityMapper">  
+	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
+	<sql id="communitySearch">
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<if test="keyfield == 1">
+					l.lf_title LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 2">
+					m.mem_id LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 3">
+					l.lf_content LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+		<choose>
+			<when test="keyfield2 == 1">
+				ORDER BY l.lf_hit DESC
+			</when>
+			<when test="keyfield2 == 2">
+				ORDER BY l.lf_title ASC
+			</when>
+			<otherwise>
+				ORDER BY l.lf_num DESC
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="selectCount" parameterType="map" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM lost_found l JOIN member m
+		ON l.mem_num = m.mem_num
+		<if test="keyword != null and keyword != ''">
+		where
+			<if test="keyfield == 1">
+				l.lf_title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 2">
+				m.mem_id LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield == 3">
+				l.lf_content LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+		<choose>
+			<when test="keyfield2 == 1">
+				ORDER BY l.lf_hit DESC
+			</when>
+			<when test="keyfield2 == 2">
+				ORDER BY l.lf_title ASC
+			</when>
+			<otherwise>
+				ORDER BY l.lf_num DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectList" parameterType="map" resultType="communityVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			   FROM (SELECT
+			   			l.lf_num,
+			   			<![CDATA[
+			   			REPLACE(REPLACE(l.lf_title,'<','&lt;'),'>','&gt;') lf_title,
+			   			]]>
+			   			l.lf_hit,
+			   			l.lf_imgsrc,
+			   			l.lf_date,
+			   			l.mem_num,
+			   			m.mem_id
+			   		 FROM lost_found l JOIN member m 
+			   		 ON l.mem_num = m.mem_num
+			   		 <if test="keyword != null and keyword != ''">
+			   		 	where
+						<if test="keyfield == 1">
+							l.lf_title LIKE '%' || #{keyword} || '%'
+						</if>
+						<if test="keyfield == 2">
+							m.mem_id LIKE '%' || #{keyword} || '%'
+						</if>
+						<if test="keyfield == 3">
+							l.lf_content LIKE '%' || #{keyword} || '%'
+						</if>
+					</if>
+			   		 <choose>
+						<when test="keyfield2 == 1">
+							ORDER BY l.lf_hit DESC, l.lf_title ASc
+						</when>
+						<when test="keyfield2 == 2">
+							ORDER BY l.lf_title ASC
+						</when>
+						<otherwise>
+							ORDER BY l.lf_num DESC
+						</otherwise>
+					</choose>)a)
+			   	<![CDATA[
+			   	WHERE rnum >= #{start} and rnum <= #{end}
+			   	]]>
+	</select>
+	<!-- 동적 sql을 사용하기 위해서 -->
+	<update id="updateCommunity" parameterType="communityVO">
+		UPDATE lost_found SET
+		 <if test="lf_imgsrc != ''">
+		 lf_ufile=#{lf_ufile},
+		 lf_imgsrc=#{lf_imgsrc},
+		 </if>
+		 lf_title=#{lf_title},
+		 lf_content=#{lf_content},
+		 lf_modify_date=SYSDATE
+		WHERE lf_num=#{lf_num} 
+	</update>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectListReply" parameterType="map" resultType="communityReplyVO">	
+		SELECT
+			*
+		FROM(SELECT
+				a.*,
+				rownum rnum
+			FROM (SELECT
+					re_num,
+					<![CDATA[
+					REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') re_content,
+					]]>
+					re_date,
+					re_modify_date,
+					lf_num,
+					mem_num,
+					mem_id
+				FROM reply_lost_found JOIN member
+				USING (mem_num)
+				WHERE lf_num = #{lf_num}
+				ORDER BY re_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
+	<!-- 안읽은 알람 목록 -->
+	<select id="selectAlarm" parameterType="integer" resultType="communityAlarmVO">	
+		SELECT
+			*
+		FROM alarmCount a join member m
+		USING(mem_num)
+		WHERE a.mem_num = #{mem_unm} AND a.al_reand = 1
+	</select>
+	
+	<!-- 전체 알람 목록 -->
+	<select id="selectAllAlarm" parameterType="integer" resultType="communityAlarmVO">	
+		SELECT
+			*
+		FROM alarmcount JOIN member
+		USING(mem_num)
+		WHERE mem_num = #{mem_unm}
+		ORDER BY al_date DESC
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
