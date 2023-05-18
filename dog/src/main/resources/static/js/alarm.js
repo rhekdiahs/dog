@@ -55,7 +55,13 @@ function selectalarm(){
 		dataType:'json',
 		success:function(param){
 			if(param.result == 'success'){
-				$('.count').text(param.acount);
+				if(param.acount > 0){
+					$('.count').text(param.acount);
+					$('.count').css({"height":"20px", "width":"20px", "color":"white", 
+					"text-align":"center", "background-color":"red", 
+					"border-radius":"15px", "display":"inline-block" });
+				}
+				
 			}else{
 				alert('알림 카운트 오류');
 				message_socket.close();

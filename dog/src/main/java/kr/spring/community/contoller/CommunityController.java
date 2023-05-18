@@ -587,23 +587,29 @@ public class CommunityController {
 		//map.put("keyword", keyword);
 		//map.put("keyfield2", keyfield2);
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		int count = communityService.selectCount(map);
-
+		//읽음 처리 전 알림 갯수
+		int bcount = communityService.selectCount(map);
+		
+		communityService.updateAlarm(user.getMem_num());
+		//읽음 처리 후 알림 개수
+		int acount = communityService.selectCount(map);
+		
 		//PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 20, 10, "/board/list.do");
 		
 		List<CommunityAlarmVO> list = null;
-		if(count > 0) {
+		
 			//map.put("start", page.getStartRow());
 			//map.put("end", page.getEndRow());
 
-			list = communityService.selectAllAlarm(user.getMem_num());
-		}
-
+		list = communityService.selectAllAlarm(user.getMem_num());
+		
+		session.setAttribute("acount", acount);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("alarmlist");//타일스 설정 값
 		//mav.addObject("keyfield", keyfield);//처음 검색값에 조회수순과 가나다순을 하기 위해
 		//mav.addObject("keyword", keyword);
-		mav.addObject("count", count);
+		mav.addObject("count", bcount);
 		mav.addObject("list", list);
 		//mav.addObject("page",page.getPage());
 
