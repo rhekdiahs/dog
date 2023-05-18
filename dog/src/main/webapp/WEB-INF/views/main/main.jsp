@@ -15,6 +15,7 @@
 		
 		<a class = "menu-list" href="${pageContext.request.contextPath}/weather/weather.do">날씨</a>
 		<a class = "menu-list" href="${pageContext.request.contextPath}/naver/search.do">블로그 검색</a>
+		<a class = "menu-list" href="${pageContext.request.contextPath}/community/list.do">자유게시판</a>
 		
 	</div>
 	<div class = "menu-login">
