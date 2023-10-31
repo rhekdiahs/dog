@@ -1,5 +1,5 @@
 ## 🐶For Dog
-![fordogreadme](https://github.com/rhekdiahs/dog/assets/121605597/33f537a7-5e4f-4344-9ccb-59054717af21)
+![fordogs](https://github.com/rhekdiahs/dog/assets/121605597/8970937c-1f4c-45a9-bec5-ad47cffe7bdf)
 
 
 ## 🐶프로젝트 소개
